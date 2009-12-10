@@ -22,6 +22,10 @@ comments on how to set it up.
 You might also want to ignore the plugin and the config file. It's not
 really something that should be in the code base.
 
+# Configuration
+* **Mactag::Config.gem_home:** The path where the gems are located. Defaults to **/usr/lib/ruby/gems/1.8/gems**
+* **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **etags -o TAGS**
+
 # Example mactag.rb file
     Mactag::Config.gem_home = "/usr/lib/ruby/gems/1.9/gems"
     Mactag::Config.binary = "etags -o TAGS"
