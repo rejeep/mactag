@@ -43,6 +43,10 @@ end
 Then /^the tags file should contain "([^\"]*)"$/ do |tag|
   assert @tags.contain?(tag)
 end
+  
+Then /^the tags file should not contain "([^\"]*)"$/ do |tag|
+  assert !@tags.contain?(tag)
+end
 
 After do
   @app.destroy

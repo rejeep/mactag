@@ -14,6 +14,11 @@ module Mactag
         @table << Mactag::Tag::Plugin.new(*plugins)
       end
       alias_method :plugins, :plugin
+      
+      def gem(*gems)
+        @table << Mactag::Tag::Gem.new(*gems)
+      end
+      alias_method :gems, :gem
 
     end
   end
