@@ -3,7 +3,7 @@ Feature: Tag Plugins
   As a user
   I want to tag plugins
 
-  Scenario: Single plugin
+  Scenario: Tag single plugin
     Given a Rails application
     And mactag is installed
     And the plugin "superduper" is installed
@@ -14,7 +14,7 @@ Feature: Tag Plugins
     When I create the tags file
     Then the tags file should contain "acts_as_superduper"
 
-  Scenario: Multiple plugins
+  Scenario: Tag multiple plugins
     Given a Rails application
     And mactag is installed
     And the plugin "superduper" is installed
@@ -29,7 +29,7 @@ Feature: Tag Plugins
     Then the tags file should contain "acts_as_superduper"
     Then the tags file should contain "acts_as_dunder"
 
-  Scenario: All plugins
+  Scenario: Tag all plugins
     Given a Rails application
     And mactag is installed
     And the plugin "superduper" is installed
