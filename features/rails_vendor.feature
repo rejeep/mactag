@@ -1,4 +1,4 @@
-Feature: Tag Rails
+Feature: Tag Rails in vendor
   In order to create a TAGS file
   As a user
   I want to tag Rails
