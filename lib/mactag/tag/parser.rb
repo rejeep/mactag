@@ -9,6 +9,11 @@ module Mactag
       def app(*files)
         @table << Mactag::Tag::App.new(*files)
       end
+      
+      def plugin(*plugins)
+        @table << Mactag::Tag::Plugin.new(*plugins)
+      end
+      alias_method :plugins, :plugin
 
     end
   end
