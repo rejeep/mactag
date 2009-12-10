@@ -8,7 +8,7 @@ Feature: Tag Plugins
     And mactag is installed
   
   Scenario: Tag single plugin
-    And the plugin "superduper" is installed
+    Given the plugin "superduper" is installed
     And an acts as method for the "superduper" plugin
     And a plugin mactag config with the following tags
     | tag        |
@@ -17,7 +17,7 @@ Feature: Tag Plugins
     Then the tags file should contain "acts_as_superduper"
 
   Scenario: Tag multiple plugins
-    And the plugin "superduper" is installed
+    Given the plugin "superduper" is installed
     And the plugin "dunder" is installed
     And an acts as method for the "superduper" plugin
     And an acts as method for the "dunder" plugin
@@ -30,7 +30,7 @@ Feature: Tag Plugins
     Then the tags file should contain "acts_as_dunder"
 
   Scenario: Tag all plugins
-    And the plugin "superduper" is installed
+    Given the plugin "superduper" is installed
     And the plugin "dunder" is installed
     And an acts as method for the "superduper" plugin
     And an acts as method for the "dunder" plugin

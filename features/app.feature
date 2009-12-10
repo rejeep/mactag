@@ -8,7 +8,7 @@ Feature: Tag application files
     And mactag is installed
     
   Scenario: Tag single file
-    And a javascript function "show" in "whitebox"
+    Given a javascript function "show" in "whitebox"
     And an app mactag config with the following tags
     | tag                            |
     | public/javascripts/whitebox.js |
@@ -16,7 +16,7 @@ Feature: Tag application files
     Then the tags file should contain "show"
 
   Scenario: Tag multiple files
-    And a javascript function "hide" in "whitebox"
+    Given a javascript function "hide" in "whitebox"
     And a ruby method "to_s" in the "user" model
     And an app mactag config with the following tags
     | tag                            |
@@ -27,7 +27,7 @@ Feature: Tag application files
     And the tags file should contain "to_s"
 
   Scenario: Tag files recursive
-    And a ruby method "kill!" in the "user" model
+    Given a ruby method "kill!" in the "user" model
     And an app mactag config with the following tags
     | tag         |
     | app/**/*.rb |
