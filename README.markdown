@@ -17,7 +17,7 @@ Generate a basic configuration file:
     $ ./script/generate mactag
 
 This will create the file **config/mactag.rb**, which contains
-comments on how to set it up.
+some examples of how to set it up.
 
 You might also want to ignore the plugin and the config file. It's not
 really something that should be in the code base.
