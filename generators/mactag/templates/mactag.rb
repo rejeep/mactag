@@ -1,6 +1,3 @@
-Mactag::Config.gem_home = "/usr/lib/ruby/gems/1.9/gems"
-Mactag::Config.binary = "etags -o TAGS"
-
 Mactag::Table.generate do
   app "app/**/*.rb", "lib/*.rb"
 
