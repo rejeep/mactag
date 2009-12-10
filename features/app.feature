@@ -3,9 +3,11 @@ Feature: Tag application files
   As a user
   I want to tag application files
 
-  Scenario: Tag single file
+  Background:
     Given a Rails application
     And mactag is installed
+    
+  Scenario: Tag single file
     And a javascript function "show" in "whitebox"
     And an app mactag config with the following tags
     | tag                            |
@@ -14,8 +16,6 @@ Feature: Tag application files
     Then the tags file should contain "show"
 
   Scenario: Tag multiple files
-    Given a Rails application
-    And mactag is installed
     And a javascript function "hide" in "whitebox"
     And a ruby method "to_s" in the "user" model
     And an app mactag config with the following tags
@@ -27,8 +27,6 @@ Feature: Tag application files
     And the tags file should contain "to_s"
 
   Scenario: Tag files recursive
-    Given a Rails application
-    And mactag is installed
     And a ruby method "kill!" in the "user" model
     And an app mactag config with the following tags
     | tag         |

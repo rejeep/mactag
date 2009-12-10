@@ -3,9 +3,11 @@ Feature: Tag Gems
   As a user
   I want to tag gems
 
-  Scenario: Tag single gem
+  Background:
     Given a Rails application
     And mactag is installed
+  
+  Scenario: Tag single gem
     And the gem "superduper" version "1.0.0" is installed
     And an acts as method for the "superduper-1.0.0" gem
     And a gem mactag config with the following tags
@@ -15,8 +17,6 @@ Feature: Tag Gems
     Then the tags file should contain "acts_as_superduper"
 
   Scenario: Tag multiple gems
-    Given a Rails application
-    And mactag is installed
     And the gem "superduper" version "1.0.0" is installed
     And the gem "dunder" version "1.0.0" is installed
     And an acts as method for the "superduper-1.0.0" gem
@@ -30,8 +30,6 @@ Feature: Tag Gems
     Then the tags file should contain "acts_as_dunder"
 
   Scenario: Tag specific version
-    Given a Rails application
-    And mactag is installed
     And the gem "superduper" version "1.0.0" is installed
     And the gem "superduper" version "1.0.1" is installed
     And an acts as method for the "superduper-1.0.0" gem
@@ -45,8 +43,6 @@ Feature: Tag Gems
     And the tags file should not contain "1.0.1"
 
   Scenario: Tag latest version
-    Given a Rails application
-    And mactag is installed
     And the gem "superduper" version "1.0.2" is installed
     And the gem "superduper" version "1.0.1" is installed
     And the gem "superduper" version "1.0.0" is installed
