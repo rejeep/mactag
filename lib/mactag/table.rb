@@ -14,7 +14,11 @@ module Mactag
       end
 
       def tags
-        @@tags.collect(&:files).flatten.collect { |file| File.expand_path(file) }.join(' ')
+        @@tags.collect!(&:files)
+        @@tags.flatten!
+        @@tags.collect! { |file| File.expand_path(file) }
+        @@tags.collect! { |file| Dir.glob(file) }
+        @@tags.join(' ')
       end
     end
 
