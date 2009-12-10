@@ -8,10 +8,3 @@ require 'mactag'
 require 'test/unit/assertions'
 
 World(Test::Unit::Assertions)
-
-
-class String
-  def quote
-    "\"#{self}\""
-  end
-end
