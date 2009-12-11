@@ -48,7 +48,7 @@ really something that should be in the code base.
 # Usage
 
 To create the TAGS file. Simpy run:
-    rake mactag
+    $ rake mactag
 
 # License
 
