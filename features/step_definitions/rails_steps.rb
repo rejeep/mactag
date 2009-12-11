@@ -1,17 +1,45 @@
 Given /^rails lives in vendor$/ do
-  pending
+  @app.install_rails
 end
 
 Given /^a rails mactag config with the following tags$/ do |table|
-  pending
-end
+  options = {
+    "only"    => [],
+    "except"  => [],
+    "version" => []
+  }
 
-Given /^rails version "([^\"]*)" lives in vendor$/ do |version|
-  pending
-end
+  table.hashes.each do |hash|
+    hash.each do |option, value|
+      options[option] << value
+    end
+  end
 
-Given /^a rails mactag config file with the following tags$/ do |table|
-  pending
+  if options.values.flatten.empty?
+    tags = ""
+  else
+    tags = []
+    options.each do |option, value|
+      unless value.empty?
+        if value.size == 1
+          tags << ":#{option} => #{value.first.quote}"
+        else
+          values = value.collect(&:quote).join(", ")
+          tags << ":#{option} => [#{values}]"
+        end
+      end
+    end
+
+    tags = tags.join(", ")
+  end
+
+  @app.puts "config/mactag.rb" do
+    <<-eos
+      Mactag::Table.generate do
+        rails #{tags}
+      end
+    eos
+  end
 end
 
 Given /^rails is installed as a gem$/ do
