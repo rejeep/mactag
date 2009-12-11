@@ -32,7 +32,7 @@ class RailsApp
     FileUtils.mv(File.join(plugins, gem), File.join(gems, "#{gem}-#{version}"))
   end
 
-  def install_rails
+  def install_rails_vendor
     from = File.join("features", "rails")
     to = File.join(rails_root, "vendor", "rails-temp")
 

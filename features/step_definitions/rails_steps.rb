@@ -1,5 +1,5 @@
 Given /^rails lives in vendor$/ do
-  @app.install_rails
+  @app.install_rails_vendor
 
   # Replaces the path to vendor rails. We can not use "rails" here
   # since when running the rake task rails will try to start by using
