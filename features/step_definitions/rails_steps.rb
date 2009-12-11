@@ -1,5 +1,14 @@
 Given /^rails lives in vendor$/ do
   @app.install_rails
+
+  # Replaces the path to vendor rails. We can not use "rails" here
+  # since when running the rake task rails will try to start by using
+  # rails in vendor. But by renaming it to "rails-temp", this will not happen.
+  mactag = File.join(@app.rails_root, "vendor", "plugins", "mactag")
+  vendor = File.join(mactag, "lib", "mactag", "tag", "rails.rb")
+  from = 'VENDOR = File.join("vendor", "rails")'
+  to = 'VENDOR = File.join("vendor", "rails-temp")'
+  @app.gsub(vendor, from, to)
 end
 
 Given /^a rails mactag config with the following tags$/ do |table|
