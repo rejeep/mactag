@@ -2,5 +2,6 @@
 
 * Tagging [1/1]
   - [X] Make sure that files are not repeated, but unique
-* Testing [0/0]
-  - [ ] Some stuff needs unit testing
+* Testing [1/2]
+  - [X] Some stuff needs unit testing
+  - [ ] Test files in Rails tag
