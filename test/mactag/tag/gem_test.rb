@@ -12,4 +12,31 @@ class GemTest < ActiveSupport::TestCase
     end
   end
   
+  context "gem without version" do
+    context "one gem" do
+      setup do
+        Dir.stubs(:glob).returns("whenever")
+
+        @gem = Mactag::Tag::Gem.new("whenever")
+      end
+      
+      should "return that gem" do
+        assert_contains @gem.files, "whenever/**/*.rb"
+      end
+    end
+    
+    context "multiple gems" do
+      setup do
+        Dir.stubs(:glob).returns(["whenever-0.3.7", "whenever-0.3.6"])
+        
+        @gem = Mactag::Tag::Gem.new("whenever")
+      end
+      
+      should "return the gem with the latest version" do
+        assert_contains @gem.files, "whenever-0.3.7/**/*.rb"
+        assert_does_not_contain @gem.files, "whenever-0.3.6/**/*.rb"
+      end
+    end
+  end
+  
 end
