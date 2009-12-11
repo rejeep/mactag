@@ -21,9 +21,9 @@ Feature: Tag Rails in vendor
     
   Scenario: Tag only some packages
     Given a rails mactag config with the following tags
-    | only          |
-    | activerecord  |
-    | activesupport |
+    | only           |
+    | activerecord   |
+    | active_support |
     When I create the tags file
     Then the tags file should contain "diff"
     And the tags file should contain "has_many"
@@ -35,7 +35,7 @@ Feature: Tag Rails in vendor
   Scenario: Tag all except some packages
     Given a rails mactag config with the following tags
     | except            |
-    | actioncontroller  |
+    | action_controller |
     | actionview        |
     When I create the tags file
     Then the tags file should contain "diff"
