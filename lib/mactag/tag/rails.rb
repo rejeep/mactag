@@ -37,9 +37,9 @@ module Mactag
       end
 
       def package_path(package)
-        paths = PACKAGES[package]
+        paths = PACKAGES[package].dup
         paths.insert(1, "lib")
-
+        
         unless Mactag::Tag::Rails.vendor?
           top = paths.first
           if version = @options[:version]
@@ -60,7 +60,7 @@ module Mactag
 
         File.join(paths)
       end
-
+      
       def files
         result = []
 
