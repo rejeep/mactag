@@ -6,6 +6,10 @@ Emacs. Mactag is DSL for creating an
 file. With Emacs TAGS you can follow tags (of functions, variables,
 macros, whatever) to their definitions.
 
+# Ctags
+First off you must install [Ctags](http://ctags.sourceforge.net/) if
+you haven't already.
+
 # Installation
 
 Install it as a plugin:
