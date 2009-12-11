@@ -50,7 +50,7 @@ Feature: Tag Rails as a Gem
   Scenario: Tag specific version
     Given rails version "3.0.0" is installed as a gem
     And rails version "2.3.5" is installed as a gem
-    And a rails mactag config file with the following tags
+    And a rails mactag config with the following tags
     | version |
     |   3.0.0 |
     When I create the tags file
@@ -61,7 +61,7 @@ Feature: Tag Rails as a Gem
     Given rails version "3.0.0" is installed as a gem
     And rails version "2.3.5" is installed as a gem
     And rails version "2.3.2" is installed as a gem
-    And a rails mactag config file with the following tags
+    And a rails mactag config with the following tags
     | tag |
     When I create the tags file
     Then the tags file should contain "3.0.0"

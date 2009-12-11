@@ -1,9 +1,6 @@
-require 'mactag/tag/rails/vendor'
-require 'mactag/tag/rails/gem'
-
 module Mactag
   module Tag
-    module Rails
+    class Rails
 
       VENDOR = File.join("vendor", "rails")
 
@@ -39,10 +36,46 @@ module Mactag
         result
       end
 
-      def package_lib(package)
-        pkg = PACKAGES[package]
+      def package_path(package)
+        paths = PACKAGES[package]
+        paths.insert(1, "lib")
 
-        File.join(pkg.first, "lib", pkg.last)
+        unless Mactag::Tag::Rails.vendor?
+          top = paths.first
+          if version = @options[:version]
+            top = "#{top}-#{version}"
+          else
+            versions = Dir.glob(File.join(Mactag::Config.gem_home, "#{top}-*"))
+
+            if versions.size == 1
+              top = versions.first
+            else
+              top = versions.sort.last
+            end
+
+            top = File.basename(top)
+          end
+          paths[0] = top
+        end
+
+        File.join(paths)
+      end
+
+      def files
+        result = []
+
+        packages.each do |package|
+          path = []
+          path << rails_home
+          path << package_path(package)
+          path << "**"
+          path << "*.rb"
+          path.flatten!
+
+          result << Dir.glob(File.join(path))
+        end
+
+        result.flatten
       end
 
       def self.vendor?

@@ -41,20 +41,22 @@ Given /^a rails mactag config with the following tags$/ do |table|
 
     tags = tags.join(", ")
   end
-
+  
   @app.puts "config/mactag.rb" do
     <<-eos
-      Mactag::Table.generate do
-        rails #{tags}
-      end
+    Mactag::Config.gem_home = File.join("vendor", "rails-temp")
+
+    Mactag::Table.generate do
+      rails #{tags}
+    end
     eos
   end
 end
 
 Given /^rails is installed as a gem$/ do
-  pending
+  @app.install_rails_gem
 end
 
 Given /^rails version "([^\"]*)" is installed as a gem$/ do |version|
-  pending
+  @app.install_rails_gem(version)
 end

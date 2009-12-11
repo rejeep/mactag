@@ -39,6 +39,21 @@ class RailsApp
     FileUtils.cp_r(from, to)
   end
 
+  def install_rails_gem(version = "3.0.0")
+    from = File.join("features", "rails", "*")
+    to = File.join(rails_root, "vendor", "rails-temp")
+
+    FileUtils.mkdir_p(to)
+
+    Dir.glob(from).each do |file|
+      FileUtils.cp_r(file, to)
+    end
+
+    Dir.glob(File.join(to, "*[a-z]")).each do |file|
+      FileUtils.mv(file, "#{file}-#{version}")
+    end
+  end
+
   def gsub(file, from, to)
     text = File.read(file)
     File.open(file, 'w+') do |f|

@@ -21,11 +21,7 @@ module Mactag
       alias_method :gems, :gem
 
       def rails(options = {})
-        if Mactag::Tag::Rails.vendor?
-          @table << Mactag::Tag::Rails::Vendor.new(options)
-        else
-          @table << Mactag::Tag::Rails::Gem.new(options)
-        end
+        @table << Mactag::Tag::Rails.new(options)
       end
 
     end
