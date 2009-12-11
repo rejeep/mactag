@@ -37,13 +37,12 @@ really something that should be in the code base.
     Mactag::Table.generate do
       app "app/**/*.rb", "lib/*.rb"
 
-      plugins "thinking-sphinx", "formtastic"
+      plugins "thinking-sphinx", "whenever"
 
       gems "paperclip", "authlogic"
       gem "formtastic", :version => "0.9.7"
 
-      rails :except => :actionmailer
-      rails :only => [:activerecord, :active_support]
+      rails :except => :actionmailer, :version => "2.3.5"
     end
 
 # Usage
