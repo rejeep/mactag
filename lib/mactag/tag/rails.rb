@@ -5,7 +5,7 @@ module Mactag
   module Tag
     module Rails
 
-      VENDOR = File.join(::Rails.root, "vendor", "rails-temp")
+      VENDOR = File.join("vendor", "rails")
 
       PACKAGES = {
         :activesupport    => ["activesupport", "active_support"],
