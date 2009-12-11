@@ -12,6 +12,14 @@ Given /^mactag is installed$/ do
 
     FileUtils.cp_r(file, mactag)
   end
+  
+  # Replaces the path to vendor rails. We can not use "rails" here
+  # since when running the rake task rails will try to start by using
+  # rails in vendor. But by renaming it to "rails-temp", this will not happen.
+  vendor = File.join(mactag, "lib", "mactag", "tag", "rails.rb")
+  from = 'VENDOR = File.join("vendor", "rails")'
+  to = 'VENDOR = File.join("vendor", "rails-temp")'
+  @app.gsub(vendor, from, to)
 end
 
 Given /^a javascript function "([^\"]*)" in "([^\"]*)"$/ do |function, file|

@@ -39,6 +39,13 @@ class RailsApp
     FileUtils.cp_r(from, to)
   end
 
+  def gsub(file, from, to)
+    text = File.read(file)
+    File.open(file, 'w+') do |f|
+      f << text.gsub(from, to)
+    end
+  end
+
   def rails_root
     @rails_root ||= File.join(File.dirname(__FILE__), "..", "..", @name)
   end
