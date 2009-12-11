@@ -59,7 +59,7 @@ module Mactag
       def packagize!(pkgs)
         return nil if pkgs.blank?
 
-        pkgs.collect do |pkg|
+        Array(pkgs).collect do |pkg|
           "#{pkg}".gsub(/[^a-z]/, '').to_sym
         end
       end
