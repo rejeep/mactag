@@ -17,8 +17,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "mactag"
-    gemspec.summary = "Emacs TAGS for Rails"
-    gemspec.description = "Mactag is DSL in ruby for creating an Emacs TAGS-file for Rails projects"
+    gemspec.summary = "Ctags for Rails"
+    gemspec.description = "Mactag is DSL in ruby for creating a Ctags-file for Rails projects"
     gemspec.email = "johan.rejeep@gmail.com"
     gemspec.homepage = "http://github.com/rejeep/mactag"
     gemspec.authors = ["Johan Andersson"]
