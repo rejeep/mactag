@@ -1,5 +1,41 @@
 module Mactag
   module Tag
+
+    # Tag for the Rails source.
+    #
+    # ==== Packages
+    # Naming does not matter. So *activerecord* and *active_record* are the same.
+    #
+    # * activesupport
+    # * activeresource
+    # * activerecord
+    # * actionmailer
+    # * actioncontroller
+    # * actionview
+    #
+    # ==== Examples
+    #   Mactag::Table.generate do
+    #     # Tag all rails packages, latest version
+    #     rails
+    #
+    #     # Tag all rails packages, version 2.3.5
+    #     rails :version => "2.3.5"
+    #
+    #     # Tag only activerecord, latest version
+    #     rails :only => :active_record
+    #
+    #     # Tag all packages except activerecord, latest version
+    #     rails :except => :activerecord
+    #
+    #     # Tag only activerecord and actionview, latest version
+    #     rails :only => [:activerecord, :action_view]
+    #
+    #     # Tag all packages except activerecord and actionview, latest version
+    #     rails :except => ["activerecord", :action_controller]
+    #
+    #     # Tag all packages except actionmailer, version 2.3.4
+    #     rails :except => :actionmailer, :version => "2.3.4"
+    #   do
     class Rails
 
       VENDOR = File.join("vendor", "rails")

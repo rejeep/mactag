@@ -1,4 +1,13 @@
 module Mactag
+  # Configuration options.
+  #
+  # ==== Binary
+  # The command to run when creating the TAGS-file.
+  #   Mactag::Config.binary = "etags -o TAGS"
+  #
+  # ==== Gem Home
+  # The folder where the gems are stored.
+  #   Mactag::Config.gem_home = "/usr/lib/ruby/gems/1.9/gems"
   class Config
 
     @@binary = "ctags -o TAGS -e"

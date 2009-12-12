@@ -1,5 +1,19 @@
 module Mactag
   module Tag
+    
+    # Tag for gems.
+    #
+    # ==== Examples
+    #   Mactag::Table.generate do
+    #     # Tag the whenever gem, latest version
+    #     gem "whenever"
+    #
+    #     # Tag the thinking-sphinx and formtastic gems, latest versions
+    #     gems "thinking-sphinx", "formtastic"
+    #
+    #     # Tag the formtastic gem version 0.8.2
+    #     gem "formtastic", :version => "0.8.2"
+    #   do
     class Gem
 
       def initialize(*gems)

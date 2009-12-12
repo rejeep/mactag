@@ -4,6 +4,22 @@ module Mactag
     @@tags = []
 
     class << self
+      # Generates the TAGS-table.
+      #
+      # ==== Example
+      #   Mactag::Table.generate do
+      #     app "app/**/*.rb", "lib/*.rb"
+      #    
+      #     plugins "thinking-sphinx", "whenever"
+      #    
+      #     gems "paperclip", "authlogic"
+      #     gem "formtastic", :version => "0.9.7"
+      #    
+      #     rails :except => :actionmailer, :version => "2.3.5"
+      #   end
+      #
+      # See documentation for the methods *app*, *plugins*, *gems* and
+      # *rails* in respective tag class.
       def generate(&block)
         parser = Mactag::Tag::Parser.new(self)
         parser.instance_eval(&block)
@@ -13,6 +29,8 @@ module Mactag
         @@tags << tag
       end
 
+      # Returns a string with all files that should be tagged. The
+      # files are separated with a whitespace.
       def tags
         @@tags.collect!(&:files)
         @@tags.flatten!

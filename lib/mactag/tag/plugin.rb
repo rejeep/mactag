@@ -1,5 +1,16 @@
 module Mactag
   module Tag
+    
+    # Tag for the current project plugins.
+    #
+    # ==== Examples
+    #   Mactag::Table.generate do
+    #     # Tag the whenever plugin
+    #     plugin "whenever"
+    #
+    #     # Tag the thinking-sphinx and formtastic plugins
+    #     plugins "thinking-sphinx", "formtastic"
+    #   do
     class Plugin
       
       PLUGIN_PATH = File.join("vendor", "plugins")
