@@ -20,6 +20,26 @@ module Mactag
         @except = packagize!(options[:except])
       end
 
+      def files
+        result = []
+
+        packages.each do |package|
+          path = []
+          path << rails_home
+          path << package_path(package)
+          path << "**"
+          path << "*.rb"
+          path.flatten!
+
+          result << Dir.glob(File.join(path))
+        end
+
+        result.flatten
+      end
+
+
+      private
+
       def packages
         result = []
 
@@ -39,7 +59,7 @@ module Mactag
       def package_path(package)
         paths = PACKAGES[package].dup
         paths.insert(1, "lib")
-        
+
         unless Mactag::Tag::Rails.vendor?
           top = paths.first
           if version = @options[:version]
@@ -60,23 +80,6 @@ module Mactag
 
         File.join(paths)
       end
-      
-      def files
-        result = []
-
-        packages.each do |package|
-          path = []
-          path << rails_home
-          path << package_path(package)
-          path << "**"
-          path << "*.rb"
-          path.flatten!
-
-          result << Dir.glob(File.join(path))
-        end
-
-        result.flatten
-      end
 
       def self.vendor?
         File.exist?(VENDOR)
@@ -85,9 +88,6 @@ module Mactag
       def rails_home
         @rails_home ||= Mactag::Tag::Rails.vendor? ? VENDOR : Mactag::Config.gem_home
       end
-
-
-      private
 
       def packagize!(pkgs)
         return nil if pkgs.blank?

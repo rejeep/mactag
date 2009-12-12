@@ -36,7 +36,7 @@ class RailsTest < ActiveSupport::TestCase
       end
 
       should "return all packages" do
-        assert_same_elements Mactag::Tag::Rails::PACKAGES.keys, @rails.packages
+        assert_same_elements Mactag::Tag::Rails::PACKAGES.keys, @rails.send(:packages)
       end
     end
 
@@ -46,7 +46,7 @@ class RailsTest < ActiveSupport::TestCase
       end
 
       should "return only those packages" do
-        assert_same_elements [:activesupport, :activerecord], @rails.packages
+        assert_same_elements [:activesupport, :activerecord], @rails.send(:packages)
       end
     end
 
@@ -56,7 +56,7 @@ class RailsTest < ActiveSupport::TestCase
       end
 
       should "return all except those packages" do
-        assert_same_elements Mactag::Tag::Rails::PACKAGES.keys - [:activesupport, :activerecord], @rails.packages
+        assert_same_elements Mactag::Tag::Rails::PACKAGES.keys - [:activesupport, :activerecord], @rails.send(:packages)
       end
     end
   end
@@ -67,7 +67,7 @@ class RailsTest < ActiveSupport::TestCase
     end
 
     should "be in vendor since file exist" do
-      assert Mactag::Tag::Rails.vendor?
+      assert Mactag::Tag::Rails.send(:vendor?)
     end
   end
 
@@ -80,7 +80,7 @@ class RailsTest < ActiveSupport::TestCase
       end
 
       should "return vendor" do
-        assert_equal Mactag::Tag::Rails::VENDOR, @rails.rails_home
+        assert_equal Mactag::Tag::Rails::VENDOR, @rails.send(:rails_home)
       end
     end
 
@@ -92,7 +92,7 @@ class RailsTest < ActiveSupport::TestCase
       end
 
       should "return gem home" do
-        assert_equal Mactag::Config.gem_home, @rails.rails_home
+        assert_equal Mactag::Config.gem_home, @rails.send(:rails_home)
       end
     end
   end
@@ -132,7 +132,7 @@ class RailsTest < ActiveSupport::TestCase
       end
       
       should "return the correct path" do
-        assert_equal "activerecord/lib/active_record", @rails.package_path(:activerecord)
+        assert_equal "activerecord/lib/active_record", @rails.send(:package_path, :activerecord)
       end
     end
     
@@ -147,7 +147,7 @@ class RailsTest < ActiveSupport::TestCase
         end
         
         should "return the correct path" do
-          assert_equal "activerecord-3.0.0/lib/active_record", @rails.package_path(:activerecord)
+          assert_equal "activerecord-3.0.0/lib/active_record", @rails.send(:package_path, :activerecord)
         end
       end
       
@@ -162,7 +162,7 @@ class RailsTest < ActiveSupport::TestCase
           end
           
           should "return the correct path" do
-            assert_equal "activerecord-2.3.5/lib/active_record", @rails.package_path(:activerecord)
+            assert_equal "activerecord-2.3.5/lib/active_record", @rails.send(:package_path, :activerecord)
           end
         end
         
@@ -172,7 +172,7 @@ class RailsTest < ActiveSupport::TestCase
           end
           
           should "return the correct path" do
-            assert_equal "activerecord-2.3.5/lib/active_record", @rails.package_path(:activerecord)
+            assert_equal "activerecord-2.3.5/lib/active_record", @rails.send(:package_path, :activerecord)
           end
         end
       end
