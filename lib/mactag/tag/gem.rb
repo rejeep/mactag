@@ -5,6 +5,9 @@ module Mactag
     #
     # ==== Examples
     #   Mactag::Table.generate do
+    #     # Tag all gems given by *Rails.configuration.gems*
+    #     gems
+    #
     #     # Tag the whenever gem, latest version
     #     gem "whenever"
     #
@@ -18,7 +21,7 @@ module Mactag
 
       def initialize(*gems)
         @options = gems.extract_options!
-        @gems = gems
+        @gems = gems.blank? ? ::Rails.configuration.gems.collect(&:name) : gems
       end
 
       def files
