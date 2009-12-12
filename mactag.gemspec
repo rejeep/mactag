@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     "README.markdown",
-     "Rakefile",
      "VERSION",
      "generators/mactag/mactag_generator.rb",
      "generators/mactag/templates/mactag.rb",
@@ -30,6 +29,7 @@ Gem::Specification.new do |s|
      "lib/mactag/tag/parser.rb",
      "lib/mactag/tag/plugin.rb",
      "lib/mactag/tag/rails.rb",
+     "lib/mactag/tasks.rb",
      "tasks/mactag_tasks.rake"
   ]
   s.homepage = %q{http://github.com/rejeep/mactag}
