@@ -12,7 +12,7 @@ class PluginTest < ActiveSupport::TestCase
     end
 
     should "return all plugins as path" do
-      assert_equal @plugin.files, "vendor/plugins/*/**/*.rb"
+      assert_equal @plugin.files, "vendor/plugins/*/lib/**/*.rb"
     end
   end
   
@@ -22,7 +22,7 @@ class PluginTest < ActiveSupport::TestCase
     end
     
     should "return the path to that plugin" do
-      assert_equal ["vendor/plugins/thinking-sphinx/**/*.rb"], @plugin.files
+      assert_equal ["vendor/plugins/thinking-sphinx/lib/**/*.rb"], @plugin.files
     end
   end
   
@@ -32,8 +32,8 @@ class PluginTest < ActiveSupport::TestCase
     end
     
     should "return the paths to those plugins" do
-      assert_contains @plugin.files, "vendor/plugins/thinking-sphinx/**/*.rb"
-      assert_contains @plugin.files, "vendor/plugins/formtastic/**/*.rb"
+      assert_contains @plugin.files, "vendor/plugins/thinking-sphinx/lib/**/*.rb"
+      assert_contains @plugin.files, "vendor/plugins/formtastic/lib/**/*.rb"
     end
   end
   

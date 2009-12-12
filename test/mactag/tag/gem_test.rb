@@ -8,7 +8,7 @@ class GemTest < ActiveSupport::TestCase
     end
     
     should "return the gem with that version" do
-      assert_contains @gem.files, File.join(Mactag::Config.gem_home, "thinking-sphinx-1.0.0", "**", "*.rb")
+      assert_contains @gem.files, File.join(Mactag::Config.gem_home, "thinking-sphinx-1.0.0", "lib", "**", "*.rb")
     end
   end
   
@@ -21,7 +21,7 @@ class GemTest < ActiveSupport::TestCase
       end
       
       should "return that gem" do
-        assert_contains @gem.files, "whenever/**/*.rb"
+        assert_contains @gem.files, "whenever/lib/**/*.rb"
       end
     end
     
@@ -33,8 +33,8 @@ class GemTest < ActiveSupport::TestCase
       end
       
       should "return the gem with the latest version" do
-        assert_contains @gem.files, "whenever-0.3.7/**/*.rb"
-        assert_does_not_contain @gem.files, "whenever-0.3.6/**/*.rb"
+        assert_contains @gem.files, "whenever-0.3.7/lib/**/*.rb"
+        assert_does_not_contain @gem.files, "whenever-0.3.6/lib/**/*.rb"
       end
     end
   end

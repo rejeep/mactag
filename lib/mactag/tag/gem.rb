@@ -34,7 +34,7 @@ module Mactag
             end
           end
 
-          File.join(gem, "**", "*.rb")
+          File.join(gem, "lib", "**", "*.rb")
         end
       end
 

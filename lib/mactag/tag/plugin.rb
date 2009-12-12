@@ -20,10 +20,10 @@ module Mactag
       end
       
       def files
-        return File.join(PLUGIN_PATH, "*", "**", "*.rb") if @plugins.empty?
+        return File.join(PLUGIN_PATH, "*", "lib", "**", "*.rb") if @plugins.empty?
 
         @plugins.collect do |plugin|
-          File.join(PLUGIN_PATH, plugin, "**", "*.rb")
+          File.join(PLUGIN_PATH, plugin, "lib", "**", "*.rb")
         end
       end
       
