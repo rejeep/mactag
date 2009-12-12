@@ -10,6 +10,6 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = true
 end
 
-task :cucumber do
+task :features do
   system "cucumber features"
 end
