@@ -9,7 +9,7 @@ their definitions.
 First off you must install [Ctags](http://ctags.sourceforge.net/).
 Some systems comes with a ctags command already. If you have the ctags
 executable, but have problems creating the tags file. Then make sure
-that you are using *Exuberant Ctags* and not some other version.
+that you are using **Exuberant Ctags** and not some other version.
 
 # Installation
 
