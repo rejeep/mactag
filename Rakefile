@@ -23,7 +23,6 @@ begin
     gemspec.homepage = "http://github.com/rejeep/mactag"
     gemspec.authors = ["Johan Andersson"]
     gemspec.files = FileList[
-                             "Rakefile",
                              "lib/**/*.rb",
                              "LICENCE",
                              "README.markdown",
