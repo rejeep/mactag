@@ -1,3 +1,5 @@
+require 'mactag/tag/versioned'
+
 module Mactag
   module Tag
 
@@ -37,6 +39,8 @@ module Mactag
     #     rails :except => :actionmailer, :version => "2.3.4"
     #   do
     class Rails
+      
+      include Versioned
 
       VENDOR = File.join("vendor", "rails")
 
@@ -101,15 +105,7 @@ module Mactag
           if version = @options[:version]
             top = "#{top}-#{version}"
           else
-            versions = Dir.glob(File.join(Mactag::Config.gem_home, "#{top}-*"))
-
-            if versions.size == 1
-              top = versions.first
-            else
-              top = versions.sort.last
-            end
-
-            top = File.basename(top)
+            top = File.basename(latest(top))
           end
           paths[0] = top
         end

@@ -1,3 +1,5 @@
+require 'mactag/tag/versioned'
+
 module Mactag
   module Tag
     
@@ -19,6 +21,8 @@ module Mactag
     #   do
     class Gem
 
+      include Versioned
+      
       def initialize(*gems)
         @options = gems.extract_options!
         @gems = gems.blank? ? ::Rails.configuration.gems.collect(&:name) : gems
@@ -29,12 +33,7 @@ module Mactag
           if version = @options[:version]
             gem = File.join(Mactag::Config.gem_home, "#{gem}-#{version}")
           else
-            versions = Dir.glob(File.join(Mactag::Config.gem_home, "#{gem}*"))
-            if versions.size == 1
-              gem = versions.first
-            else
-              gem = versions.sort.last
-            end
+            gem = latest(gem)
           end
 
           File.join(gem, "lib", "**", "*.rb")
