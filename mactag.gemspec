@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mactag}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johan Andersson"]
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
      "lib/mactag/tag/parser.rb",
      "lib/mactag/tag/plugin.rb",
      "lib/mactag/tag/rails.rb",
+     "lib/mactag/tag/versioned.rb",
      "lib/mactag/tasks.rb",
      "tasks/mactag_tasks.rake"
   ]
