@@ -13,9 +13,23 @@ that you are using *Exuberant Ctags* and not some other version.
 
 # Installation
 
-Install it as a plugin:
+## Plugin
+
+Install the plugin:
 
     $ ./script/plugin install git://github.com/rejeep/mactag.git
+
+## Gem
+
+Install the gem:
+
+    $ sudo gem install mactag
+
+If you install mactag as a gem you must also include it's rake tasks in your *Rakefile*.
+
+    require 'mactag/tasks'
+
+# Configuration
 
 Generate a basic configuration file:
 
@@ -24,14 +38,12 @@ Generate a basic configuration file:
 This will create the file **config/mactag.rb**, which contains
 some examples of how to set it up.
 
-You might also want to ignore the plugin and the config file. It's not
-really something that should be in the code base.
+## Options
 
-# Configuration
 * **Mactag::Config.gem_home:** The path where the gems are located. Defaults to **/usr/lib/ruby/gems/1.8/gems**
 * **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **ctags -o TAGS -e**
 
-# Example mactag.rb file
+## Example mactag.rb file
     Mactag::Config.gem_home = "/usr/lib/ruby/gems/1.9/gems"
     Mactag::Config.binary = "etags -o TAGS"
 
