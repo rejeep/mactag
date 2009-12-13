@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johan Andersson"]
-  s.date = %q{2009-12-12}
+  s.date = %q{2009-12-13}
   s.description = %q{Mactag is DSL in ruby for creating a Ctags-file for Rails projects}
   s.email = %q{johan.rejeep@gmail.com}
   s.extra_rdoc_files = [
