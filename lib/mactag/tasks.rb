@@ -1,10 +1,8 @@
-Rake::Task[:environment].invoke
+task :environment
 
-require 'mactag'
+desc "Creates a Ctags file"
+task :mactag => :environment do
+  require File.join(Rails.root, "config", "mactag")
 
-require File.join(Rails.root, "config", "mactag")
-
-desc "Creates an Ctags file"
-task :mactag do
   system "cd #{Rails.root} && #{Mactag::Config.binary} #{Mactag::Table.tags}"
 end
