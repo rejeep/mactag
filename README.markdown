@@ -1,9 +1,9 @@
 # Mactag
 
 Mactag is a plugin for Rails developers that do their development in
-an editor that supports Ctags (Emacs, Vim, jEdit, ...). With Ctags
-you can follow tags (of functions, variables, macros, whatever) to
-their definitions.
+an editor that supports Ctags (Emacs, Vim, TextMate, jEdit, ...). With
+Ctags you can follow tags (of functions, variables, macros, whatever)
+to their definitions.
 
 # Exuberant Ctags
 First off you must install [Ctags](http://ctags.sourceforge.net/).
