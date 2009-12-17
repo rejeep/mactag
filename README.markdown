@@ -60,7 +60,7 @@ some examples of how to set it up.
 
 # Usage
 
-To create the TAGS file. Simpy run:
+To create the TAGS file. Simply run:
     $ rake mactag
 
 # License
