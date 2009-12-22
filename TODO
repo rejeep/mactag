@@ -1,0 +1,4 @@
+-*- mode: Org -*-
+
+* Bugs [0/1]
+  - [ ] Using config.gem 'mactag' only works in environment.rb file, not in environments/*.rb
