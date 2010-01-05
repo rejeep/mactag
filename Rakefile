@@ -1,17 +1,6 @@
 require 'rake'
 require 'rake/testtask'
-
-task :default => :test
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
-
-task :features do
-  system "cucumber features"
-end
+require 'cucumber/rake/task'
 
 begin
   require 'jeweler'
@@ -39,3 +28,16 @@ begin
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install jeweler"
 end
+
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
+
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "features --format progress"
+end
+
+task :default => [:test, :features]
