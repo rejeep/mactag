@@ -9,8 +9,13 @@ Feature: Tag Rails as a Gem
     
   Scenario: Tag all packages
     Given rails is installed as a gem
-    And a rails mactag config with the following tags
-    | tag |
+    And a mactag config file with this contents:
+      """
+      Mactag::Config.gem_home = File.join("vendor", "rails-temp")
+      Mactag::Table.generate do
+        rails
+      end
+      """
     When I create the tags file
     Then the tags file should contain "diff"
     And the tags file should contain "get"
@@ -21,10 +26,13 @@ Feature: Tag Rails as a Gem
     
   Scenario: Tag only some packages
     Given rails is installed as a gem
-    And a rails mactag config with the following tags
-    | only          |
-    | activerecord  |
-    | activesupport |
+    And a mactag config file with this contents:
+      """
+      Mactag::Config.gem_home = File.join("vendor", "rails-temp")
+      Mactag::Table.generate do
+        rails :only => %w[activerecord activesupport]
+      end
+      """
     When I create the tags file
     Then the tags file should contain "diff"
     And the tags file should contain "has_many"
@@ -35,10 +43,13 @@ Feature: Tag Rails as a Gem
 
   Scenario: Tag all except some packages
     Given rails is installed as a gem
-    And a rails mactag config with the following tags
-    | except            |
-    | actioncontroller  |
-    | actionview        |
+    And a mactag config file with this contents:
+      """
+      Mactag::Config.gem_home = File.join("vendor", "rails-temp")
+      Mactag::Table.generate do
+        rails :except => %w[actioncontroller actionview]
+      end
+      """
     When I create the tags file
     Then the tags file should contain "diff"
     And the tags file should contain "has_many"
@@ -50,9 +61,13 @@ Feature: Tag Rails as a Gem
   Scenario: Tag specific version
     Given rails version "3.0.0" is installed as a gem
     And rails version "2.3.5" is installed as a gem
-    And a rails mactag config with the following tags
-    | version |
-    |   3.0.0 |
+    And a mactag config file with this contents:
+      """
+      Mactag::Config.gem_home = File.join("vendor", "rails-temp")
+      Mactag::Table.generate do
+        rails :version => "3.0.0"
+      end
+      """
     When I create the tags file
     Then the tags file should contain "3.0.0"
     And the tags file should not contain "2.3.5"
@@ -61,8 +76,13 @@ Feature: Tag Rails as a Gem
     Given rails version "3.0.0" is installed as a gem
     And rails version "2.3.5" is installed as a gem
     And rails version "2.3.2" is installed as a gem
-    And a rails mactag config with the following tags
-    | tag |
+    And a mactag config file with this contents:
+      """
+      Mactag::Config.gem_home = File.join("vendor", "rails-temp")
+      Mactag::Table.generate do
+        rails
+      end
+      """
     When I create the tags file
     Then the tags file should contain "3.0.0"
     And the tags file should not contain "2.3.2"

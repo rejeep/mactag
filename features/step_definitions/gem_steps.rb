@@ -20,21 +20,3 @@ Given /^an acts as method for the "([^\"]*)" gem$/ do |gem|
     eos
   end
 end
-
-Given /^a gem mactag config with the following tags$/ do |table|
-  if version = table.hashes.first["version"]
-    tags = "#{table.hashes.first["tag"].quote}, :version => #{version.quote}"
-  else
-    tags = table.rows.flatten.collect(&:quote).join(", ")
-  end
-
-  @app.puts "config/mactag.rb" do
-    <<-eos
-      Mactag::Config.gem_home = File.join("vendor", "gems")
-
-      Mactag::Table.generate do
-        gems #{tags}
-      end
-    eos
-  end
-end

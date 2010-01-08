@@ -12,10 +12,10 @@ class RailsApp
     FileUtils.rm_rf(rails_root)
   end
 
-  def puts(file, &block)
+  def puts(file, contents = nil, &block)
     file = File.join(rails_root, file)
-    contents = block_given? ? instance_eval(&block) : ""
-    File.open(file, "a") { |f| f.write(contents) }
+    text = contents || (block_given? ? instance_eval(&block) : "")
+    File.open(file, "a") { |f| f.write(text) }
   end
 
   def install_plugin(plugin)

@@ -20,15 +20,3 @@ Given /^an acts as method for the "([^\"]*)" plugin$/ do |plugin|
     eos
   end
 end
-
-Given /^a plugin mactag config with the following tags$/ do |table|
-  tags = table.rows.flatten.collect(&:quote).join(", ")
-
-  @app.puts "config/mactag.rb" do
-    <<-eos
-      Mactag::Table.generate do
-        plugins #{tags}
-      end
-    eos
-  end
-end

@@ -9,8 +9,13 @@ Feature: Tag Rails in vendor
     And rails lives in vendor
 
   Scenario: Tag all packages
-    Given a rails mactag config with the following tags
-    | tag |
+    Given a mactag config file with this contents:
+      """
+      Mactag::Config.gem_home = File.join("vendor", "rails-temp")
+      Mactag::Table.generate do
+        rails
+      end
+      """
     When I create the tags file
     Then the tags file should contain "diff"
     And the tags file should contain "get"
@@ -20,10 +25,13 @@ Feature: Tag Rails in vendor
     And the tags file should contain "form_tag"
     
   Scenario: Tag only some packages
-    Given a rails mactag config with the following tags
-    | only           |
-    | activerecord   |
-    | active_support |
+    Given a mactag config file with this contents:
+      """
+      Mactag::Config.gem_home = File.join("vendor", "rails-temp")
+      Mactag::Table.generate do
+        rails :only => %w[activerecord active_support]
+      end
+      """
     When I create the tags file
     Then the tags file should contain "diff"
     And the tags file should contain "has_many"
@@ -33,10 +41,13 @@ Feature: Tag Rails in vendor
     And the tags file should not contain "form_tag"
 
   Scenario: Tag all except some packages
-    Given a rails mactag config with the following tags
-    | except            |
-    | action_controller |
-    | actionview        |
+    Given a mactag config file with this contents:
+      """
+      Mactag::Config.gem_home = File.join("vendor", "rails-temp")
+      Mactag::Table.generate do
+        rails :except => %w[action_controller actionview]
+      end
+      """
     When I create the tags file
     Then the tags file should contain "diff"
     And the tags file should contain "has_many"

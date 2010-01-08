@@ -14,6 +14,10 @@ Given /^mactag is installed$/ do
   end
 end
 
+Given /^a mactag config file with this contents:$/ do |contents|
+  @app.puts "config/mactag.rb", contents
+end
+
 Given /^a javascript function "([^\"]*)" in "([^\"]*)"$/ do |function, file|
   @app.puts "public/javascripts/#{file}.js" do
     <<-eos

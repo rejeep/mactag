@@ -10,9 +10,12 @@ Feature: Tag Plugins
   Scenario: Tag single plugin
     Given the plugin "superduper" is installed
     And an acts as method for the "superduper" plugin
-    And a plugin mactag config with the following tags
-    | tag        |
-    | superduper |
+    And a mactag config file with this contents:
+      """
+      Mactag::Table.generate do
+        plugin "superduper"
+      end
+      """
     When I create the tags file
     Then the tags file should contain "acts_as_superduper"
 
@@ -21,10 +24,12 @@ Feature: Tag Plugins
     And the plugin "dunder" is installed
     And an acts as method for the "superduper" plugin
     And an acts as method for the "dunder" plugin
-    And a plugin mactag config with the following tags
-    | tag        |
-    | superduper |
-    | dunder     |
+    And a mactag config file with this contents:
+      """
+      Mactag::Table.generate do
+        plugin "superduper", "dunder"
+      end
+      """
     When I create the tags file
     Then the tags file should contain "acts_as_superduper"
     Then the tags file should contain "acts_as_dunder"
@@ -34,8 +39,12 @@ Feature: Tag Plugins
     And the plugin "dunder" is installed
     And an acts as method for the "superduper" plugin
     And an acts as method for the "dunder" plugin
-    And a plugin mactag config with the following tags
-    | tag |
+    And a mactag config file with this contents:
+      """
+      Mactag::Table.generate do
+        plugins
+      end
+      """
     When I create the tags file
     Then the tags file should contain "acts_as_superduper"
     Then the tags file should contain "acts_as_dunder"

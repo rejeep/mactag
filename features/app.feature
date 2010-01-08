@@ -9,27 +9,36 @@ Feature: Tag application files
     
   Scenario: Tag single file
     Given a javascript function "show" in "whitebox"
-    And an app mactag config with the following tags
-    | tag                            |
-    | public/javascripts/whitebox.js |
+    And a mactag config file with this contents:
+      """
+      Mactag::Table.generate do
+        app "public/javascripts/whitebox.js"
+      end
+      """
     When I create the tags file
     Then the tags file should contain "show"
 
   Scenario: Tag multiple files
     Given a javascript function "hide" in "whitebox"
     And a ruby method "to_s" in the "user" model
-    And an app mactag config with the following tags
-    | tag                            |
-    | public/javascripts/whitebox.js |
-    | app/models/user.rb             |
+    And a mactag config file with this contents:
+      """
+      Mactag::Table.generate do
+        app "public/javascripts/whitebox.js"
+        app "app/models/user.rb"
+      end
+      """
     When I create the tags file
     Then the tags file should contain "hide"
     And the tags file should contain "to_s"
 
   Scenario: Tag files recursive
     Given a ruby method "kill!" in the "user" model
-    And an app mactag config with the following tags
-    | tag         |
-    | app/**/*.rb |
+    And a mactag config file with this contents:
+      """
+      Mactag::Table.generate do
+        app "app/**/*.rb"
+      end
+      """
     When I create the tags file
     Then the tags file should contain "kill!"
