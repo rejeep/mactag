@@ -35,8 +35,8 @@ Generate a basic configuration file:
 
     $ ./script/generate mactag
 
-This will create the file **config/mactag.rb**, which contains
-some examples of how to set it up.
+This will create the file **config/mactag.rb**, which contains some
+examples of how to configure Mactag.
 
 ## Options
 
