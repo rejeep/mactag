@@ -5,38 +5,64 @@ an editor that supports Ctags (Emacs, Vim, TextMate, jEdit, ...). With
 Ctags you can follow tags (of functions, variables, macros, whatever)
 to their definitions.
 
+
 # Exuberant Ctags
 First off you must install [Ctags](http://ctags.sourceforge.net/).
 Some systems comes with a ctags command already. If you have the ctags
 executable, but have problems creating the tags file. Then make sure
 that you are using **Exuberant Ctags** and not some other version.
 
+
 # Installation
 
-## Plugin
+## Rails 2.x
+Version 0.0.3 is the latest version supporting Rails 2.x.
 
+### Plugin
 Install the plugin:
+    $ ./script/plugin install git://github.com/rejeep/mactag.git --revision 'tags/0.0.3'
 
-    $ ./script/plugin install git://github.com/rejeep/mactag.git
-
-## Gem
-
+### Gem
 Install the gem:
+    $ sudo gem install mactag --version='0.0.3'
+    
+Load the gem in **config/environments/development.rb**:
+    config.gem 'mactag'
 
-    $ sudo gem install mactag
+## Rails 3.x
+Version 0.1.0 is the only version supporting Rails 3.x.
 
-If you install mactag as a gem you must also include it's rake tasks in your *Rakefile*.
+### Plugin
+Install the plugin:
+    $ rails plugin install git://github.com/rejeep/mactag.git --revision 'rails3'
 
+### Gem
+Install the gem:
+    $ sudo gem install mactag --version='0.1.0'
+    
+Load the gem in **Gemfile**:
+    group :development do
+      gem 'mactag'
+    end
+
+## Note when installing as Gem
+When you install mactag as a gem you must also include it's rake tasks
+in your *Rakefile*.
     require 'mactag/tasks'
+    
 
 # Configuration
-
 Generate a basic configuration file:
 
+## Rails 2.x
     $ ./script/generate mactag
+    
+## Rails 3.x
+    $ rails generate mactag
 
 This will create the file **config/mactag.rb**, which contains
 some examples of how to set it up.
+
 
 ## Options
 
@@ -58,11 +84,11 @@ some examples of how to set it up.
       rails :except => :actionmailer, :version => "2.3.5"
     end
 
-# Usage
 
+# Usage
 To create the TAGS file. Simply run:
     $ rake mactag
 
-# License
 
+# License
 Copyright (c) 2010 Johan Andersson, released under the MIT license
