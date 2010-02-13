@@ -15,7 +15,7 @@ begin
                              "lib/**/*.rb",
                              "LICENCE",
                              "README.markdown",
-                             "tasks/**/*.rake",
+                             "lib/tasks/*.rake",
                              "lib/generators/**/*.rb",
                              "VERSION"
                             ]
