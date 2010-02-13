@@ -7,7 +7,7 @@ Given /^mactag is installed$/ do
 
   FileUtils.mkdir_p(mactag)
 
-  [ "lib", "tasks", "Rakefile", "init.rb" ].each do |name|
+  [ "lib", "Rakefile", "init.rb" ].each do |name|
     file = File.join(File.dirname(__FILE__), "..", "..", name)
 
     FileUtils.cp_r(file, mactag)
