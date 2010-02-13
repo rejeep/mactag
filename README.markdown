@@ -47,7 +47,7 @@ Load the gem in **Gemfile**:
 
 ## Note when installing as Gem
 When you install mactag as a gem you must also include it's rake tasks
-in your *Rakefile*.
+in your **Rakefile**.
     require 'mactag/tasks'
     
 
