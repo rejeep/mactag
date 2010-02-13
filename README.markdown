@@ -44,7 +44,7 @@ examples of how to configure Mactag.
 * **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **ctags -o TAGS -e**
 
 ## Example mactag.rb file
-    Mactag::Config.gem_home = "/usr/lib/ruby/gems/1.9/gems"
+    Mactag::Config.gem_home = "/usr/lib/ruby/gems/1.8/gems"
     Mactag::Config.binary = "etags -o TAGS"
 
     Mactag::Table.generate do
