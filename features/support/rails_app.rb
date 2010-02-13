@@ -19,7 +19,7 @@ class RailsApp
   end
 
   def install_plugin(plugin)
-    system "cd #{rails_root} && ./script/generate plugin #{plugin} &> /dev/null"
+    system "cd #{rails_root} && rails generate plugin #{plugin} &> /dev/null"
   end
 
   def install_gem(gem, version)
