@@ -40,7 +40,7 @@ some examples of how to set it up.
 
 ## Options
 
-* **Mactag::Config.gem_home:** The path where the gems are located. Defaults to **/usr/lib/ruby/gems/1.8/gems**
+* **Mactag::Config.gem_home:** The path where the gems are located. Defaults to **/Library/Ruby/Gems/1.8/gems**
 * **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **ctags -o TAGS -e**
 
 ## Example mactag.rb file
