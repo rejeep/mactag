@@ -2,3 +2,7 @@
 
 * Bugs [0/1]
   - [ ] Using config.gem 'mactag' only works in environment.rb file, not in environments/*.rb
+* Feedback [0/1]
+  - [ ] Give user feedback if a plugin or gem does not exist
+* Other [0/1]
+  - [ ] In generator script, add binary and gem_home examples
