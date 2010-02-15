@@ -20,7 +20,7 @@ Version 0.0.3 is the latest version supporting Rails 2.x.
 
 ### Plugin
 Install the plugin:
-    $ ./script/plugin install git://github.com/rejeep/mactag.git --revision 'tags/0.0.3'
+    $ ./script/plugin install git://github.com/rejeep/mactag.git --revision 'tags/v0.0.3'
 
 ### Gem
 Install the gem:
@@ -34,7 +34,7 @@ Version 0.1.0 is the only version supporting Rails 3.x.
 
 ### Plugin
 Install the plugin:
-    $ rails plugin install git://github.com/rejeep/mactag.git --revision 'rails3'
+    $ rails plugin install git://github.com/rejeep/mactag.git --revision 'tags/v0.1.0'
 
 ### Gem
 Install the gem:
