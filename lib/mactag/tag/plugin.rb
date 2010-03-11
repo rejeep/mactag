@@ -23,7 +23,11 @@ module Mactag
         return File.join(PLUGIN_PATH, "*", "lib", "**", "*.rb") if @plugins.empty?
 
         @plugins.collect do |plugin|
-          File.join(PLUGIN_PATH, plugin, "lib", "**", "*.rb")
+          if plugin
+            File.join(PLUGIN_PATH, plugin, "lib", "**", "*.rb")
+          else
+            $stderr.puts "Plugin #{plugin} not found"
+          end
         end
       end
       
