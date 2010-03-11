@@ -1,6 +1,6 @@
 module Mactag
   module Tag
-    
+
     # Tag for the current project plugins.
     #
     # ==== Examples
@@ -12,25 +12,27 @@ module Mactag
     #     plugins "thinking-sphinx", "formtastic"
     #   do
     class Plugin
-      
+
       PLUGIN_PATH = File.join("vendor", "plugins")
-      
+
       def initialize(*plugins)
         @plugins = plugins
       end
-      
+
       def files
         return File.join(PLUGIN_PATH, "*", "lib", "**", "*.rb") if @plugins.empty?
 
-        @plugins.collect do |plugin|
-          if plugin
-            File.join(PLUGIN_PATH, plugin, "lib", "**", "*.rb")
+        result = []
+        @plugins.each do |plugin|
+          if File.exist?(File.join(PLUGIN_PATH, plugin))
+            result << File.join(PLUGIN_PATH, plugin, "lib", "**", "*.rb")
           else
             $stderr.puts "Plugin #{plugin} not found"
           end
         end
+        result
       end
-      
+
     end
   end
 end

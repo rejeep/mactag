@@ -30,19 +30,21 @@ module Mactag
       end
 
       def files
-        @gems.collect do |gem_name|
+        result = []
+        @gems.each do |gem_name|
           if version = @options[:version]
             gem = File.join(Mactag::Config.gem_home, "#{gem_name}-#{version}")
           else
             gem = latest(gem_name)
           end
-          
+
           if gem
-            File.join(gem, "lib", "**", "*.rb")
+            result << File.join(gem, "lib", "**", "*.rb")
           else
             $stderr.puts "Gem #{gem_name} not found"
           end
         end
+        result
       end
 
     end
