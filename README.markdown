@@ -30,15 +30,15 @@ Load the gem in **config/environments/development.rb**:
     config.gem 'mactag'
 
 ## Rails 3.x
-Version 0.1.0 is the only version supporting Rails 3.x.
+Version 0.1.1 is the only version supporting Rails 3.x.
 
 ### Plugin
 Install the plugin:
-    $ rails plugin install git://github.com/rejeep/mactag.git --revision 'tags/v0.1.0'
+    $ rails plugin install git://github.com/rejeep/mactag.git --revision 'tags/v0.1.1'
 
 ### Gem
 Install the gem:
-    $ sudo gem install mactag --version='0.1.0'
+    $ sudo gem install mactag --version='0.1.1'
     
 Load the gem in **Gemfile**:
     group :development do
