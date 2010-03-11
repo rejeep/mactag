@@ -47,7 +47,9 @@ class GemTest < ActiveSupport::TestCase
     end
 
     should "not raise exception because no such gem" do
-      assert_nothing_raised { @gem.files }
+      assert_nothing_raised do
+        assert_equal [], @gem.files
+      end
     end
   end
 
