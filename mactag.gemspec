@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mactag}
-  s.version = "0.1.0"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johan Andersson"]
-  s.date = %q{2010-02-13}
+  s.date = %q{2010-03-11}
   s.description = %q{Mactag is DSL in ruby for creating a Ctags-file for Rails projects}
   s.email = %q{johan.rejeep@gmail.com}
   s.extra_rdoc_files = [
@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/rejeep/mactag}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Ctags for Rails}
   s.test_files = [
     "features/app.feature",
@@ -77,7 +77,6 @@ Gem::Specification.new do |s|
      "features/step_definitions/gem_steps.rb",
      "features/step_definitions/mactab_steps.rb",
      "features/support",
-     "features/support/core_ext.rb",
      "features/support/tags_file.rb",
      "features/support/env.rb",
      "features/support/rails_app.rb",
