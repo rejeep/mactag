@@ -16,15 +16,15 @@ that you are using **Exuberant Ctags** and not some other version.
 # Installation
 
 ## Rails 2.x
-Version 0.0.4 is the latest version supporting Rails 2.x.
+Version 0.0.5 is the latest version supporting Rails 2.x.
 
 ### Plugin
 Install the plugin:
-    $ ./script/plugin install git://github.com/rejeep/mactag.git --revision 'tags/v0.0.4'
+    $ ./script/plugin install git://github.com/rejeep/mactag.git --revision 'tags/v0.0.5'
 
 ### Gem
 Install the gem:
-    $ sudo gem install mactag --version='0.0.4'
+    $ sudo gem install mactag --version='0.0.5'
     
 Load the gem in **config/environments/development.rb**:
     config.gem 'mactag'
