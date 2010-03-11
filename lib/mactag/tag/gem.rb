@@ -1,8 +1,9 @@
 require 'mactag/tag/versioned'
 
+
 module Mactag
   module Tag
-    
+
     # Tag for gems.
     #
     # ==== Examples
@@ -22,21 +23,25 @@ module Mactag
     class Gem
 
       include Versioned
-      
+
       def initialize(*gems)
         @options = gems.extract_options!
         @gems = gems.blank? ? ::Rails.configuration.gems.collect(&:name) : gems
       end
 
       def files
-        @gems.collect do |gem|
+        @gems.collect do |gem_name|
           if version = @options[:version]
-            gem = File.join(Mactag::Config.gem_home, "#{gem}-#{version}")
+            gem = File.join(Mactag::Config.gem_home, "#{gem_name}-#{version}")
           else
-            gem = latest(gem)
+            gem = latest(gem_name)
           end
-
-          File.join(gem, "lib", "**", "*.rb")
+          
+          if gem
+            File.join(gem, "lib", "**", "*.rb")
+          else
+            $stderr.puts "Gem #{gem_name} not found"
+          end
         end
       end
 
