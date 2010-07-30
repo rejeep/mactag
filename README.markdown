@@ -7,7 +7,7 @@ to their definitions.
 
 
 # Exuberant Ctags
-First off you must install [Ctags](http://ctags.sourceforge.net/).
+First off, you must install [Ctags](http://ctags.sourceforge.net/).
 Some systems comes with a ctags command already. If you have the ctags
 executable, but have problems creating the tags file. Then make sure
 that you are using **Exuberant Ctags** and not some other version.
@@ -24,29 +24,31 @@ Install the plugin:
 
 ### Gem
 Install the gem:
-    $ sudo gem install mactag --version='0.0.5'
+    $ gem install mactag --version='0.0.5'
     
 Load the gem in **config/environments/development.rb**:
     config.gem 'mactag'
 
+
 ## Rails 3.x
-Version 0.1.1 is the only version supporting Rails 3.x.
+Version 0.1.1 is the latest version supporting Rails 3.x.
 
 ### Plugin
 Install the plugin:
-    $ rails plugin install git://github.com/rejeep/mactag.git --revision 'tags/v0.1.1'
+    $ rails plugin install git://github.com/rejeep/mactag.git
 
 ### Gem
 Install the gem:
-    $ sudo gem install mactag --version='0.1.1'
+    $ gem install mactag
     
 Load the gem in **Gemfile**:
     group :development do
-      gem 'mactag'
+      gem 'mactag', '0.1.1'
     end
 
-## Note when installing as Gem
-When you install mactag as a gem you must also include it's rake tasks
+
+## When installing as Gem
+When you install Mactag as a gem you must also include it's rake tasks
 in your **Rakefile**.
     require 'mactag/tasks'
     
@@ -69,18 +71,18 @@ examples of how to configure Mactag.
 * **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **ctags -o TAGS -e**
 
 ## Example mactag.rb file
-    Mactag::Config.gem_home = "/usr/lib/ruby/gems/1.8/gems"
-    Mactag::Config.binary = "etags -o TAGS"
+    Mactag::Config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
+    Mactag::Config.binary = 'etags -o TAGS'
 
     Mactag::Table.generate do
-      app "app/**/*.rb", "lib/*.rb"
+      app 'app/**/*.rb', 'lib/*.rb'
 
-      plugins "thinking-sphinx", "whenever"
+      plugins 'thinking-sphinx', 'whenever'
 
-      gems "paperclip", "authlogic"
-      gem "formtastic", :version => "0.9.7"
+      gems 'paperclip', 'authlogic'
+      gem 'formtastic', :version => '0.9.7'
 
-      rails :except => :actionmailer, :version => "2.3.5"
+      rails :except => :actionmailer, :version => '2.3.5'
     end
 
 
