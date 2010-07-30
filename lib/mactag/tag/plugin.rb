@@ -1,38 +1,41 @@
 module Mactag
   module Tag
-
-    # Tag for the current project plugins.
+    ##
+    #
+    # Tags plugins in current Rails application.
     #
     # ==== Examples
     #   Mactag::Table.generate do
-    #     # Tag the whenever plugin
-    #     plugin "whenever"
+    #     # Tag single plugin
+    #     plugin 'whenever'
     #
-    #     # Tag the thinking-sphinx and formtastic plugins
-    #     plugins "thinking-sphinx", "formtastic"
+    #     # Tag multiple plugins
+    #     plugins 'thinking-sphinx', 'formtastic'
+    #
+    #     # Tag all plugins
+    #     plugins
     #   do
+    #
     class Plugin
-
-      PLUGIN_PATH = File.join("vendor", "plugins")
+      PLUGIN_PATH = File.join('vendor', 'plugins')
 
       def initialize(*plugins)
         @plugins = plugins
       end
 
       def files
-        return File.join(PLUGIN_PATH, "*", "lib", "**", "*.rb") if @plugins.empty?
+        return File.join(PLUGIN_PATH, '*', 'lib', '**', '*.rb') if @plugins.empty?
 
         result = []
         @plugins.each do |plugin|
           if File.exist?(File.join(PLUGIN_PATH, plugin))
-            result << File.join(PLUGIN_PATH, plugin, "lib", "**", "*.rb")
+            result << File.join(PLUGIN_PATH, plugin, 'lib', '**', '*.rb')
           else
-            $stderr.puts "Plugin #{plugin} not found"
+            Mactag.warn "Plugin #{plugin} not found"
           end
         end
         result
       end
-
     end
   end
 end

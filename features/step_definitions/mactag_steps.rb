@@ -25,6 +25,11 @@ end
 Then /^"([^"]*)" should be tagged$/ do |definition|
   assert @tags.include?(definition)
 end
+
+Given /^the plugin "([^"]*)" is installed$/ do |plugin|
+  @app.install_plugin(plugin)
+end
+
 Given /^file "([^"]*)" with contents:$/ do |file, contents|
   @app.inject file, contents
 end

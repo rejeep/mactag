@@ -1,7 +1,7 @@
 Feature: Tag Plugins
   In order to create a TAGS file
   As a user
-  I want to tag plugins
+  I want to tag application plugins
 
   Background:
     Given a Rails application
@@ -9,42 +9,107 @@ Feature: Tag Plugins
   
   Scenario: Tag single plugin
     Given the plugin "superduper" is installed
-    And an acts as method for the "superduper" plugin
-    And a mactag config file with this contents:
+    And file "vendor/plugins/superduper/lib/superduper.rb" with contents:
+      """
+      class SuperDuper
+        def i_really_am
+          # ...
+        end
+      end
+      """
+    And this mactag config file:
       """
       Mactag::Table.generate do
-        plugin "superduper"
+        plugin 'superduper'
       end
       """
     When I create the tags file
-    Then the tags file should contain "acts_as_superduper"
-
-  Scenario: Tag multiple plugins
+    Then "i_really_am" should be tagged
+  
+  Scenario: Tag multiple plugins different calls
     Given the plugin "superduper" is installed
-    And the plugin "dunder" is installed
-    And an acts as method for the "superduper" plugin
-    And an acts as method for the "dunder" plugin
-    And a mactag config file with this contents:
+    Given the plugin "dunder" is installed
+    And file "vendor/plugins/superduper/lib/superduper.rb" with contents:
+      """
+      class SuperDuper
+        def i_really_am
+          # ...
+        end
+      end
+      """
+    And file "vendor/plugins/dunder/lib/dunder.rb" with contents:
+      """
+      class Dunder
+        def and_brak
+          # ...
+        end
+      end
+      """
+    And this mactag config file:
       """
       Mactag::Table.generate do
-        plugin "superduper", "dunder"
+        plugin 'superduper'
+        plugin 'dunder'
       end
       """
     When I create the tags file
-    Then the tags file should contain "acts_as_superduper"
-    Then the tags file should contain "acts_as_dunder"
-
+    Then "i_really_am" should be tagged
+    Then "and_brak" should be tagged
+  
+  Scenario: Tag multiple plugins same call
+    Given the plugin "superduper" is installed
+    Given the plugin "dunder" is installed
+    And file "vendor/plugins/superduper/lib/superduper.rb" with contents:
+      """
+      class SuperDuper
+        def i_really_am
+          # ...
+        end
+      end
+      """
+    And file "vendor/plugins/dunder/lib/dunder.rb" with contents:
+      """
+      class Dunder
+        def and_brak
+          # ...
+        end
+      end
+      """
+    And this mactag config file:
+      """
+      Mactag::Table.generate do
+        plugins 'superduper', 'dunder'
+      end
+      """
+    When I create the tags file
+    Then "i_really_am" should be tagged
+    Then "and_brak" should be tagged
+    
   Scenario: Tag all plugins
     Given the plugin "superduper" is installed
-    And the plugin "dunder" is installed
-    And an acts as method for the "superduper" plugin
-    And an acts as method for the "dunder" plugin
-    And a mactag config file with this contents:
+    Given the plugin "dunder" is installed
+    And file "vendor/plugins/superduper/lib/superduper.rb" with contents:
+      """
+      class SuperDuper
+        def i_really_am
+          # ...
+        end
+      end
+      """
+    And file "vendor/plugins/dunder/lib/dunder.rb" with contents:
+      """
+      class Dunder
+        def and_brak
+          # ...
+        end
+      end
+      """
+    And this mactag config file:
       """
       Mactag::Table.generate do
         plugins
       end
       """
     When I create the tags file
-    Then the tags file should contain "acts_as_superduper"
-    Then the tags file should contain "acts_as_dunder"
+    Then "i_really_am" should be tagged
+    Then "and_brak" should be tagged
