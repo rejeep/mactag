@@ -5,8 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mactag}
-  s.version = "0.0.5"
-
+  s.version = "0.1.1"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johan Andersson"]
   s.date = %q{2010-03-11}
@@ -19,8 +18,8 @@ Gem::Specification.new do |s|
   s.files = [
     "README.markdown",
      "VERSION",
-     "generators/mactag/mactag_generator.rb",
-     "generators/mactag/templates/mactag.rb",
+     "lib/generators/mactag/mactag_generator.rb",
+     "lib/generators/mactag/templates/mactag.rb",
      "lib/mactag.rb",
      "lib/mactag/config.rb",
      "lib/mactag/table.rb",
@@ -31,8 +30,7 @@ Gem::Specification.new do |s|
      "lib/mactag/tag/plugin.rb",
      "lib/mactag/tag/rails.rb",
      "lib/mactag/tag/versioned.rb",
-     "lib/mactag/tasks.rb",
-     "tasks/mactag_tasks.rake"
+     "lib/tasks/mactag.rake"
   ]
   s.homepage = %q{http://github.com/rejeep/mactag}
   s.rdoc_options = ["--charset=UTF-8"]

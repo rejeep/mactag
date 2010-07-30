@@ -60,17 +60,16 @@ Generate a basic configuration file:
 ## Rails 3.x
     $ rails generate mactag
 
-This will create the file **config/mactag.rb**, which contains
-some examples of how to set it up.
-
+This will create the file **config/mactag.rb**, which contains some
+examples of how to configure Mactag.
 
 ## Options
 
-* **Mactag::Config.gem_home:** The path where the gems are located. Defaults to **/usr/lib/ruby/gems/1.8/gems**
+* **Mactag::Config.gem_home:** The path where the gems are located. Defaults to **/Library/Ruby/Gems/1.8/gems**
 * **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **ctags -o TAGS -e**
 
 ## Example mactag.rb file
-    Mactag::Config.gem_home = "/usr/lib/ruby/gems/1.9/gems"
+    Mactag::Config.gem_home = "/usr/lib/ruby/gems/1.8/gems"
     Mactag::Config.binary = "etags -o TAGS"
 
     Mactag::Table.generate do

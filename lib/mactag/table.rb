@@ -9,12 +9,12 @@ module Mactag
       # ==== Example
       #   Mactag::Table.generate do
       #     app "app/**/*.rb", "lib/*.rb"
-      #    
+      #
       #     plugins "thinking-sphinx", "whenever"
-      #    
+      #
       #     gems "paperclip", "authlogic"
       #     gem "formtastic", :version => "0.9.7"
-      #    
+      #
       #     rails :except => :actionmailer, :version => "2.3.5"
       #   end
       #
@@ -38,6 +38,14 @@ module Mactag
         @@tags.collect! { |file| Dir.glob(file) }
         @@tags.uniq!
         @@tags.join(' ')
+      end
+
+      def create
+        unless File.directory?(Mactag::Config.gem_home)
+          Mactag.warn "Gem home path does not exist on your system"
+        end
+
+        system "cd #{Rails.root} && #{Mactag::Config.binary} #{Mactag::Table.tags}"
       end
     end
 
