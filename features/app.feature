@@ -8,7 +8,7 @@ Feature: Tag application files
     And mactag is installed
     
   Scenario: Tag single file
-    Given javascript file "mactag" with contents:
+    Given file "public/javascripts/mactag.js" with contents:
       """
       function mactag() {
         // ...
@@ -24,13 +24,13 @@ Feature: Tag application files
     Then "mactag" should be tagged
 
   Scenario: Tag multiple files different calls
-    Given javascript file "application" with contents:
+    Given file "public/javascripts/application.js" with contents:
       """
       function app() {
         // ...
       }
       """
-    Given javascript file "base" with contents:
+    Given file "public/javascripts/base.js" with contents:
       """
       function base() {
         // ...
@@ -48,13 +48,13 @@ Feature: Tag application files
     Then "base" should be tagged
 
   Scenario: Tag multiple files same call
-    Given javascript file "application" with contents:
+    Given file "public/javascripts/application.js" with contents:
       """
       function app() {
         // ...
       }
       """
-    Given javascript file "base" with contents:
+    Given file "public/javascripts/base.js" with contents:
       """
       function base() {
         // ...
@@ -71,13 +71,13 @@ Feature: Tag application files
     Then "base" should be tagged
     
   Scenario: Tag multiple files using asterix
-    Given javascript file "application" with contents:
+    Given file "public/javascripts/application.js" with contents:
       """
       function app() {
         // ...
       }
       """
-    Given javascript file "base" with contents:
+    Given file "public/javascripts/base.js" with contents:
       """
       function base() {
         // ...
@@ -94,7 +94,7 @@ Feature: Tag application files
     Then "base" should be tagged
 
   Scenario: Tag files recursive
-    Given javascript file "mactag" with contents:
+    Given file "public/javascripts/mactag.js" with contents:
       """
       function mactag() {
         // ...

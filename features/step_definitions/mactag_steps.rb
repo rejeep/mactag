@@ -14,11 +14,6 @@ Given /^mactag is installed$/ do
   end
 end
 
-Given /^javascript file "([^"]*)" with contents:$/ do |file, javascript|
-  @app.inject "public/javascripts/#{file}.js", javascript
-end
-
-
 Given /^this mactag config file:$/ do |config|
   @app.inject "config/mactag.rb", config
 end
@@ -29,4 +24,7 @@ end
 
 Then /^"([^"]*)" should be tagged$/ do |definition|
   assert @tags.include?(definition)
+end
+Given /^file "([^"]*)" with contents:$/ do |file, contents|
+  @app.inject file, contents
 end
