@@ -8,3 +8,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'mactag'
 
 World(Test::Unit::Assertions)
+
+After do
+  @app.destroy
+end
