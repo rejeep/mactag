@@ -13,6 +13,11 @@ class RailsApp
     FileUtils.rm_rf(root)
   end
   
+  def inject(file, contents)
+    to = File.join(root, file)
+    File.open(to, "a") { |f| f.write("#{contents}\n") }
+  end
+  
 
   private
 

@@ -10,5 +10,5 @@ require 'mactag'
 World(Test::Unit::Assertions)
 
 After do
-  @app.destroy
+  @app.destroy unless ENV['DEBUG'] == 'true'
 end
