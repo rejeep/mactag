@@ -74,9 +74,12 @@ module Mactag
         gem && File.directory?(gem)
       end
 
-      # TODO: Test
+      ##
+      #
+      # Returns all gems in this application.
+      #
       def all
-        # ::Rails.configuration.gems.collect(&:name)
+        Bundler.environment.dependencies.select { |d| d.groups.include?(:default) }.collect(&:name)
       end
     end
   end
