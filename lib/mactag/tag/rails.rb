@@ -1,4 +1,4 @@
-require 'mactag/tag/versioned'
+require 'mactag/tag/is_a_gem'
 
 module Mactag
   module Tag
@@ -40,7 +40,7 @@ module Mactag
     #   do
     class Rails
       
-      include Versioned
+      include IsAGem
 
       VENDOR = File.join("vendor", "rails")
 

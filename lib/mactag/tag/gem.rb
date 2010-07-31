@@ -1,28 +1,28 @@
-require 'mactag/tag/versioned'
-
+require 'mactag/tag/is_a_gem'
 
 module Mactag
   module Tag
-
-    # Tag for gems.
+    ##
+    #
+    # Tags ruby gems.
     #
     # ==== Examples
     #   Mactag::Table.generate do
-    #     # Tag all gems given by *Rails.configuration.gems*
+    #     # Tag all gems given by *...*
     #     gems
     #
     #     # Tag the whenever gem, latest version
-    #     gem "whenever"
+    #     gem 'whenever'
     #
     #     # Tag the thinking-sphinx and formtastic gems, latest versions
-    #     gems "thinking-sphinx", "formtastic"
+    #     gems 'thinking-sphinx', 'formtastic'
     #
-    #     # Tag the formtastic gem version 0.8.2
-    #     gem "formtastic", :version => "0.8.2"
+    #     # Tag the formtastic gem, version 0.8.2
+    #     gem 'formtastic', :version => '0.8.2'
     #   do
+    #
     class Gem
-
-      include Versioned
+      include IsAGem
 
       def initialize(*gems)
         @options = gems.extract_options!
@@ -38,15 +38,14 @@ module Mactag
             gem = latest(gem_name)
           end
 
-          if gem
+          if exists?(gem)
             result << File.join(gem, "lib", "**", "*.rb")
           else
-            $stderr.puts "Gem #{gem_name} not found"
+            Mactag.warn "Gem #{gem_name} not found"
           end
         end
         result
       end
-
     end
   end
 end

@@ -26,8 +26,16 @@ Then /^"([^"]*)" should be tagged$/ do |definition|
   assert @tags.include?(definition)
 end
 
+Then /^"([^"]*)" should not be tagged$/ do |definition|
+  assert !@tags.include?(definition)
+end
+
 Given /^the plugin "([^"]*)" is installed$/ do |plugin|
   @app.install_plugin(plugin)
+end
+
+Given /^the gem "([^"]*)" version "([^"]*)" is installed$/ do |gem, version|
+  @app.install_gem(gem, version)
 end
 
 Given /^file "([^"]*)" with contents:$/ do |file, contents|
