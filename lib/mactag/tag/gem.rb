@@ -23,6 +23,7 @@ module Mactag
       def initialize(*gems)
         if gems.blank?
           @gems = all
+          @options = {}
         else
           @gems = gems
           @options = gems.extract_options!
