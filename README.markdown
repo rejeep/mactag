@@ -67,10 +67,12 @@ examples of how to configure Mactag.
 
 ## Options
 
+* **Mactag::Config.rvm:** If true, use RVM gems. Defaults to **true**
 * **Mactag::Config.gem_home:** The path where the gems are located. Defaults to **/Library/Ruby/Gems/1.8/gems**
 * **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **ctags -o TAGS -e**
 
 ## Example mactag.rb file
+    Mactag::Config.rvm = false
     Mactag::Config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
     Mactag::Config.binary = 'etags -o TAGS'
 
