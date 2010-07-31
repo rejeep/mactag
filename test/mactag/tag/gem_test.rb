@@ -59,23 +59,23 @@ class GemTest < ActiveSupport::TestCase
     end
   end
 
-  context "#exists?" do
+  context '#exists?' do
     setup do
       @gem = Mactag::Tag::Gem.new('whatever')
     end
 
-    context "with valid gem" do
+    context 'with valid gem' do
       setup do
         File.stubs(:directory?).returns(true)
       end
 
-      should "exist" do
+      should 'exist' do
         assert @gem.send(:exists?, 'whatever')
       end
     end
     
-    context "with no gem" do
-      should "exist" do
+    context 'with no gem' do
+      should 'exist' do
         assert !@gem.send(:exists?, nil)
       end
     end
