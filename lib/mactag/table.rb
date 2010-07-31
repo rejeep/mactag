@@ -54,7 +54,7 @@ module Mactag
           Mactag.warn 'Gem home path does not exist on your system'
         end
 
-        if @@tags.empty?
+        if @@tags.collect(&:files).flatten.empty?
           Mactag.warn 'You did not specify anything to tag'
         else
           system "cd #{Rails.root} && #{Mactag::Config.binary} #{Mactag::Table.tags}"
