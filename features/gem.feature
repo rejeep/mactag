@@ -19,6 +19,7 @@ Feature: Tag Gems
       """
     And this mactag config file:
       """
+      Mactag::Config.rvm = false
       Mactag::Config.gem_home = File.join('vendor', 'gems')
       Mactag::Table.generate do
         gem 'superduper'
@@ -48,6 +49,7 @@ Feature: Tag Gems
       """
     And this mactag config file:
       """
+      Mactag::Config.rvm = false
       Mactag::Config.gem_home = File.join('vendor', 'gems')
       Mactag::Table.generate do
         gem 'superduper'
@@ -79,6 +81,7 @@ Feature: Tag Gems
       """
     And this mactag config file:
       """
+      Mactag::Config.rvm = false
       Mactag::Config.gem_home = File.join('vendor', 'gems')
       Mactag::Table.generate do
         gem 'superduper', 'dunder'
@@ -109,6 +112,7 @@ Feature: Tag Gems
       """
     And this mactag config file:
       """
+      Mactag::Config.rvm = false
       Mactag::Config.gem_home = File.join('vendor', 'gems')
       Mactag::Table.generate do
         gem 'superduper', :version => '1.0.0'
@@ -139,6 +143,7 @@ Feature: Tag Gems
       """
     And this mactag config file:
       """
+      Mactag::Config.rvm = false
       Mactag::Config.gem_home = File.join('vendor', 'gems')
       Mactag::Table.generate do
         gem 'superduper'
