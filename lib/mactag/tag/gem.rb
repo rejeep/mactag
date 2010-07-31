@@ -70,7 +70,7 @@ module Mactag
       # Returns true if +gem+ exists, false otherwise.
       #
       def exists?(gem)
-        File.directory?(gem)
+        gem && File.directory?(gem)
       end
 
       # TODO: Test

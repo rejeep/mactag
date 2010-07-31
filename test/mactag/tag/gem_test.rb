@@ -4,7 +4,7 @@ class GemTest < ActiveSupport::TestCase
   def setup
     File.stubs(:directory?).returns(true)
   end
-  
+
   context 'gem with version' do
     setup do
       Mactag::Config.stubs(:gem_home).returns('GEM_HOME')
@@ -55,6 +55,28 @@ class GemTest < ActiveSupport::TestCase
     should 'not raise exception because no such gem' do
       assert_nothing_raised do
         assert_equal [], @gem.files
+      end
+    end
+  end
+
+  context "#exists?" do
+    setup do
+      @gem = Mactag::Tag::Gem.new('whatever')
+    end
+
+    context "with valid gem" do
+      setup do
+        File.stubs(:directory?).returns(true)
+      end
+
+      should "exist" do
+        assert @gem.send(:exists?, 'whatever')
+      end
+    end
+    
+    context "with no gem" do
+      should "exist" do
+        assert !@gem.send(:exists?, nil)
       end
     end
   end
