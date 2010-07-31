@@ -1,5 +1,3 @@
-require 'mactag/tag/is_a_gem'
-
 module Mactag
   module Tag
     ##
@@ -22,11 +20,13 @@ module Mactag
     #   do
     #
     class Gem
-      include IsAGem
-
       def initialize(*gems)
-        @options = gems.extract_options!
-        @gems = gems.blank? ? ::Rails.configuration.gems.collect(&:name) : gems
+        if gems.blank?
+          @gems = all
+        else
+          @gems = gems
+          @options = gems.extract_options!
+        end
       end
 
       def files
@@ -45,6 +45,37 @@ module Mactag
           end
         end
         result
+      end
+
+
+      private
+
+      ##
+      #
+      # Returns the latest version of +gem+. If only one gem, that gem
+      # is returned.
+      #
+      def latest(gem)
+        versions = Dir.glob(File.join(Mactag::Config.gem_home, gem) + "-*")
+        if versions.size == 1
+          gem = versions.first
+        else
+          gem = versions.sort.last
+        end
+        gem
+      end
+
+      ##
+      #
+      # Returns true if +gem+ exists, false otherwise.
+      #
+      def exists?(gem)
+        File.directory?(gem)
+      end
+
+      # TODO: Test
+      def all
+        # ::Rails.configuration.gems.collect(&:name)
       end
     end
   end
