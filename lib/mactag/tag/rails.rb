@@ -1,19 +1,20 @@
-require 'mactag/tag/is_a_gem'
-
 module Mactag
   module Tag
-
-    # Tag for the Rails source.
+    ##
+    #
+    # Tags Rails gem.
     #
     # ==== Packages
-    # Naming does not matter. So *activerecord* and *active_record* are the same.
+    # Naming does not matter, so *activerecord* and *active_record* are the same.
     #
-    # * activesupport
-    # * activeresource
-    # * activerecord
     # * actionmailer
-    # * actioncontroller
-    # * actionview
+    # * actionpack
+    # * activemodel
+    # * activerecord
+    # * activeresource
+    # * railties
+    # * activesupport
+    #
     #
     # ==== Examples
     #   Mactag::Table.generate do
@@ -21,7 +22,7 @@ module Mactag
     #     rails
     #
     #     # Tag all rails packages, version 2.3.5
-    #     rails :version => "2.3.5"
+    #     rails :version => '2.3.5'
     #
     #     # Tag only activerecord, latest version
     #     rails :only => :active_record
@@ -33,25 +34,22 @@ module Mactag
     #     rails :only => [:activerecord, :action_view]
     #
     #     # Tag all packages except activerecord and actionview, latest version
-    #     rails :except => ["activerecord", :action_controller]
+    #     rails :except => ['activerecord', :action_controller]
     #
     #     # Tag all packages except actionmailer, version 2.3.4
-    #     rails :except => :actionmailer, :version => "2.3.4"
+    #     rails :except => :actionmailer, :version => '2.3.4'
     #   do
+    #
     class Rails
-      
-      include IsAGem
-
-      VENDOR = File.join("vendor", "rails")
-
-      PACKAGES = {
-        :activesupport    => ["activesupport", "active_support"],
-        :activeresource   => ["activeresource", "active_resource"],
-        :activerecord     => ["activerecord", "active_record"],
-        :actionmailer     => ["actionmailer", "action_mailer"],
-        :actioncontroller => ["actionpack", "action_controller"],
-        :actionview       => ["actionpack", "action_view"]
-      }
+      PACKAGES = [
+                  :actionmailer,
+                  :actionpack,
+                  :activemodel,
+                  :activerecord,
+                  :activeresource,
+                  :railties,
+                  :activesupport
+                 ]
 
       def initialize(options)
         @options = options
@@ -62,65 +60,44 @@ module Mactag
 
       def files
         result = []
-
         packages.each do |package|
-          path = []
-          path << rails_home
-          path << package_path(package)
-          path << "**"
-          path << "*.rb"
-          path.flatten!
-
-          result << Dir.glob(File.join(path))
+          if PACKAGES.include?(package)
+            if version = @options[:version]
+              gem = Gem.new(package.to_s, :version => version)
+            else
+              gem = Gem.new(package.to_s)
+            end
+            result << gem.files
+          end
         end
-
-        result.flatten
+        result
       end
 
 
       private
 
+      ##
+      #
+      # Returns a list of all packages that should be included.
+      #
       def packages
         result = []
-
         unless @only || @except
-          result = PACKAGES.keys
+          result = PACKAGES
         else
           if @only
             result = @only
           elsif @except
-            result = PACKAGES.keys - @except
+            result = PACKAGES - @except
           end
         end
-
         result
       end
 
-      def package_path(package)
-        paths = PACKAGES[package].dup
-        paths.insert(1, "lib")
-
-        unless Mactag::Tag::Rails.vendor?
-          top = paths.first
-          if version = @options[:version]
-            top = "#{top}-#{version}"
-          else
-            top = File.basename(latest(top))
-          end
-          paths[0] = top
-        end
-
-        File.join(paths)
-      end
-
-      def self.vendor?
-        File.exist?(VENDOR)
-      end
-
-      def rails_home
-        @rails_home ||= Mactag::Tag::Rails.vendor? ? VENDOR : Mactag::Config.gem_home
-      end
-
+      ##
+      #
+      # Packagizes all +pkgs+.
+      #
       def packagize!(pkgs)
         return nil if pkgs.blank?
 
@@ -128,7 +105,6 @@ module Mactag
           "#{pkg}".gsub(/[^a-z]/, '').to_sym
         end
       end
-
     end
   end
 end
