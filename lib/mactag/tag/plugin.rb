@@ -19,22 +19,16 @@ module Mactag
     class Plugin
       PLUGIN_PATH = File.join('vendor', 'plugins')
 
-      def initialize(*plugins)
-        @plugins = plugins
+      def initialize(plugin)
+        @plugin = plugin
       end
 
-      def files
-        return File.join(PLUGIN_PATH, '*', 'lib', '**', '*.rb') if @plugins.empty?
-
-        result = []
-        @plugins.each do |plugin|
-          if File.exist?(File.join(PLUGIN_PATH, plugin))
-            result << File.join(PLUGIN_PATH, plugin, 'lib', '**', '*.rb')
-          else
-            Mactag.warn "Plugin #{plugin} not found"
-          end
+      def tag
+        if File.directory?(File.join(PLUGIN_PATH, @plugin))
+          return File.join(PLUGIN_PATH, @plugin, 'lib', '**', '*.rb')
+        else
+          Mactag.warn "Plugin #{@plugin} not found"
         end
-        result
       end
     end
   end

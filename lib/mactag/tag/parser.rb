@@ -20,7 +20,13 @@ module Mactag
       # @see Mactag::Tag::Plugin
       #
       def plugin(*plugins)
-        @table << Mactag::Tag::Plugin.new(*plugins)
+        if plugins.empty?
+          plugins = all_plugins
+        end
+
+        plugins.each do |plugin|
+          @table << Mactag::Tag::Plugin.new(plugin)
+        end
       end
       alias_method :plugins, :plugin
 
@@ -39,6 +45,13 @@ module Mactag
       #
       def rails(options = {})
         @table << Mactag::Tag::Rails.new(options)
+      end
+      
+      
+      private
+      
+      def all_plugins
+        Dir.glob(File.join(Plugin::PLUGIN_PATH, '*')).collect { |f| File.basename(f) }
       end
     end
   end
