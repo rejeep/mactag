@@ -8,7 +8,7 @@ class AppTest < ActiveSupport::TestCase
     end
 
     should 'return the same file as array' do
-      assert_same_elements [@tag], @app.files
+      assert_equal @tag, @app.tag
     end
   end
 end

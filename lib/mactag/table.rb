@@ -41,8 +41,8 @@ module Mactag
       # files are separated with a whitespace.
       #
       def tags
-        @@tags.collect!(&:files)
         @@tags.flatten!
+        @@tags.collect!(&:tag)
         @@tags.collect! { |file| File.expand_path(file) }
         @@tags.collect! { |file| Dir.glob(file) }
         @@tags.uniq!
