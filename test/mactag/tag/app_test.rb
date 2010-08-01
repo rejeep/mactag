@@ -3,12 +3,12 @@ require 'test_helper'
 class AppTest < ActiveSupport::TestCase
   context 'application tag' do
     setup do
-      @tags = ['app/**/*.rb', 'public/javascripts/*.js']
-      @app = Mactag::Tag::App.new(@tags)
+      @tag = 'app/**/*.rb'
+      @app = Mactag::Tag::App.new(@tag)
     end
 
-    should 'return the correct files' do
-      assert_same_elements [@tags], @app.files
+    should 'return the same file as array' do
+      assert_same_elements [@tag], @app.files
     end
   end
 end

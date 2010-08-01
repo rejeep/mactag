@@ -20,10 +20,12 @@ module Mactag
     #   do
     #
     class App
-      attr_reader :files
-
-      def initialize(*files)
+      def initialize(files)
         @files = files
+      end
+      
+      def files
+        Array(@files)
       end
     end
   end

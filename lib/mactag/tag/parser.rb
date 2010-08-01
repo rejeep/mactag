@@ -10,7 +10,9 @@ module Mactag
       # @see Mactag::Tag::App
       #
       def app(*files)
-        @table << Mactag::Tag::App.new(*files)
+        files.each do |file|
+          @table << Mactag::Tag::App.new(file)
+        end
       end
 
       ##
