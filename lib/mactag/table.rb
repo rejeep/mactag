@@ -27,6 +27,10 @@ module Mactag
         parser.instance_eval(&block)
       end
 
+      ##
+      #
+      # Add +tag+ to list of tags.
+      #
       def <<(tag)
         @@tags << tag
       end
