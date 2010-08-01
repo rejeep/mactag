@@ -11,7 +11,7 @@ class ParserTest < ActiveSupport::TestCase
       @parser.app(@tag)
     end
 
-    should 'have correct tags' do
+    should 'have correct tag' do
       assert_equal 1, tags.size
       assert_equal 'lib/**/*.rb', tags.first.tag
     end
