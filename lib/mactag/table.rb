@@ -42,7 +42,6 @@ module Mactag
       #
       def tags
         @@tags.collect!(&:tag)
-        # @@tags.flatten!
         @@tags.collect! { |file| File.expand_path(file) }
         @@tags.collect! { |file| Dir.glob(file) }
         @@tags.uniq!
