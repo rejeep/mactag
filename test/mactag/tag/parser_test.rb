@@ -21,13 +21,27 @@ class ParserTest < ActiveSupport::TestCase
   context 'plugin' do
     setup do
       File.stubs(:directory?).returns(true)
-
-      @plugin = 'funland'
-      @parser.plugin(@plugin)
     end
 
-    should 'have correct tag' do
-      assert_equal 'vendor/plugins/funland/lib/**/*.rb', tags.first.tag
+    context 'single' do
+      setup do
+        @parser.plugin('rack')
+      end
+
+      should 'have correct tag' do
+        assert_equal 'vendor/plugins/rack/lib/**/*.rb', tags.first.tag
+      end
+    end
+
+    context 'multiple' do
+      setup do
+        @parser.plugin('bundler', 'rake')
+      end
+
+      should 'have correct tag' do
+        assert_equal 'vendor/plugins/bundler/lib/**/*.rb', tags.first.tag
+        assert_equal 'vendor/plugins/rake/lib/**/*.rb', tags.last.tag
+      end
     end
   end
 
