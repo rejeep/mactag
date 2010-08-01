@@ -12,7 +12,6 @@ class ParserTest < ActiveSupport::TestCase
     end
 
     should 'have correct tag' do
-      assert_equal 1, tags.size
       assert_equal 'lib/**/*.rb', tags.first.tag
     end
   end
