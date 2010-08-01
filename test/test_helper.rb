@@ -8,3 +8,9 @@ require 'mocha'
 
 $:.unshift File.dirname(__FILE__) + '/../lib'
 require 'mactag'
+
+module Mactag
+  def self.warn(message)
+    # TODO: Why can this method no be stubbed?
+  end
+end
