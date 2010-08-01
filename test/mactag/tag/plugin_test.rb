@@ -28,4 +28,26 @@ class PluginTest < ActiveSupport::TestCase
       assert_nil @plugin.tag
     end
   end
+
+  context '#all' do
+    context 'with existing plugins' do
+      setup do
+        Dir.stubs(:glob).returns(['plugin/one', 'plugin/two'])
+      end
+
+      should 'return only plugin names' do
+        assert_same_elements Mactag::Tag::Plugin.all, ['one', 'two']
+      end
+    end
+
+    context 'with no existing plugins' do
+      setup do
+        Dir.stubs(:glob).returns([])
+      end
+
+      should 'return only plugin names' do
+        assert_same_elements Mactag::Tag::Plugin.all, []
+      end
+    end
+  end
 end

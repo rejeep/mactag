@@ -30,6 +30,10 @@ module Mactag
           Mactag.warn "Plugin #{@plugin} not found"
         end
       end
+      
+      def self.all
+        Dir.glob(File.join(PLUGIN_PATH, '*')).collect { |f| File.basename(f) }
+      end
     end
   end
 end

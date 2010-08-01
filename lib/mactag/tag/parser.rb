@@ -21,7 +21,7 @@ module Mactag
       #
       def plugin(*plugins)
         if plugins.empty?
-          plugins = all_plugins
+          plugins = Plugin.all
         end
 
         plugins.each do |plugin|
@@ -50,8 +50,6 @@ module Mactag
       
       private
       
-      def all_plugins
-        Dir.glob(File.join(Plugin::PLUGIN_PATH, '*')).collect { |f| File.basename(f) }
       end
     end
   end

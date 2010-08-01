@@ -45,32 +45,6 @@ class ParserTest < ActiveSupport::TestCase
     end
   end
 
-  context 'all plugins' do
-    setup do
-      @parser = Mactag::Tag::Parser.new(nil)
-    end
-
-    context 'with existing plugins' do
-      setup do
-        Dir.stubs(:glob).returns(['plugin/one', 'plugin/two'])
-      end
-
-      should 'return only plugin names' do
-        assert_same_elements @parser.send(:all_plugins), ['one', 'two']
-      end
-    end
-
-    context 'with no existing plugins' do
-      setup do
-        Dir.stubs(:glob).returns([])
-      end
-
-      should 'return only plugin names' do
-        assert_same_elements @parser.send(:all_plugins), []
-      end
-    end
-  end
-
 
   private
 
