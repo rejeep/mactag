@@ -3,6 +3,7 @@ require 'test_helper'
 class ParserTest < ActiveSupport::TestCase
   def setup
     Mactag::Table.class_variable_set('@@tags', [])
+
     @parser = Mactag::Tag::Parser.new(Mactag::Table)
   end
 
@@ -19,12 +20,14 @@ class ParserTest < ActiveSupport::TestCase
 
   context 'plugin' do
     setup do
+      File.stubs(:directory?).returns(true)
+
       @plugin = 'funland'
-      @parser.app(@plugin)
+      @parser.plugin(@plugin)
     end
 
     should 'have correct tag' do
-      assert_equal 'funland', tags.first.tag
+      assert_equal 'vendor/plugins/funland/lib/**/*.rb', tags.first.tag
     end
   end
 
