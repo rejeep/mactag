@@ -1,4 +1,3 @@
-require 'mactag/tag/parser'
 require 'mactag/tag/app'
 require 'mactag/tag/plugin'
 require 'mactag/tag/gem'
