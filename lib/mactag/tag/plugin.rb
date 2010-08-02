@@ -24,11 +24,15 @@ module Mactag
       end
 
       def tag
-        if File.directory?(File.join(PLUGIN_PATH, @plugin))
+        if exists?
           return File.join(PLUGIN_PATH, @plugin, 'lib', '**', '*.rb')
         else
           Mactag.warn "Plugin #{@plugin} not found"
         end
+      end
+      
+      def exists?
+        File.directory?(File.join(PLUGIN_PATH, @plugin))
       end
       
       def self.all
