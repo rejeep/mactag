@@ -22,16 +22,16 @@ class ParserTest < ActiveSupport::TestCase
     setup do
       File.stubs(:directory?).returns(true)
     end
-    
+
     context 'none' do
       setup do
-        Mactag::Tag::Plugin.stubs(:all).returns([])
-        
+        Mactag::Tag::Plugin.stubs(:all).returns(['devise'])
+
         @parser.plugin
       end
 
       should 'have correct tag' do
-        assert_equal [], tags
+        assert_equal 'vendor/plugins/devise/lib/**/*.rb', tags.first.tag
       end
     end
 
