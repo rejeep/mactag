@@ -5,7 +5,7 @@ module Mactag
     # Tags files in current Rails application.
     #
     # ==== Examples
-    #   Mactag::Table.generate do
+    #   Mactag::Builder.generate do
     #     # Tag single file
     #     app 'lib/super_duper.rb'
     #

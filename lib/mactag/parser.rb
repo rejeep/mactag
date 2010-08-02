@@ -4,8 +4,8 @@ module Mactag
   # Parser for builder.
   #
   class Parser
-    def initialize(table)
-      @table = table
+    def initialize(builder)
+      @builder = builder
     end
 
     ##
@@ -14,7 +14,7 @@ module Mactag
     #
     def app(*tags)
       tags.each do |tag|
-        @table << Mactag::Tag::App.new(tag)
+        @builder << Mactag::Tag::App.new(tag)
       end
     end
 
@@ -28,7 +28,7 @@ module Mactag
       end
 
       plugins.each do |plugin|
-        @table << Mactag::Tag::Plugin.new(plugin)
+        @builder << Mactag::Tag::Plugin.new(plugin)
       end
     end
     alias_method :plugins, :plugin
@@ -41,10 +41,10 @@ module Mactag
       options = gems.extract_options!
 
       if gems.empty?
-        @table << Mactag::Tag::Gem.all
+        @builder << Mactag::Tag::Gem.all
       else
         gems.each do |name|
-          @table << Mactag::Tag::Gem.new(name, options[:version])
+          @builder << Mactag::Tag::Gem.new(name, options[:version])
         end
       end
     end
@@ -55,7 +55,7 @@ module Mactag
     # @see Mactag::Tag::Rails
     #
     def rails(options = {})
-      @table << Mactag::Tag::Rails.new(options)
+      @builder << Mactag::Tag::Rails.new(options)
     end
   end
 end

@@ -1,5 +1,5 @@
 require 'mactag/config'
-require 'mactag/table'
+require 'mactag/builder'
 require 'mactag/parser'
 require 'mactag/tag'
 

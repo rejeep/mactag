@@ -5,7 +5,7 @@ module Mactag
     # Tags plugins in current Rails application.
     #
     # ==== Examples
-    #   Mactag::Table.generate do
+    #   Mactag::Builder.generate do
     #     # Tag single plugin
     #     plugin 'whenever'
     #

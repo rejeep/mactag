@@ -1,5 +1,5 @@
 module Mactag
-  class Table
+  class Builder
     @@tags = []
 
     class << self
@@ -8,7 +8,7 @@ module Mactag
       # Generates the TAGS-table.
       #
       # ==== Example
-      #   Mactag::Table.generate do
+      #   Mactag::Builder.generate do
       #     app 'app/**/*.rb', 'lib/*.rb'
       #
       #     plugins 'thinking-sphinx', 'whenever'
@@ -42,6 +42,7 @@ module Mactag
       #
       def tags
         @@tags.collect!(&:tag)
+        @@tags.flatten! # For the Rails fucker...
         @@tags.collect! { |file| File.expand_path(file) }
         @@tags.collect! { |file| Dir.glob(file) }
         @@tags.uniq!
@@ -60,7 +61,7 @@ module Mactag
         if @@tags.collect(&:files).flatten.empty?
           Mactag.warn 'You did not specify anything to tag'
         else
-          system "cd #{Rails.root} && #{Mactag::Config.binary} #{Mactag::Table.tags}"
+          system "cd #{Rails.root} && #{Mactag::Config.binary} #{Mactag::Builder.tags}"
           puts "Successfully generated TAGS file"
         end
       end
