@@ -23,7 +23,7 @@ module Mactag
       # *rails* in respective tag class.
       #
       def generate(&block)
-        parser = Mactag::Tag::Parser.new(self)
+        parser = Mactag::Parser.new(self)
         parser.instance_eval(&block)
       end
 
