@@ -22,6 +22,18 @@ class ParserTest < ActiveSupport::TestCase
     setup do
       File.stubs(:directory?).returns(true)
     end
+    
+    context 'none' do
+      setup do
+        Mactag::Tag::Plugin.stubs(:all).returns([])
+        
+        @parser.plugin
+      end
+
+      should 'have correct tag' do
+        assert_equal [], tags
+      end
+    end
 
     context 'single' do
       setup do
