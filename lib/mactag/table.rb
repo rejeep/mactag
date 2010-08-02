@@ -31,8 +31,8 @@ module Mactag
       #
       # Add +tag+ to list of tags.
       #
-      def <<(tag)
-        @@tags << tag
+      def <<(tags)
+        @@tags += Array(tags)
       end
 
       ##
