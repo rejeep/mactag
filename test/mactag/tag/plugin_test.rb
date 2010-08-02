@@ -31,13 +31,13 @@ class PluginTest < ActiveSupport::TestCase
     should 'return true when plugin exists' do
       File.stubs(:directory?).returns(true)
       
-      assert @plugin.exists?
+      assert @plugin.send(:exists?)
     end
 
     should 'return false when plugin does not exist' do
       File.stubs(:directory?).returns(false)
       
-      assert !@plugin.exists?
+      assert !@plugin.send(:exists?)
     end
   end
 

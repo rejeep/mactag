@@ -31,12 +31,15 @@ module Mactag
         end
       end
       
-      def exists?
-        File.directory?(File.join(PLUGIN_PATH, @plugin))
-      end
-      
       def self.all
         Dir.glob(File.join(PLUGIN_PATH, '*')).collect { |f| File.basename(f) }
+      end
+      
+      
+      private
+      
+      def exists?
+        File.directory?(File.join(PLUGIN_PATH, @plugin))
       end
     end
   end
