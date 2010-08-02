@@ -20,32 +20,32 @@ module Mactag
     #   do
     #
     class Gem
-      def initialize(*gems)
-        if gems.blank?
-          @gems = all
-          @options = {}
+      autoload :Bundler, 'bundler'
+
+      def initialize(name, version = nil)
+        @name = name
+        @version = version
+      end
+
+      def tag
+        if exists?
+          if @version
+            gem = "#{@name}-#{@version}"
+          else
+            gem = latest
+          end
+          File.join(Mactag::Config.gem_home, gem, 'lib', '**', '*.rb')
         else
-          @gems = gems
-          @options = gems.extract_options!
+          Mactag.warn "Gem #{@name} not found"
         end
       end
 
-      def files
-        result = []
-        @gems.each do |gem_name|
-          if version = @options[:version]
-            gem = File.join(Mactag::Config.gem_home, "#{gem_name}-#{version}")
-          else
-            gem = latest(gem_name)
-          end
-
-          if exists?(gem)
-            result << File.join(gem, "lib", "**", "*.rb")
-          else
-            Mactag.warn "Gem #{gem_name} not found"
-          end
-        end
-        result
+      ##
+      #
+      # Returns all application gems.
+      #
+      def self.all
+        Bundler.load.specs.collect { |spec| Gem.new(spec.name, spec.version.to_s) }
       end
 
 
@@ -53,33 +53,25 @@ module Mactag
 
       ##
       #
-      # Returns the latest version of +gem+. If only one gem, that gem
-      # is returned.
+      # Returns the latest version of this gem.
       #
-      def latest(gem)
-        versions = Dir.glob(File.join(Mactag::Config.gem_home, gem) + "-*")
+      def latest
+        versions = Dir.glob(File.join(Mactag::Config.gem_home, @name) + "-*")
         if versions.size == 1
           gem = versions.first
         else
           gem = versions.sort.last
         end
-        gem
+        File.basename(gem)
       end
 
       ##
       #
       # Returns true if +gem+ exists, false otherwise.
       #
-      def exists?(gem)
-        gem && File.directory?(gem)
-      end
-
-      ##
-      #
-      # Returns all gems in this application.
-      #
-      def all
-        Bundler.environment.dependencies.select { |d| d.groups.include?(:default) }.collect(&:name)
+      # TODO: Must check for gems when no version is given...
+      def exists?
+        File.directory?(File.join(Mactag::Config.gem_home, "#{@name}-#{@version}"))
       end
     end
   end
