@@ -41,12 +41,13 @@ module Mactag
       # files are separated with a whitespace.
       #
       def tags
-        @@tags.collect!(&:tag)
-        @@tags.flatten! # For the Rails fucker...
-        @@tags.collect! { |file| File.expand_path(file) }
-        @@tags.collect! { |file| Dir.glob(file) }
-        @@tags.uniq!
-        @@tags.join(' ')
+        tags = all_tags
+        tags.flatten!
+        tags.compact!
+        tags.collect! { |file| File.expand_path(file) }
+        tags.collect! { |file| Dir.glob(file) }
+        tags.uniq!
+        tags.join(' ')
       end
 
       ##
@@ -58,12 +59,19 @@ module Mactag
           Mactag.warn 'Gem home path does not exist on your system'
         end
 
-        if @@tags.collect(&:files).flatten.empty?
+        if all_tags.flatten.compact.empty?
           Mactag.warn 'You did not specify anything to tag'
         else
           system "cd #{Rails.root} && #{Mactag::Config.binary} #{Mactag::Builder.tags}"
           puts "Successfully generated TAGS file"
         end
+      end
+      
+      
+      private
+      
+      def all_tags
+        @all_tags ||= @@tags.collect!(&:tag)
       end
     end
   end
