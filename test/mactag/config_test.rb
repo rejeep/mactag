@@ -1,17 +1,13 @@
 require 'test_helper'
 
 class ConfigTest < ActiveSupport::TestCase
-  context 'binary' do
-    setup do
-      @binary = Mactag::Config.binary
-    end
-
+  context '#binary' do
     should 'be right command' do
-      assert_equal 'ctags -o TAGS -e', @binary
+      assert_equal 'ctags -o TAGS -e', Mactag::Config.binary
     end
   end
 
-  context 'gem home' do
+  context '#gem_home' do
     context 'when using RVM' do
       setup do
         Mactag::Config.stubs(:rvm).returns(true)
@@ -20,7 +16,7 @@ class ConfigTest < ActiveSupport::TestCase
         @gem_home = Mactag::Config.gem_home
       end
 
-      should 'correct' do
+      should 'be correct' do
         assert_equal '/path/to/rvm/gems', @gem_home
       end
     end
