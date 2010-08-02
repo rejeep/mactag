@@ -29,7 +29,7 @@
 #
 # Example configuration. Change according to your application.
 #
-Mactag::Builder.generate do
+Mactag do
   ##
   #
   # Index all ruby files in app recursive and all ruby files directly under lib.

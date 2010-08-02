@@ -8,3 +8,7 @@ module Mactag
     $stderr.puts "Mactag Warning: #{message}"
   end
 end
+
+def Mactag(&block)
+  Mactag::Builder.generate(&block)
+end

@@ -5,7 +5,7 @@ module Mactag
     # Tags ruby gems.
     #
     # ==== Examples
-    #   Mactag::Builder.generate do
+    #   Mactag do
     #     # Tag all gems given by *...*
     #     gems
     #

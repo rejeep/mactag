@@ -17,7 +17,7 @@ module Mactag
     #
     #
     # ==== Examples
-    #   Mactag::Builder.generate do
+    #   Mactag do
     #     # Tag all rails packages, latest version
     #     rails
     #

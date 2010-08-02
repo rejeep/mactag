@@ -76,7 +76,7 @@ examples of how to configure Mactag.
     Mactag::Config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
     Mactag::Config.binary = 'etags -o TAGS'
 
-    Mactag::Table.generate do
+    Mactag do
       app 'app/**/*.rb', 'lib/*.rb'
 
       plugins 'thinking-sphinx', 'whenever'

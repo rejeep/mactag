@@ -8,7 +8,7 @@ module Mactag
       # Generates the TAGS-table.
       #
       # ==== Example
-      #   Mactag::Builder.generate do
+      #   Mactag do
       #     app 'app/**/*.rb', 'lib/*.rb'
       #
       #     plugins 'thinking-sphinx', 'whenever'
