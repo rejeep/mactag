@@ -17,59 +17,71 @@ class RailsTest < ActiveSupport::TestCase
     end
   end
 
-  context "packages" do
-    context "without arguments" do
-      setup do
-        @rails = Mactag::Tag::Rails.new({})
-      end
+  context '#tag' do
+    should 'return empty array if no packages' do
+      @rails = Mactag::Tag::Rails.new({})
+      @rails.stubs(:packages).returns([])
 
-      should "return all packages" do
-        assert_same_elements Mactag::Tag::Rails::PACKAGES, @rails.send(:packages)
-      end
+      assert_equal [], @rails.tag
     end
 
-    context "with some packages only" do
-      setup do
-        @rails = Mactag::Tag::Rails.new(:only => [:active_support, :activerecord])
-      end
+    should 'return array with gem tags if packages' do
+      @rails = Mactag::Tag::Rails.new({})
+      @rails.stubs(:packages).returns([:activemodel, :activerecord])
 
-      should "return only those packages" do
-        assert_same_elements [:activesupport, :activerecord], @rails.send(:packages)
+      o = Object.new
+      def o.tag
+        'tag'
       end
-    end
-
-    context "except some packages" do
-      setup do
-        @rails = Mactag::Tag::Rails.new(:except => [:active_support, :activerecord])
-      end
-
-      should "return all except those packages" do
-        assert_same_elements Mactag::Tag::Rails::PACKAGES - [:activesupport, :activerecord], @rails.send(:packages)
-      end
+      
+      Mactag::Tag::Gem.stubs(:new).returns(o)
+      
+      assert_equal ['tag', 'tag'], @rails.tag
     end
   end
 
-  context "packagize" do
+  context '#packages' do
+    should 'return all packages if no arguments' do
+      @rails = Mactag::Tag::Rails.new({})
+
+      assert_same_elements Mactag::Tag::Rails::PACKAGES, @rails.send(:packages)
+    end
+
+    should 'return some packages if only specified' do
+      @rails = Mactag::Tag::Rails.new(:only => [:active_support, :activerecord])
+
+      assert_same_elements [:activesupport, :activerecord], @rails.send(:packages)
+    end
+
+    should 'return some packages if except specified' do
+
+      @rails = Mactag::Tag::Rails.new(:except => [:active_support, :activerecord])
+
+      assert_same_elements Mactag::Tag::Rails::PACKAGES - [:activesupport, :activerecord], @rails.send(:packages)
+    end
+  end
+
+  context '#packagize' do
     setup do
       @rails = Mactag::Tag::Rails.new({})
     end
 
-    context "one package" do
+    context 'single package' do
       setup do
-        @packagized = @rails.send(:packagize!, "active_record")
+        @packagized = @rails.send(:packagize!, 'active_record')
       end
 
-      should "be packagized" do
+      should 'return a packagized package' do
         assert_equal [:activerecord], @packagized
       end
     end
 
-    context "several packages" do
+    context 'multiple packages' do
       setup do
-        @packagized = @rails.send(:packagize!, ["_active_support_", :action_view])
+        @packagized = @rails.send(:packagize!, ['_active_support_', :action_view])
       end
 
-      should "be packagized" do
+      should 'return packagized packages' do
         assert_equal [:activesupport, :actionview], @packagized
       end
     end

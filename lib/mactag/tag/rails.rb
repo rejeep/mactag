@@ -58,16 +58,11 @@ module Mactag
         @except = packagize!(options[:except])
       end
 
-      def files
+      def tag
         result = []
         packages.each do |package|
           if PACKAGES.include?(package)
-            if version = @options[:version]
-              gem = Gem.new(package.to_s, :version => version)
-            else
-              gem = Gem.new(package.to_s)
-            end
-            result << gem.files
+            result << Gem.new(package.to_s, @options[:version]).tag
           end
         end
         result
