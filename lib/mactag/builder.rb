@@ -44,11 +44,11 @@ module Mactag
         Mactag.warn 'Gem home path does not exist on your system'
       end
 
-      if @builder.gems?
-        Mactag.warn 'You did not specify anything to tag'
-      else
-        system "cd #{Rails.root} && #{Mactag::Config.binary} #{@builder.tags}"
+      tags = Mactag::Ctags.new(@builder)
+      if tags.build
         puts "Successfully generated TAGS file"
+      else
+        Mactag.warn 'You did not specify anything to tag'
       end
     end
 

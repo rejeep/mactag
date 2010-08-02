@@ -1,6 +1,7 @@
 require 'mactag/config'
 require 'mactag/builder'
 require 'mactag/parser'
+require 'mactag/ctags'
 require 'mactag/tag'
 
 module Mactag
