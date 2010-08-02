@@ -14,9 +14,3 @@ module Mactag
     # TODO: Why can this method no be stubbed?
   end
 end
-
-class ActiveSupport::TestCase
-  def setup
-    Mactag::Config.stubs(:gem_home).returns('GEM_HOME')
-  end
-end

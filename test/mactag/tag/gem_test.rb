@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class GemTest < ActiveSupport::TestCase
+  setup do
+    Mactag::Config.stubs(:gem_home).returns('GEM_HOME')
+  end
+  
   context '#tag' do
     context 'for existing gem' do
       context 'with no specified version' do
