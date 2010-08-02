@@ -30,9 +30,9 @@ module Mactag
       def tag
         if exists?
           if @version
-            gem = "#{@name}-#{@version}"
+            gem = splash
           else
-            gem = latest
+            gem = Gem.most_recent(@name)
           end
           File.join(Mactag::Config.gem_home, gem, 'lib', '**', '*.rb')
         else
@@ -48,30 +48,43 @@ module Mactag
         Bundler.load.specs.collect { |spec| Gem.new(spec.name, spec.version.to_s) }
       end
 
+      ##
+      #
+      # Returns the most recent gem with +name+.
+      #
+      def self.most_recent(name)
+        versions = Dir.glob(File.join(Mactag::Config.gem_home, name) + "-*")
+        unless versions.empty?
+          if versions.size == 1
+            gem = versions.first
+          else
+            gem = versions.sort.last
+          end
+          File.basename(gem)
+        end
+      end
+
 
       private
 
       ##
       #
-      # Returns the latest version of this gem.
+      # Returns true if +gem+ exists, false otherwise.
       #
-      def latest
-        versions = Dir.glob(File.join(Mactag::Config.gem_home, @name) + "-*")
-        if versions.size == 1
-          gem = versions.first
+      def exists?
+        if @version
+          File.directory?(File.join(Mactag::Config.gem_home, splash))
         else
-          gem = versions.sort.last
+          Gem.most_recent(@name)
         end
-        File.basename(gem)
       end
 
       ##
       #
-      # Returns true if +gem+ exists, false otherwise.
+      # Returns the gem name, dash, version.
       #
-      # TODO: Must check for gems when no version is given...
-      def exists?
-        File.directory?(File.join(Mactag::Config.gem_home, "#{@name}-#{@version}"))
+      def splash
+        "#{@name}-#{@version}"
       end
     end
   end

@@ -1,83 +1,136 @@
 require 'test_helper'
 
 class GemTest < ActiveSupport::TestCase
-  def setup
-    File.stubs(:directory?).returns(true)
+  setup do
+    Mactag::Config.stubs(:gem_home).returns('GEM_HOME')
   end
 
-  context 'gem with version' do
+  context '#tag' do
+    context 'for existing gem' do
+      context 'with no specified version' do
+        setup do
+          Mactag::Tag::Gem.stubs(:most_recent).returns('devise-1.1.1')
+
+          @gem = Mactag::Tag::Gem.new('devise')
+          @gem.stubs(:exists?).returns(true)
+        end
+
+        should 'return correct tag' do
+          assert_equal 'GEM_HOME/devise-1.1.1/lib/**/*.rb', @gem.tag
+        end
+      end
+
+      context 'with specified version' do
+        setup do
+          @gem = Mactag::Tag::Gem.new('devise', '1.1.1')
+          @gem.stubs(:exists?).returns(true)
+        end
+
+        should 'return correct tag' do
+          assert_equal 'GEM_HOME/devise-1.1.1/lib/**/*.rb', @gem.tag
+        end
+      end
+    end
+
+    should 'return nil when gem does not exist' do
+      @gem = Mactag::Tag::Gem.new('devise')
+      @gem.stubs(:exists?).returns(false)
+
+      assert_nil @gem.tag
+    end
+  end
+
+  context '#all' do
     setup do
-      Mactag::Config.stubs(:gem_home).returns('GEM_HOME')
+      require 'bundler'
 
-      @gem = Mactag::Tag::Gem.new('thinking-sphinx', :version => '1.0.0')
+      @runtime = Bundler.load
+
+      devise = ::Gem::Specification.new
+      devise.name = 'devise'
+      devise.version = '1.1.1'
+
+      rack = ::Gem::Specification.new
+      rack.name = 'rack'
+      rack.version = '1.2.1'
+
+      @runtime.stubs(:specs).returns([devise, rack])
     end
 
-    should 'return the gem with that version' do
-      assert_contains @gem.files, File.join('GEM_HOME', 'thinking-sphinx-1.0.0', 'lib', '**', '*.rb')
-    end
-  end
+    should 'return the correct gems' do
+      devise = Mactag::Tag::Gem.all.first
+      assert_equal 'devise', devise.instance_variable_get('@name')
+      assert_equal '1.1.1', devise.instance_variable_get('@version')
 
-  context 'gem without version' do
-    context 'single gem' do
-      setup do
-        Dir.stubs(:glob).returns(['whenever-0.3.7'])
-
-        @gem = Mactag::Tag::Gem.new('whenever')
-      end
-
-      should 'return that gem' do
-        assert_contains @gem.files, File.join('whenever-0.3.7', 'lib', '**', '*.rb')
-      end
-    end
-
-    context 'multiple gems' do
-      setup do
-        Dir.stubs(:glob).returns(['whenever-0.3.7', 'whenever-0.3.6'])
-
-        @gem = Mactag::Tag::Gem.new('whenever')
-      end
-
-      should 'return the gem with the latest version' do
-        assert_contains @gem.files, File.join('whenever-0.3.7', 'lib', '**', '*.rb')
-        assert_does_not_contain @gem.files, File.join('whenever-0.3.6', 'lib', '**', '*.rb')
-      end
+      rack = Mactag::Tag::Gem.all.last
+      assert_equal 'rack', rack.instance_variable_get('@name')
+      assert_equal '1.2.1', rack.instance_variable_get('@version')
     end
   end
 
-  context 'gem that does not exist' do
-    setup do
+  context '#most_recent' do
+    should 'return most recent gem if more than one version of same gem exists' do
+      Dir.stubs(:glob).returns(['vendor/plugins/devise-1.1.1', 'vendor/plugins/devise-1.1.0'])
+
+      assert_equal 'devise-1.1.1', Mactag::Tag::Gem.most_recent('devise')
+    end
+
+    should 'return only gem if only one version of same gem exists' do
+      Dir.stubs(:glob).returns(['vendor/plugins/devise-1.1.1'])
+
+      assert_equal 'devise-1.1.1', Mactag::Tag::Gem.most_recent('devise')
+    end
+
+    should 'return nil if no version of gem' do
       Dir.stubs(:glob).returns([])
-      File.stubs(:directory?).returns(false)
 
-      @gem = Mactag::Tag::Gem.new('whenever')
+      assert_nil Mactag::Tag::Gem.most_recent('devise')
+    end
+  end
+
+  context '#exists' do
+    context 'with specified version' do
+      setup do
+        @gem = Mactag::Tag::Gem.new('devise', '1.1.1')
+      end
+
+      should 'return true when gem exists' do
+        File.stubs(:directory?).returns(true)
+
+        assert @gem.send(:exists?)
+      end
+
+      should 'return false when gem does not exist' do
+        File.stubs(:directory?).returns(false)
+
+        assert !@gem.send(:exists?)
+      end
     end
 
-    should 'not raise exception because no such gem' do
-      assert_nothing_raised do
-        assert_equal [], @gem.files
+    context 'with no specified version' do
+      setup do
+        @gem = Mactag::Tag::Gem.new('devise')
+      end
+
+      should 'return true when gem exists' do
+        Mactag::Tag::Gem.stubs(:most_recent).returns('devise-1.1.1')
+
+        assert @gem.send(:exists?)
+      end
+
+      should 'return false when gem does not exist' do
+        Mactag::Tag::Gem.stubs(:most_recent).returns(nil)
+
+        assert !@gem.send(:exists?)
       end
     end
   end
 
-  context '#exists?' do
-    setup do
-      @gem = Mactag::Tag::Gem.new('whatever')
-    end
+  context '#splash' do
+    should 'return gem name, dash, version' do
+      @gem = Mactag::Tag::Gem.new('devise', '1.1.1')
 
-    context 'with valid gem' do
-      setup do
-        File.stubs(:directory?).returns(true)
-      end
-
-      should 'exist' do
-        assert @gem.send(:exists?, 'whatever')
-      end
-    end
-    
-    context 'with no gem' do
-      should 'exist' do
-        assert !@gem.send(:exists?, nil)
-      end
+      assert_equal 'devise-1.1.1', @gem.send(:splash)
     end
   end
 end
