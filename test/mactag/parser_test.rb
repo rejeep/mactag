@@ -2,7 +2,8 @@ require 'test_helper'
 
 class ParserTest < ActiveSupport::TestCase
   setup do
-    @parser = Mactag::Parser.new(Mactag::Builder)
+    @builder = Mactag::Builder.new
+    @parser = Mactag::Parser.new(@builder)
   end
 
   context 'app' do
