@@ -1,5 +1,5 @@
 require 'test_helper'
 
-class TableTest < ActiveSupport::TestCase
+class BuilderTest < ActiveSupport::TestCase
   
 end
