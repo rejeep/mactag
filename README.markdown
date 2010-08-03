@@ -48,8 +48,9 @@ Load the gem in **Gemfile**:
 
 
 ## When installing as Gem
-When you install Mactag as a gem you must also include it's rake tasks
-in your **Rakefile**.
+If your using Mactag as a gem in a Rails 2 project, you must also
+include it's rake tasks in your **Rakefile**. In Rails 3, this is done
+automatically.
     require 'mactag/tasks'
     
 

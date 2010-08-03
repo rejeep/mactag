@@ -1,3 +1,6 @@
+require 'rails'
+
+require 'mactag/railtie'
 require 'mactag/config'
 require 'mactag/builder'
 require 'mactag/parser'
