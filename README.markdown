@@ -31,7 +31,7 @@ Load the gem in **config/environments/development.rb**:
 
 
 ## Rails 3.x
-Version 0.2.0 is the latest version supporting Rails 3.x.
+Version 0.3.2 is the latest version supporting Rails 3.x.
 
 ### Plugin
 Install the plugin:
@@ -43,7 +43,7 @@ Install the gem:
     
 Load the gem in **Gemfile**:
     group :development do
-      gem 'mactag', '0.2.0'
+      gem 'mactag', '0.3.2'
     end
 
 
