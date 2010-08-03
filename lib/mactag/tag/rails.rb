@@ -18,22 +18,22 @@ module Mactag
     #
     # ==== Examples
     #   Mactag do
-    #     # Tag all rails packages, latest version
+    #     # Tag all rails packages, same rails version as application
     #     rails
     #
     #     # Tag all rails packages, version 2.3.5
     #     rails :version => '2.3.5'
     #
-    #     # Tag only activerecord, latest version
+    #     # Tag only activerecord, same rails version as application
     #     rails :only => :active_record
     #
-    #     # Tag all packages except activerecord, latest version
+    #     # Tag all packages except activerecord, same rails version as application
     #     rails :except => :activerecord
     #
-    #     # Tag only activerecord and actionview, latest version
+    #     # Tag only activerecord and actionview, same rails version as application
     #     rails :only => [:activerecord, :action_view]
     #
-    #     # Tag all packages except activerecord and actionview, latest version
+    #     # Tag all packages except activerecord and actionview, same rails version as application
     #     rails :except => ['activerecord', :action_controller]
     #
     #     # Tag all packages except actionmailer, version 2.3.4
