@@ -36,7 +36,7 @@ module Mactag
           end
           File.join(Mactag::Config.gem_home, gem, 'lib', '**', '*.rb')
         else
-          Mactag.warn "Gem #{@name} not found"
+          Mactag.warn "Gem #{@version ? splash : @name} not found"
         end
       end
 
