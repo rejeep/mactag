@@ -86,4 +86,20 @@ class RailsTest < ActiveSupport::TestCase
       end
     end
   end
+  
+  context '#version' do
+    should 'pick specified version if given' do
+      @rails = Mactag::Tag::Rails.new({ :version => '3.0.0.rc' })
+      
+      assert_equal '3.0.0.rc', @rails.send(:version)
+    end
+    
+    should 'pick same rails version as application if not specified version' do
+      Rails.stubs(:version).returns('3.0.0.beta3')
+      
+      @rails = Mactag::Tag::Rails.new({})
+      
+      assert_equal '3.0.0.beta3', @rails.send(:version)
+    end
+  end
 end

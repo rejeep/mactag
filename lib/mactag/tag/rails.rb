@@ -62,7 +62,7 @@ module Mactag
         result = []
         packages.each do |package|
           if PACKAGES.include?(package)
-            result << Gem.new(package.to_s, @options[:version]).tag
+            result << Gem.new(package.to_s, version).tag
           end
         end
         result
@@ -99,6 +99,14 @@ module Mactag
         Array(pkgs).collect do |pkg|
           "#{pkg}".gsub(/[^a-z]/, '').to_sym
         end
+      end
+
+      ##
+      #
+      # Returns what Rails version to use.
+      #
+      def version
+        @options[:version] || ::Rails.version
       end
     end
   end
