@@ -40,34 +40,6 @@ class GemTest < ActiveSupport::TestCase
     end
   end
 
-  context '#all' do
-    setup do
-      require 'bundler'
-
-      @runtime = Bundler.load
-
-      devise = ::Gem::Specification.new
-      devise.name = 'devise'
-      devise.version = '1.1.1'
-
-      rack = ::Gem::Specification.new
-      rack.name = 'rack'
-      rack.version = '1.2.1'
-
-      @runtime.stubs(:specs).returns([devise, rack])
-    end
-
-    should 'return the correct gems' do
-      devise = Mactag::Tag::Gem.all.first
-      assert_equal 'devise', devise.instance_variable_get('@name')
-      assert_equal '1.1.1', devise.instance_variable_get('@version')
-
-      rack = Mactag::Tag::Gem.all.last
-      assert_equal 'rack', rack.instance_variable_get('@name')
-      assert_equal '1.2.1', rack.instance_variable_get('@version')
-    end
-  end
-
   context '#most_recent' do
     should 'return most recent gem if more than one version of same gem exists' do
       Dir.stubs(:glob).returns(['vendor/plugins/devise-1.1.1', 'vendor/plugins/devise-1.1.0'])

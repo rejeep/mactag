@@ -42,10 +42,17 @@ module Mactag
 
       ##
       #
-      # Returns all application gems.
+      # Returns all application gems in Bundler default group.
       #
       def self.all
-        Bundler.load.specs.collect { |spec| Gem.new(spec.name, spec.version.to_s) }
+        gems = {}
+        Bundler.load.specs.each do |spec|
+          gems[spec.name] = spec.version.to_s
+        end
+
+        default = Bundler.load.dependencies.select { |dependency| dependency.groups.include?(:default) }.collect(&:name)
+        default.delete('rails')
+        default.collect { |tmp| Gem.new(tmp, gems[tmp]) }
       end
 
       ##
