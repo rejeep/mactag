@@ -6,7 +6,7 @@ module Mactag
     #
     # ==== Examples
     #   Mactag do
-    #     # Tag all gems given by *...*
+    #     # Tags all gems specified in Gemfile.
     #     gems
     #
     #     # Tag the whenever gem, latest version
