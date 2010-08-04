@@ -1,4 +1,8 @@
 module Mactag
+  ##
+  #
+  # Tag builder.
+  #
   class Builder
     def initialize
       @tags = []
