@@ -1,9 +1,9 @@
 module Mactag
   ##
   #
-  # Parser for builder.
+  # Mactag DSL.
   #
-  class Parser
+  class Dsl
     def initialize(builder)
       @builder = builder
     end

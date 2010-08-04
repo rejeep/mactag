@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johan Andersson"]
-  s.date = %q{2010-08-03}
+  s.date = %q{2010-08-04}
   s.description = %q{Mactag is DSL in ruby for creating a Ctags-file for Rails projects}
   s.email = %q{johan.rejeep@gmail.com}
   s.extra_rdoc_files = [
@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
      "lib/mactag/builder.rb",
      "lib/mactag/config.rb",
      "lib/mactag/ctags.rb",
-     "lib/mactag/parser.rb",
+     "lib/mactag/dsl.rb",
      "lib/mactag/railtie.rb",
      "lib/mactag/tag.rb",
      "lib/mactag/tag/app.rb",
@@ -41,7 +41,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/mactag/builder_test.rb",
      "test/mactag/config_test.rb",
-     "test/mactag/parser_test.rb",
+     "test/mactag/dsl_test.rb",
      "test/mactag/tag/app_test.rb",
      "test/mactag/tag/gem_test.rb",
      "test/mactag/tag/plugin_test.rb",

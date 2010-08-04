@@ -78,8 +78,8 @@ module Mactag
     def self.generate(&block)
       @builder = Mactag::Builder.new
 
-      parser = Mactag::Parser.new(@builder)
-      parser.instance_eval(&block)
+      dsl = Mactag::Dsl.new(@builder)
+      dsl.instance_eval(&block)
     end
 
     ##
