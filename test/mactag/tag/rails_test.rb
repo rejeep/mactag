@@ -2,8 +2,7 @@ require 'test_helper'
 
 class RailsTest < ActiveSupport::TestCase
   should "have correct packages" do
-    packages = Mactag::Tag::Rails::PACKAGES
-
+    assert_same_elements Mactag::Tag::Rails::PACKAGES,
     [
      :actionmailer,
      :actionpack,
@@ -12,9 +11,7 @@ class RailsTest < ActiveSupport::TestCase
      :activeresource,
      :railties,
      :activesupport
-    ].each do |package|
-      assert_contains packages, package
-    end
+    ]
   end
 
   context '#tag' do
@@ -33,9 +30,9 @@ class RailsTest < ActiveSupport::TestCase
       def o.tag
         'tag'
       end
-      
+
       Mactag::Tag::Gem.stubs(:new).returns(o)
-      
+
       assert_equal ['tag', 'tag'], @rails.tag
     end
   end
@@ -86,19 +83,19 @@ class RailsTest < ActiveSupport::TestCase
       end
     end
   end
-  
+
   context '#version' do
     should 'pick specified version if given' do
       @rails = Mactag::Tag::Rails.new({ :version => '3.0.0.rc' })
-      
+
       assert_equal '3.0.0.rc', @rails.send(:version)
     end
-    
+
     should 'pick same rails version as application if not specified version' do
       Rails.stubs(:version).returns('3.0.0.beta3')
-      
+
       @rails = Mactag::Tag::Rails.new({})
-      
+
       assert_equal '3.0.0.beta3', @rails.send(:version)
     end
   end
