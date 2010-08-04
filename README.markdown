@@ -16,7 +16,6 @@ that you are using **Exuberant Ctags** and not some other version.
 # Installation
 
 ## Rails 2.x
-Version 0.0.5 is the latest version supporting Rails 2.x.
 
 ### Plugin
 Install the plugin:
@@ -28,10 +27,12 @@ Install the gem:
     
 Load the gem in **config/environments/development.rb**:
     config.gem 'mactag'
+    
+Load the rake tasks in **Rakefile**.
+    require 'mactag/tasks'
 
 
 ## Rails 3.x
-Version 0.3.2 is the latest version supporting Rails 3.x.
 
 ### Plugin
 Install the plugin:
@@ -43,16 +44,9 @@ Install the gem:
     
 Load the gem in **Gemfile**:
     group :development do
-      gem 'mactag', '0.3.2'
+      gem 'mactag', '0.3.3'
     end
 
-
-## When installing as Gem
-If your using Mactag as a gem in a Rails 2 project, you must also
-include it's rake tasks in your **Rakefile**. In Rails 3, this is done
-automatically.
-    require 'mactag/tasks'
-    
 
 # Configuration
 Generate a basic configuration file:
