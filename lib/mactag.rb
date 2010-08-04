@@ -9,7 +9,7 @@ require 'mactag/tag'
 
 module Mactag
   def self.warn(message)
-    $stderr.puts "Mactag Warning: #{message}"
+    $stderr.puts(message)
   end
 end
 
