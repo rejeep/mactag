@@ -8,11 +8,6 @@ module Mactag
       @builder = builder
     end
 
-    ##
-    #
-    # Creates the tags file. Returns true if anything was tagged,
-    # false otherwise.
-    #
     def build
       system "cd #{Rails.root} && #{Mactag::Config.binary} #{@builder.tags}"
       @builder.gems?

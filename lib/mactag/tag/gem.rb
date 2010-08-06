@@ -38,10 +38,6 @@ module Mactag
         end
       end
 
-      ##
-      #
-      # Returns all application gems in Bundler default group.
-      #
       def self.all
         gems = {}
         Bundler.load.specs.each do |spec|
@@ -53,10 +49,6 @@ module Mactag
         default.collect { |tmp| Gem.new(tmp, gems[tmp]) }
       end
 
-      ##
-      #
-      # Returns the most recent gem with +name+.
-      #
       def self.most_recent(name)
         versions = Dir.glob(File.join(Mactag::Config.gem_home, name) + "-*")
         unless versions.empty?
@@ -72,10 +64,6 @@ module Mactag
 
       private
 
-      ##
-      #
-      # Returns true if +gem+ exists, false otherwise.
-      #
       def exists?
         if @version
           File.directory?(File.join(Mactag::Config.gem_home, splash))
@@ -84,10 +72,6 @@ module Mactag
         end
       end
 
-      ##
-      #
-      # Returns the gem name, dash, version.
-      #
       def splash
         "#{@name}-#{@version}"
       end

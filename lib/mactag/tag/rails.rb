@@ -70,11 +70,7 @@ module Mactag
 
 
       private
-
-      ##
-      #
-      # Returns a list of all packages that should be included.
-      #
+      
       def packages
         result = []
         unless @only || @except
@@ -88,11 +84,7 @@ module Mactag
         end
         result
       end
-
-      ##
-      #
-      # Packagizes all +pkgs+.
-      #
+      
       def packagize!(pkgs)
         return nil if pkgs.blank?
 
@@ -100,11 +92,7 @@ module Mactag
           "#{pkg}".gsub(/[^a-z]/, '').to_sym
         end
       end
-
-      ##
-      #
-      # Returns what Rails version to use.
-      #
+      
       def version
         @options[:version] || ::Rails.version
       end
