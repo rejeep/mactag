@@ -20,8 +20,6 @@ module Mactag
     #   do
     #
     class Gem
-      autoload :Bundler, 'bundler'
-
       def initialize(name, version = nil)
         @name = name
         @version = version
