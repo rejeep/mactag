@@ -1,13 +1,13 @@
 require 'rubygems'
 
-require 'active_support'
-require 'active_support/test_case'
-require 'active_support/core_ext'
+require 'rails'
+require 'bundler'
 
 require 'shoulda'
 require 'mocha'
 
 $:.unshift File.dirname(__FILE__) + '/../lib'
+
 require 'mactag'
 
 class ActiveSupport::TestCase
