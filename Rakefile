@@ -20,7 +20,12 @@ begin
                              'VERSION'
                             ]
     gemspec.test_files = FileList['features/**/*', 'test/**/*_test.rb']
-    gemspec.add_bundler_dependencies
+    
+    gemspec.add_runtime_dependency("rails", [">= 3.0.0.beta1"])
+    gemspec.add_runtime_dependency("bundler", [">= 0.9.26"])
+    
+    gemspec.add_development_dependency("shoulda", [">= 2.11.1"])
+    gemspec.add_development_dependency("mocha", [">= 0.9.8"])
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
