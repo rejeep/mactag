@@ -1,12 +1,9 @@
-require 'rails'
-
 require 'mactag/railtie'
 require 'mactag/config'
 require 'mactag/builder'
 require 'mactag/dsl'
 require 'mactag/ctags'
 require 'mactag/tag'
-
 
 module Mactag
   autoload :Bundler, 'bundler'
