@@ -15,7 +15,6 @@ begin
                              'LICENCE',
                              'README.markdown',
                              'lib/tasks/*.rake',
-                             'lib/generators/**/*.rb',
                              'VERSION'
                             ]
     gemspec.test_files = FileList['test/**/*_test.rb']
