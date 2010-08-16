@@ -1,6 +1,5 @@
 require 'rake'
 require 'rake/testtask'
-require 'bundler'
 
 begin
   require 'jeweler'
