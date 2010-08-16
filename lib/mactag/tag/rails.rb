@@ -41,15 +41,7 @@ module Mactag
     #   do
     #
     class Rails
-      PACKAGES = [
-                  :actionmailer,
-                  :actionpack,
-                  :activemodel,
-                  :activerecord,
-                  :activeresource,
-                  :railties,
-                  :activesupport
-                 ]
+      PACKAGES = [:actionmailer, :actionpack, :activemodel, :activerecord, :activeresource, :railties, :activesupport]
 
       def initialize(options)
         @options = options
