@@ -17,24 +17,22 @@ begin
                              'lib/tasks/*.rake',
                              'VERSION'
                             ]
-    gemspec.test_files = FileList['test/**/*_test.rb']
-    
-    gemspec.add_runtime_dependency("rails", [">= 3.0.0.beta1"])
-    gemspec.add_runtime_dependency("bundler", [">= 0.9.26"])
-    
-    gemspec.add_development_dependency("shoulda", [">= 2.11.1"])
-    gemspec.add_development_dependency("mocha", [">= 0.9.8"])
+    gemspec.test_files = FileList['spec/**/*_spec.rb']
+
+    gemspec.add_runtime_dependency('rails', ['>= 3.0.0.beta1'])
+    gemspec.add_runtime_dependency('bundler', ['>= 0.9.26'])
+    gemspec.add_development_dependency('rspec', ['>= 2.0.0.beta.19'])
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install jeweler"
+  puts 'Jeweler not available. Install it with: sudo gem install jeweler'
 end
 
-Rake::TestTask.new(:test) do |t|
+Rake::TestTask.new(:spec) do |t|
   t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
+  t.libs << 'spec'
+  t.pattern = 'spec/**/*_spec.rb'
   t.verbose = true
 end
 
-task :default => :test
+task :default => :spec

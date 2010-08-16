@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johan Andersson"]
-  s.date = %q{2010-08-12}
+  s.date = %q{2010-08-16}
   s.description = %q{Mactag is DSL in ruby for creating a Ctags-file for Rails projects}
   s.email = %q{johan.rejeep@gmail.com}
   s.extra_rdoc_files = [
@@ -39,14 +39,14 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Ctags for Rails}
   s.test_files = [
-    "test/mactag/builder_test.rb",
-     "test/mactag/config_test.rb",
-     "test/mactag/dsl_test.rb",
-     "test/mactag/tag/app_test.rb",
-     "test/mactag/tag/gem_test.rb",
-     "test/mactag/tag/plugin_test.rb",
-     "test/mactag/tag/rails_test.rb",
-     "test/mactag_test.rb"
+    "spec/mactag/builder_spec.rb",
+     "spec/mactag/config_spec.rb",
+     "spec/mactag/dsl_spec.rb",
+     "spec/mactag/tag/app_spec.rb",
+     "spec/mactag/tag/gem_spec.rb",
+     "spec/mactag/tag/plugin_spec.rb",
+     "spec/mactag/tag/rails_spec.rb",
+     "spec/mactag_spec.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -56,19 +56,16 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rails>, [">= 3.0.0.beta1"])
       s.add_runtime_dependency(%q<bundler>, [">= 0.9.26"])
-      s.add_development_dependency(%q<shoulda>, [">= 2.11.1"])
-      s.add_development_dependency(%q<mocha>, [">= 0.9.8"])
+      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
     else
       s.add_dependency(%q<rails>, [">= 3.0.0.beta1"])
       s.add_dependency(%q<bundler>, [">= 0.9.26"])
-      s.add_dependency(%q<shoulda>, [">= 2.11.1"])
-      s.add_dependency(%q<mocha>, [">= 0.9.8"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
     end
   else
     s.add_dependency(%q<rails>, [">= 3.0.0.beta1"])
     s.add_dependency(%q<bundler>, [">= 0.9.26"])
-    s.add_dependency(%q<shoulda>, [">= 2.11.1"])
-    s.add_dependency(%q<mocha>, [">= 0.9.8"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
   end
 end
 
