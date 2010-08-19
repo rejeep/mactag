@@ -32,5 +32,18 @@ module Mactag
     #
     @@rvm = true
     cattr_accessor :rvm
+
+    ##
+    #
+    # File System State Monitor (FSSM) is a feature that can be
+    # enabled with Mactag to automatically update tags when files are
+    # updates, added or deleted.
+    #
+    @@fssm = false
+    cattr_writer :fssm
+
+    def self.fssm
+      @@fssm === true ? '.tags' : @@fssm
+    end
   end
 end

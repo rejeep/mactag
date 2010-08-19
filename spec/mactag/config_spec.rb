@@ -35,4 +35,20 @@ describe Mactag::Config do
       Mactag::Config.rvm.should be_true
     end
   end
+
+  describe '#fssm' do
+    it 'should be false by default' do
+      Mactag::Config.fssm.should be_false
+    end
+
+    it 'should return default tags dir when true' do
+      Mactag::Config.fssm = true
+      Mactag::Config.fssm.should == '.tags'
+    end
+
+    it 'should return correct tags dir when set' do
+      Mactag::Config.fssm = 'tags'
+      Mactag::Config.fssm.should == 'tags'
+    end
+  end
 end
