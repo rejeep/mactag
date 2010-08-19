@@ -18,6 +18,7 @@ module Mactag
       tags.compact!
       tags.collect! { |file| File.expand_path(file) }
       tags.collect! { |file| Dir.glob(file) }
+      tags.flatten!
       tags.uniq!
       tags
     end

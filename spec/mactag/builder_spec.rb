@@ -25,7 +25,7 @@ describe Mactag::Builder do
 
   describe '#tags' do
     before do
-      Dir.stub!(:glob).and_return { |file| file }
+      Dir.stub!(:glob).and_return { |file| [file] }
       File.stub!(:expand_path).and_return { |file| file }
     end
 
