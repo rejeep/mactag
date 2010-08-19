@@ -7,11 +7,11 @@ module Mactag
     def initialize
       @tags = []
     end
-    
+
     def <<(tags)
       @tags += Array(tags)
     end
-    
+
     def tags
       tags = all
       tags.flatten!
@@ -29,27 +29,28 @@ module Mactag
     def gems?
       all.flatten.compact.any?
     end
-    
+
     def self.create
       unless gem_home_exists?
         Mactag.warn 'Gem home path does not exist on your system'
       end
 
-      tags = Mactag::Ctags.new(@builder)
-      if tags.build
+      if @builder.gems?
+        system "cd #{Rails.root} && #{Mactag::Config.binary} #{@builder.tags.join(' ')}"
+
         puts "Successfully generated TAGS file"
       else
         Mactag.warn 'You did not specify anything to tag'
       end
     end
-    
+
     def self.generate(&block)
       @builder = Mactag::Builder.new
 
       dsl = Mactag::Dsl.new(@builder)
       dsl.instance_eval(&block)
     end
-    
+
     def self.gem_home_exists?
       File.directory?(Mactag::Config.gem_home)
     end
