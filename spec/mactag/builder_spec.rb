@@ -105,4 +105,11 @@ describe Mactag::Builder do
       Mactag::Builder.gem_home_exists?.should be_false
     end
   end
+  
+  describe '#builder' do
+    it 'should return builder instance' do
+      Mactag::Builder.generate {}
+      Mactag::Builder.builder.should == Mactag::Builder.instance_variable_get('@builder')
+    end
+  end
 end

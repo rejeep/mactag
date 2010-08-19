@@ -37,7 +37,7 @@ module Mactag
       end
 
       if @builder.gems?
-        system "cd #{Rails.root} && #{Mactag::Config.binary} #{@builder.files.join(' ')}"
+        system "cd #{Rails.root} && #{Mactag::Config.binary} #{builder.files.join(' ')}"
 
         puts "Successfully generated TAGS file"
       else
@@ -54,6 +54,10 @@ module Mactag
 
     def self.gem_home_exists?
       File.directory?(Mactag::Config.gem_home)
+    end
+    
+    def self.builder
+      @builder
     end
   end
 end
