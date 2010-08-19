@@ -9,7 +9,7 @@ module Mactag
     end
 
     def build
-      system "cd #{Rails.root} && #{Mactag::Config.binary} #{@builder.tags}"
+      system "cd #{Rails.root} && #{Mactag::Config.binary} #{@builder.tags.join(' ')}"
       @builder.gems?
     end
   end

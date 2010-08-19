@@ -19,7 +19,7 @@ module Mactag
       tags.collect! { |file| File.expand_path(file) }
       tags.collect! { |file| Dir.glob(file) }
       tags.uniq!
-      tags.join(' ')
+      tags
     end
 
     def all
