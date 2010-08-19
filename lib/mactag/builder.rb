@@ -12,7 +12,7 @@ module Mactag
       @tags += Array(tags)
     end
 
-    def tags
+    def files
       tags = all
       tags.flatten!
       tags.compact!
@@ -37,7 +37,7 @@ module Mactag
       end
 
       if @builder.gems?
-        system "cd #{Rails.root} && #{Mactag::Config.binary} #{@builder.tags.join(' ')}"
+        system "cd #{Rails.root} && #{Mactag::Config.binary} #{@builder.files.join(' ')}"
 
         puts "Successfully generated TAGS file"
       else

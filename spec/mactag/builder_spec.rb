@@ -23,44 +23,44 @@ describe Mactag::Builder do
     end
   end
 
-  describe '#tags' do
+  describe '#files' do
     before do
       Dir.stub!(:glob).and_return { |file| [file] }
       File.stub!(:expand_path).and_return { |file| file }
     end
 
-    it 'should flatten all tags' do
+    it 'should flatten all files' do
       @builder.stub!(:all).and_return([['app'], 'lib'])
-      @builder.tags.should =~ ['app', 'lib']
+      @builder.files.should =~ ['app', 'lib']
     end
 
-    it 'should compact all tags' do
+    it 'should compact all files' do
       @builder.stub!(:all).and_return([nil, 'app', nil, 'lib', nil])
-      @builder.tags.should =~ ['app', 'lib']
+      @builder.files.should =~ ['app', 'lib']
     end
 
-    it 'should expand all tags' do
+    it 'should expand all files' do
       @builder.stub!(:all).and_return(['app', 'lib'])
       File.should_receive(:expand_path).with('app')
       File.should_receive(:expand_path).with('lib')
-      @builder.tags
+      @builder.files
     end
 
-    it 'should glob all tags' do
+    it 'should glob all files' do
       @builder.stub!(:all).and_return(['app', 'lib'])
       Dir.should_receive(:glob).with('app')
       Dir.should_receive(:glob).with('lib')
-      @builder.tags
+      @builder.files
     end
 
-    it 'should uniquify tags' do
+    it 'should uniquify files' do
       @builder.stub!(:all).and_return(['app', 'lib', 'lib', 'app'])
-      @builder.tags.should =~ ['app', 'lib']
+      @builder.files.should =~ ['app', 'lib']
     end
   end
 
   describe '#all' do
-    it 'should return all tags' do
+    it 'should return all files' do
       @builder << Mactag::Tag::App.new('app')
       @builder << Mactag::Tag::App.new('lib')
 
