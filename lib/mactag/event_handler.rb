@@ -2,7 +2,7 @@ module Mactag
   class EventHandler
     def update(file)
       tags_file = Mactag::TagsFile.new(file)
-      if tags_file.exists?
+      if tags_file.exist?
         tags_file.delete
         tags_file.create
       end
@@ -10,7 +10,7 @@ module Mactag
     
     def delete(file)
       tags_file = Mactag::TagsFile.new(file)
-      if tags_file.exists?
+      if tags_file.exist?
         tags_file.delete
       end
     end
