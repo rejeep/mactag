@@ -3,6 +3,7 @@ require 'mactag/config'
 require 'mactag/builder'
 require 'mactag/dsl'
 require 'mactag/tag'
+require 'mactag/ctags'
 
 module Mactag
   autoload :Bundler, 'bundler'
