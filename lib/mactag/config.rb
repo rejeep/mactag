@@ -11,6 +11,7 @@ module Mactag
     ##
     #
     # The system folder where the gems are located.
+    #
     #   Mactag::Config.gem_home = '/Library/Ruby/Gems/1.8/gems'
     #
     @@gem_home = '/Library/Ruby/Gems/1.8/gems'
@@ -28,6 +29,7 @@ module Mactag
     #
     # If using Ruby Version Manager (RVM), setting this option to true
     # will enable Mactag to find out the gem path automatically.
+    #
     #   Mactag::Config.rvm = false
     #
     @@rvm = true
