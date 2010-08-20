@@ -33,7 +33,7 @@ describe Mactag::TagsFile do
     it 'return correct output file' do
       File.stub!(:join).and_return { |*args| args.last }
 
-      @tags_file.send(:output, '/path/to/file.rb').should == '_path_to_file.rb'
+      @tags_file.send(:output, '/path/to/file.rb').should == '_path_to-file.rb'
     end
   end
 end
