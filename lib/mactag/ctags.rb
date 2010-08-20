@@ -5,7 +5,7 @@ module Mactag
   #
   class Ctags
     def initialize(input, output)
-      @input = input
+      @input = Array(input)
       @output = output
     end
 

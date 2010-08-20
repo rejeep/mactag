@@ -22,4 +22,16 @@ describe Mactag::Ctags do
       @ctags.send(:command, 'bin').should == 'cd root && bin'
     end
   end
+
+  context 'input files' do
+    it 'should handle single file' do
+      @ctags = Mactag::Ctags.new('in', 'out')
+      @ctags.instance_variable_get('@input').should =~ ['in']
+    end
+
+    it 'should handle multiple files' do
+      @ctags = Mactag::Ctags.new(['in_1', 'in_2'], 'out')
+      @ctags.instance_variable_get('@input').should =~ ['in_1', 'in_2']
+    end
+  end
 end
