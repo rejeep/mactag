@@ -9,7 +9,7 @@ module Mactag
   autoload :Rails, 'rails'
 
   def self.warn(message)
-    $stderr.puts(message)
+    STDERR.puts(message)
   end
 end
 
