@@ -9,7 +9,7 @@ module Mactag
     #
     @@binary = 'ctags -o {OUTPUT} -e {INPUT}'
     cattr_accessor :binary
-    
+
     ##
     #
     # Name of the output tags file.
@@ -18,6 +18,13 @@ module Mactag
     #
     @@tags_file = 'TAGS'
     cattr_accessor :tags_file
+
+    ##
+    #
+    # Directory to store tags in when using Mactag server and FSSM.
+    #
+    @@tags_dir = '.tags'
+    cattr_accessor :tags_dir
 
     ##
     #
@@ -45,20 +52,5 @@ module Mactag
     #
     @@rvm = true
     cattr_accessor :rvm
-
-    ##
-    #
-    # File System State Monitor (FSSM) is a feature that can be
-    # enabled with Mactag to automatically update tags when files are
-    # updates, added or deleted.
-    #
-    #   Mactag::Config.fssm = 'tags'
-    #
-    @@fssm = false
-    cattr_writer :fssm
-
-    def self.fssm
-      @@fssm === true ? '.tags' : @@fssm
-    end
   end
 end
