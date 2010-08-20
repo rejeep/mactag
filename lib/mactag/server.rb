@@ -12,13 +12,15 @@ module Mactag
       private
 
       def create_tags_dir
-        unless File.directory?(Mactag::Config.tags_dir)
-          Dir.mkdir(Mactag::Config.tags_dir)
+        tags_dir = File.join(Rails.root, Mactag::Config.tags_dir)
+        unless File.directory?(tags_dir)
+          Dir.mkdir(tags_dir)
         end
       end
 
       def clear_tags
-        Dir.glob(File.join(Mactag::Config.tags_dir, '*')).each do |file|
+        tags_files = File.join(Rails.root, Mactag::Config.tags_dir, '*')
+        Dir.glob(tags_files).each do |file|
           File.delete(file)
         end
       end
