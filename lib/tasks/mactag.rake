@@ -1,8 +1,21 @@
 task :environment
 
-desc "Creates a Ctags file"
-task :mactag => :environment do
-  require File.join(Rails.root, "config", "mactag")
+def load_configuration
+  require File.join(Rails.root, 'config', 'mactag')
+end
 
-  Mactag::Builder.create
+namespace :mactag do
+  desc 'Creates a Ctags file'
+  task :create => :environment do
+    load_configuration
+
+    Mactag::Builder.create
+  end
+
+  desc 'Creates a Ctags file'
+  task :server => :environment do
+    load_configuration
+
+    Mactag::Server.start
+  end
 end
