@@ -20,10 +20,10 @@ module Mactag
     private
 
     def output(file)
-      basename = File.basename(file)
+      basename = File.basename(file, '.*')
       dirname = File.dirname(file)
 
-      filename = [dirname.gsub(/\//, '_'), basename].join('-')
+      filename = [dirname.gsub(/\//, '_'), basename].join('_')
 
       File.join(Rails.root, Mactag::Config.tags_dir, filename)
     end
