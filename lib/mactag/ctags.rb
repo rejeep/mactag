@@ -13,7 +13,7 @@ module Mactag
       binary = Mactag::Config.binary
 
       binary.gsub!('{OUTPUT}', @output)
-      binary.gsub!('{INPUT}', @input)
+      binary.gsub!('{INPUT}', @input.join(' '))
       
       exec(binary)
     end
