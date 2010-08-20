@@ -58,6 +58,18 @@ describe Mactag::Builder do
       @builder.files.should =~ ['app', 'lib']
     end
   end
+  
+  describe '#directories' do
+    it 'should return all file dirnames' do
+      @builder.stub!(:files).and_return(['app/models/user.rb', 'lib/validate.rb'])
+      @builder.directories.should =~ ['app/models', 'lib']
+    end
+    
+    it 'should only return uniq directories' do
+      @builder.stub!(:files).and_return(['app/models/user.rb', 'app/models/post.rb'])
+      @builder.directories.should =~ ['app/models']
+    end
+  end
 
   describe '#all' do
     it 'should return all files' do

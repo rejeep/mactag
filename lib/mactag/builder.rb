@@ -23,6 +23,10 @@ module Mactag
       tags
     end
 
+    def directories
+      files.collect { |file| File.dirname(file) }.uniq
+    end
+
     def all
       @all_tags ||= @tags.collect!(&:tag)
     end
@@ -55,7 +59,7 @@ module Mactag
     def self.gem_home_exists?
       File.directory?(Mactag::Config.gem_home)
     end
-    
+
     def self.builder
       @builder
     end
