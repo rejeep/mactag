@@ -7,6 +7,7 @@ require 'mactag/tag'
 module Mactag
   autoload :Bundler, 'bundler'
   autoload :Rails, 'rails'
+  autoload :FSSM, 'fssm'
 
   def self.warn(message)
     STDERR.puts(message)
