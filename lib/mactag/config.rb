@@ -41,6 +41,8 @@ module Mactag
     # enabled with Mactag to automatically update tags when files are
     # updates, added or deleted.
     #
+    #   Mactag::Config.fssm = 'tags'
+    #
     @@fssm = false
     cattr_writer :fssm
 
