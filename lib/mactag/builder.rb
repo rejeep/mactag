@@ -20,6 +20,7 @@ module Mactag
       tags.collect! { |file| Dir.glob(file) }
       tags.flatten!
       tags.uniq!
+      tags.reject! { |file| File.directory?(file) }
       tags
     end
 

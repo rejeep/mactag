@@ -27,6 +27,7 @@ describe Mactag::Builder do
     before do
       Dir.stub!(:glob).and_return { |file| [file] }
       File.stub!(:expand_path).and_return { |file| file }
+      File.stub!(:directory?).and_return(false)
     end
 
     it 'should flatten all files' do
@@ -56,6 +57,13 @@ describe Mactag::Builder do
     it 'should uniquify files' do
       @builder.stub!(:all).and_return(['app', 'lib', 'lib', 'app'])
       @builder.files.should =~ ['app', 'lib']
+    end
+    
+    it 'should not return directories' do
+      @builder.stub!(:all).and_return(['app'])
+      Dir.stub!(:glob).and_return(['app'])
+      File.stub!(:directory?).and_return(true)
+      @builder.files.should be_empty
     end
   end
   
