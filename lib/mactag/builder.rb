@@ -37,7 +37,7 @@ module Mactag
       end
 
       if @builder.gems?
-        system "cd #{Rails.root} && #{Mactag::Config.binary} #{builder.files.join(' ')}"
+        Mactag::Ctags.new(@builder.files, Mactag::Config.tags_file).create
 
         puts "Successfully generated TAGS file"
       else
