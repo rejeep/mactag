@@ -14,8 +14,19 @@ module Mactag
 
       binary.gsub!('{OUTPUT}', @output)
       binary.gsub!('{INPUT}', @input)
-
-      system "cd #{Rails.root} && #{binary}"
+      
+      exec(binary)
+    end
+    
+    
+    private
+    
+    def exec(binary)
+      system command(binary)
+    end
+    
+    def command(binary)
+      "cd #{Rails.root} && #{binary}"
     end
   end
 end
