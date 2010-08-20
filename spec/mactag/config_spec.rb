@@ -2,8 +2,14 @@ require 'spec_helper'
 
 describe Mactag::Config do
   describe '#binary' do
-    it 'should be the right command' do
-      Mactag::Config.binary.should == 'ctags -o TAGS -e'
+    it 'should have correct command' do
+      Mactag::Config.binary.should == 'ctags -o {OUTPUT} -e {INPUT}'
+    end
+  end
+  
+  describe '#tags_file' do
+    it 'should have correct name' do
+      Mactag::Config.tags_file.should == 'TAGS'
     end
   end
 

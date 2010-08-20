@@ -2,11 +2,22 @@ module Mactag
   class Config
     ##
     #
-    # The command to run when creating the TAGS-file.
-    #   Mactag::Config.binary = 'etags -o TAGS'
+    # The command to run (replacing {OUTPUT} with Mactag::Config.tags_file
+    # and {INPUT} with the input files) when creating the TAGS-file.
     #
-    @@binary = 'ctags -o TAGS -e'
+    #   Mactag::Config.binary = 'etags -o {OUTPUT} {INPUT}'
+    #
+    @@binary = 'ctags -o {OUTPUT} -e {INPUT}'
     cattr_accessor :binary
+    
+    ##
+    #
+    # Name of the output tags file.
+    #
+    # Mactag::Config.binary = 'TAGS_FILE'
+    #
+    @@tags_file = 'TAGS'
+    cattr_accessor :tags_file
 
     ##
     #
