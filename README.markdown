@@ -64,12 +64,16 @@ examples of how to configure Mactag.
 
 * **Mactag::Config.rvm:** If true, use RVM gems. Defaults to **true**
 * **Mactag::Config.gem_home:** The path where the gems are located. Defaults to **/Library/Ruby/Gems/1.8/gems**
-* **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **ctags -o TAGS -e**
+* **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **ctags -o {OUTPUT} -e {INPUT}**
+* **Mactag::Config.tags_file:** Name of output file. Defaults to **TAGS**
+* **Mactag::Config.tags_dir:** Name of output directory to store tags files when using FSSM. Defaults to **.tags**
 
 ## Example mactag.rb file
     Mactag::Config.rvm = false
     Mactag::Config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
-    Mactag::Config.binary = 'etags -o TAGS'
+    Mactag::Config.binary = 'etags -o {OUTPUT} {INPUT}'
+    Mactag::Config.tags_file = 'TAGS'
+    Mactag::Config.tags_dir = '.tags' # See FSSM
 
     Mactag do # This is "Mactag::Table.generate do" in Rails 2 applications
       app 'app/**/*.rb', 'lib/*.rb'
@@ -82,10 +86,28 @@ examples of how to configure Mactag.
       rails :except => :actionmailer, :version => '2.3.5'
     end
 
-
 # Usage
 To create the TAGS file. Simply run:
-    $ rake mactag
+    $ rake mactag:create
+
+
+# FSSM
+A problem with tags is that when new your projects code changes, your
+tags file will not keep up. Mactag can solve this by using FSSM, which
+is a tool that notice modifications in the file system.
+
+To enable FSSM, you must add the **fssm** gem to your projects Gemfile.
+
+Then start the server that keeps track of changes
+    rake mactag:server
+    
+This creates a couple of tags files in **Mactag::Config.tags_dir**
+(one for each source file). This means your editor must support
+multiple tags files.
+
+## Editor support
+
+* Emacs - http://github.com/rejeep/mactag.el
 
 
 # License
