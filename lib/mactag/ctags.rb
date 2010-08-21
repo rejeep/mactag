@@ -10,23 +10,23 @@ module Mactag
     end
 
     def create
+      system(command)
+    end
+
+
+    private
+    
+    def command
+      "cd #{Rails.root} && #{binary}"
+    end
+
+    def binary
       binary = Mactag::Config.binary
 
       binary.gsub!('{OUTPUT}', @output)
       binary.gsub!('{INPUT}', @input.join(' '))
       
-      exec(binary)
-    end
-    
-    
-    private
-    
-    def exec(binary)
-      system command(binary)
-    end
-    
-    def command(binary)
-      "cd #{Rails.root} && #{binary}"
+      binary
     end
   end
 end
