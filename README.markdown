@@ -92,11 +92,11 @@ To create the TAGS file. Simply run:
 
 
 # FSSM
-A problem with tags is that when new your projects code changes, your
+A problem with tags, is that when your project's code changes, your
 tags file will not keep up. Mactag can solve this by using FSSM, which
-is a tool that notice modifications in the file system.
+is a tool that notice file system modifications.
 
-To enable FSSM, you must add the **fssm** gem to your projects Gemfile.
+To enable FSSM, add the **fssm** gem to your projects Gemfile.
 
 Then start the server that keeps track of changes
     rake mactag:server
@@ -107,7 +107,7 @@ multiple tags files.
 
 ## Editor support
 
-* Emacs - http://github.com/rejeep/mactag.el
+* Emacs - <http://github.com/rejeep/mactag.el>
 
 
 # License
