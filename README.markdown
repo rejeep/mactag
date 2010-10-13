@@ -44,7 +44,7 @@ Install the gem:
     
 Load the gem in **Gemfile**:
     group :development do
-      gem 'mactag', '0.3.3'
+      gem 'mactag', '0.4.0'
     end
 
 
