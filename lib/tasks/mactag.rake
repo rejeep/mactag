@@ -5,14 +5,14 @@ def load_configuration
 end
 
 namespace :mactag do
-  desc 'Creates a Ctags file'
+  desc 'Creates Ctags file'
   task :create => :environment do
     load_configuration
 
     Mactag::Builder.create
   end
 
-  desc 'Creates a Ctags file'
+  desc 'Starts the Mactag server'
   task :server => :environment do
     load_configuration
 
