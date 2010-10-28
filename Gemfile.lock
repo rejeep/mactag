@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mactag (0.3.3)
+    mactag (0.4.0)
       bundler (>= 0.9.26)
       rails (>= 3.0.0.beta1)
 
