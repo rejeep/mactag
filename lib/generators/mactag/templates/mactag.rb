@@ -22,7 +22,7 @@
 # Change the binary option if you are not satisfied with the standard
 # command (ctags -o TAGS -e) used to create the TAGS table.
 # Default is *ctags -o TAGS -e*
-#   Mactag::Config.binary = 'etags -o TAGS'
+#   Mactag::Config.binary = '/usr/local/Cellar/ctags/5.8/bin/ctags -e -o {OUTPUT} {INPUT}'
 #
 
 ##
