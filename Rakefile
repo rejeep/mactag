@@ -36,3 +36,4 @@ Rake::TestTask.new(:spec) do |t|
 end
 
 task :default => :spec
+task :test => :spec
