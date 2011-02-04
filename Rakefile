@@ -20,7 +20,6 @@ begin
     gemspec.test_files = FileList['spec/**/*_spec.rb']
 
     gemspec.add_runtime_dependency('rails', ['>= 3.0.0.beta1'])
-    gemspec.add_runtime_dependency('bundler', ['>= 0.9.26'])
     gemspec.add_development_dependency('rspec', ['>= 2.0.0.beta.19'])
   end
   Jeweler::GemcutterTasks.new
