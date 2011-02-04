@@ -46,8 +46,8 @@ module Mactag
       def initialize(options)
         @options = options
 
-        @only = packagize!(options[:only])
-        @except = packagize!(options[:except])
+        @only = packagize(options[:only])
+        @except = packagize(options[:except])
       end
 
       def tag
@@ -77,10 +77,10 @@ module Mactag
         result
       end
       
-      def packagize!(pkgs)
+      def packagize(pkgs)
         return nil if pkgs.blank?
 
-        Array(pkgs).collect do |pkg|
+        Array(pkgs).map do |pkg|
           "#{pkg}".gsub(/[^a-z]/, '').to_sym
         end
       end

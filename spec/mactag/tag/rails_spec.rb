@@ -57,7 +57,7 @@ describe Mactag::Tag::Rails do
 
     context 'single package' do
       before do
-        @packagized = @rails.send(:packagize!, 'active_record')
+        @packagized = @rails.send(:packagize, 'active_record')
       end
 
       it 'should return package packagized' do
@@ -67,7 +67,7 @@ describe Mactag::Tag::Rails do
 
     context 'multiple packages' do
       before do
-        @packagized = @rails.send(:packagize!, ['_active_support_', :action_view])
+        @packagized = @rails.send(:packagize, ['_active_support_', :action_view])
       end
 
       it 'should return packages packagized' do
