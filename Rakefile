@@ -10,15 +10,13 @@ begin
     gemspec.email = 'johan.rejeep@gmail.com'
     gemspec.homepage = 'http://github.com/rejeep/mactag'
     gemspec.authors = ['Johan Andersson']
-    gemspec.files = FileList[
-                             'lib/**/*.rb',
+    gemspec.files = FileList['lib/**/*.rb',
                              'LICENCE',
                              'README.markdown',
                              'lib/tasks/*.rake',
                              'VERSION',
                              'Rakefile',
-                             '.gemtest'
-                            ]
+                             '.gemtest']
     gemspec.test_files = FileList['spec/**/*_spec.rb']
 
     gemspec.add_runtime_dependency('rails', ['>= 3.0.0.beta1'])
