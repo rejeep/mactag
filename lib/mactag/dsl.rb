@@ -43,8 +43,8 @@ module Mactag
       if gems.empty?
         @builder << Mactag::Tag::Gem.all
       else
-        gems.each do |name|
-          @builder << Mactag::Tag::Gem.new(name, options[:version])
+        gems.each do |gem|
+          @builder << Mactag::Tag::Gem.new(gem, options[:version])
         end
       end
     end
