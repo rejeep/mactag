@@ -39,17 +39,15 @@ module Mactag
     class << self
       def create
         unless gem_home_exists?
-          # EXCEPTION
-          Mactag.warn 'Gem home path does not exist on your system'
+          raise Mactag::MactagError.new("Specified gem home directory does not exist: #{Mactag::Config.gem_home}")
         end
 
-        if @builder.has_gems?
+        if builder.has_gems?
           Mactag::Ctags.new(@builder.files, Mactag::Config.tags_file).create
 
-          puts "Successfully generated TAGS file"
+          puts 'Successfully generated TAGS file'
         else
-          # EXCEPTION
-          Mactag.warn 'You did not specify anything to tag'
+          raise Mactag::MactagError.new('Nothing to tag')
         end
       end
 

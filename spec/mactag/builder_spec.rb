@@ -106,9 +106,26 @@ describe Mactag::Builder do
     end
   end
 
+  describe '#create' do
+    it 'raises error when gem home does not exist' do
+      Mactag::Builder.stub(:gem_home_exists?) { false }
+      proc {
+        Mactag::Builder.create
+      }.should raise_exception(Mactag::MactagError)
+    end
+
+    it 'raises errors when gem home exists but there are no gems' do
+      Mactag::Builder.stub(:gem_home_exists?) { true }
+      Mactag::Builder.stub(:builder) { mock(:has_gems? => false) }
+      proc {
+        Mactag::Builder.create
+      }.should raise_exception(Mactag::MactagError)
+    end
+  end
+
   describe '#generate' do
     it 'accepts a block as argument' do
-      lambda {
+      proc {
         Mactag::Builder.generate {}
       }.should_not raise_exception
     end
