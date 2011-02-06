@@ -35,7 +35,7 @@ module Mactag
         @builder << Mactag::Tag::Plugin.new(plugin)
       end
     end
-    alias_method :plugins, :plugin
+    alias :plugins :plugin
 
     ##
     #
@@ -56,7 +56,7 @@ module Mactag
         end
       end
     end
-    alias_method :gems, :gem
+    alias :gems :gem
 
     ##
     #

@@ -29,40 +29,44 @@ module Mactag
     end
 
     def all
-      @all_tags ||= @tags.collect!(&:tag)
+      @all ||= @tags.collect!(&:tag)
     end
 
-    def gems?
+    def has_gems?
       all.flatten.compact.any?
     end
 
-    def self.create
-      unless gem_home_exists?
-        Mactag.warn 'Gem home path does not exist on your system'
+    class << self
+      def create
+        unless gem_home_exists?
+          # EXCEPTION
+          Mactag.warn 'Gem home path does not exist on your system'
+        end
+
+        if @builder.has_gems?
+          Mactag::Ctags.new(@builder.files, Mactag::Config.tags_file).create
+
+          puts "Successfully generated TAGS file"
+        else
+          # EXCEPTION
+          Mactag.warn 'You did not specify anything to tag'
+        end
       end
 
-      if @builder.gems?
-        Mactag::Ctags.new(@builder.files, Mactag::Config.tags_file).create
+      def generate(&block)
+        @builder = Mactag::Builder.new
 
-        puts "Successfully generated TAGS file"
-      else
-        Mactag.warn 'You did not specify anything to tag'
+        dsl = Mactag::Dsl.new(@builder)
+        dsl.instance_eval(&block)
       end
-    end
 
-    def self.generate(&block)
-      @builder = Mactag::Builder.new
+      def gem_home_exists?
+        File.directory?(Mactag::Config.gem_home)
+      end
 
-      dsl = Mactag::Dsl.new(@builder)
-      dsl.instance_eval(&block)
-    end
-
-    def self.gem_home_exists?
-      File.directory?(Mactag::Config.gem_home)
-    end
-
-    def self.builder
-      @builder
+      def builder
+        @builder
+      end
     end
   end
 end

@@ -1,81 +1,49 @@
 # Mactag
 
 Mactag is a plugin for Rails developers that do their development in
-an editor that supports Ctags (Emacs, Vim, TextMate, jEdit, ...). With
-Ctags you can follow tags (of functions, variables, macros, whatever)
-to their definitions.
+an editor that supports Ctags (Emacs, Vim, TextMate, ...). With Ctags
+you can follow tags (of functions, variables, macros, whatever) to
+their definitions.
 
 
 # Exuberant Ctags
 First off, you must install [Ctags](http://ctags.sourceforge.net/).
-Some systems comes with a ctags command already. If you have the ctags
-executable, but have problems creating the tags file. Then make sure
-that you are using **Exuberant Ctags** and not some other version.
+Some systems comes with a **ctags** command already. If you have the
+ctags executable, but have problems creating the tags file. Then make
+sure that you are using **Exuberant Ctags** and not some other version.
 
 
 # Installation
 
-## Rails 2.x
-
-### Plugin
-Install the plugin:
-    $ ./script/plugin install git://github.com/rejeep/mactag.git --revision 'tags/v0.0.5'
-
-### Gem
-Install the gem:
-    $ gem install mactag --version='0.0.5'
-    
-Load the gem in **config/environments/development.rb**:
-    config.gem 'mactag'
-    
-Load the rake tasks in **Rakefile**.
-    require 'mactag/tasks'
-
-
-## Rails 3.x
-
-### Plugin
+## Plugin
 Install the plugin:
     $ rails plugin install git://github.com/rejeep/mactag.git
 
-### Gem
+## Gem
 Install the gem:
     $ gem install mactag
     
-Load the gem in **Gemfile**:
+Add mactag to the **Gemfile**:
     group :development do
-      gem 'mactag', '0.4.0'
+      gem 'mactag'
     end
 
 
 # Configuration
-Generate a basic configuration file:
 
-## Rails 2.x
-    $ ./script/generate mactag
-    
-## Rails 3.x
+To generate a template configuration file (**config/mactag.rb**),
+which contains a basic setup and some examples of how to configure
+Mactag, use the **mactag** generator:
     $ rails generate mactag
 
-This will create the file **config/mactag.rb**, which contains some
-examples of how to configure Mactag.
-
-## Options
-
-* **Mactag::Config.rvm:** If true, use RVM gems. Defaults to **true**
-* **Mactag::Config.gem_home:** The path where the gems are located. Defaults to **/Library/Ruby/Gems/1.8/gems**
-* **Mactag::Config.binary:** The command to run when creating the TAGS-file. Defaults to **ctags -o {OUTPUT} -e {INPUT}**
-* **Mactag::Config.tags_file:** Name of output file. Defaults to **TAGS**
-* **Mactag::Config.tags_dir:** Name of output directory to store tags files when using FSSM. Defaults to **.tags**
-
 ## Example mactag.rb file
+
     Mactag::Config.rvm = false
     Mactag::Config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
     Mactag::Config.binary = 'etags -o {OUTPUT} {INPUT}'
     Mactag::Config.tags_file = 'TAGS'
-    Mactag::Config.tags_dir = '.tags' # See FSSM
 
-    Mactag do # This is "Mactag::Table.generate do" in Rails 2 applications
+    Mactag do
       app 'app/**/*.rb', 'lib/*.rb'
 
       plugins 'thinking-sphinx', 'whenever'
@@ -85,29 +53,32 @@ examples of how to configure Mactag.
 
       rails :except => :actionmailer, :version => '2.3.5'
     end
+    
+## Options
+The available configuration options are described below.
+
+### Mactag::Config.rvm
+If true, use [Rvm](http://rvm.beginrescueend.com/) when indexing gems.  
+Defaults to: `true`
+
+### Mactag::Config.gem_home
+Path to gems. No need to set this when using **Mactag::Config.rvm**.  
+Defaults to: `/Library/Ruby/Gems/1.8/gems`
+ 
+### Mactag::Config.binary
+The command to run when creating the TAGS-file. **{OUTPUT}** will be
+replaced with the value of **Mactag::Config.tags_file**. **{INPUT}**
+will be replaced with all files to index.  
+Defaults to: `ctags -o {OUTPUT} -e {INPUT}`
+
+### Mactag::Config.tags_file
+Name of the output tags file.  
+Defaults to: `TAGS`
+
 
 # Usage
-To create the TAGS file. Simply run:
-    $ rake mactag:create
-
-
-# FSSM
-A problem with tags, is that when your project's code changes, your
-tags file will not keep up. Mactag can solve this by using FSSM, which
-is a tool that notice file system modifications.
-
-To enable FSSM, add the **fssm** gem to your projects Gemfile.
-
-Then start the server that keeps track of changes
-    rake mactag:server
-    
-This creates a couple of tags files in **Mactag::Config.tags_dir**
-(one for each source file). This means your editor must support
-multiple tags files.
-
-## Editor support
-
-* Emacs - <http://github.com/rejeep/mactag.el>
+To create the TAGS file, simply run:
+    $ rake mactag
 
 
 # License

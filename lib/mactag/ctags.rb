@@ -15,7 +15,7 @@ module Mactag
 
 
     private
-    
+
     def command
       "cd #{Rails.root} && #{binary}"
     end
@@ -25,7 +25,7 @@ module Mactag
 
       binary.gsub!('{OUTPUT}', @output)
       binary.gsub!('{INPUT}', @input.join(' '))
-      
+
       binary
     end
   end

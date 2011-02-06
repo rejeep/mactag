@@ -41,52 +41,45 @@ module Mactag
     #   do
     #
     class Rails
-      PACKAGES = [:actionmailer, :actionpack, :activemodel, :activerecord, :activeresource, :railties, :activesupport]
+
+      PACKAGES = %w(actionmailer actionpack activemodel activerecord activeresource activesupport railties)
+
+      attr_accessor :only, :except, :version
 
       def initialize(options)
-        @options = options
-
         @only = packagize(options[:only])
         @except = packagize(options[:except])
+        @version = options[:version]
       end
 
       def tag
-        result = []
-        packages.each do |package|
-          if PACKAGES.include?(package)
-            result << Gem.new(package.to_s, version).tag
-          end
+        packages.inject([]) do |array, package|
+          array << Gem.new(package, version).tag
+          array
         end
-        result
+      end
+
+      def packages
+        if only || except
+          only || PACKAGES - except
+        else
+          PACKAGES
+        end
       end
 
 
       private
-      
-      def packages
-        result = []
-        unless @only || @except
-          result = PACKAGES
-        else
-          if @only
-            result = @only
-          elsif @except
-            result = PACKAGES - @except
-          end
-        end
-        result
-      end
-      
+
       def packagize(pkgs)
         return nil if pkgs.blank?
 
         Array(pkgs).map do |pkg|
-          "#{pkg}".gsub(/[^a-z]/, '').to_sym
+          "#{pkg}".gsub(/[^a-z]/, '')
         end
       end
-      
+
       def version
-        @options[:version] || ::Rails.version
+        @version || ::Rails.version
       end
     end
   end

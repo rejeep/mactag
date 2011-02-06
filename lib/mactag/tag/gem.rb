@@ -20,6 +20,8 @@ module Mactag
     #   do
     #
     class Gem
+      attr_accessor :name, :version
+
       def initialize(name, version = nil)
         @name = name
         @version = version
@@ -27,53 +29,51 @@ module Mactag
 
       def tag
         if exists?
-          if @version
-            gem = splash
-          else
-            gem = Gem.most_recent(@name)
+          unless version
+            @version = Mactag::Tag::Gem.last(name)
           end
-          File.join(Mactag::Config.gem_home, gem, 'lib', '**', '*.rb')
+
+          File.join(Mactag::Config.gem_home, combo, 'lib', '**', '*.rb')
         else
-          Mactag.warn "Gem #{@version ? splash : @name} not found"
+          raise GemNotFoundError.new(self)
         end
       end
 
-      def self.all
-        gems = {}
-        Bundler.load.specs.each do |spec|
-          gems[spec.name] = spec.version.to_s
-        end
-
-        default = Bundler.load.dependencies.select { |dependency| dependency.groups.include?(:default) }.collect(&:name)
-        default.delete('rails')
-        default.collect { |tmp| Gem.new(tmp, gems[tmp]) }
+      def exists?
+        Mactag::Tag::Gem.dirs(name).size > 0
       end
 
-      def self.most_recent(name)
-        versions = Dir.glob(File.join(Mactag::Config.gem_home, name) + "-*")
-        unless versions.empty?
-          if versions.size == 1
-            gem = versions.first
-          else
-            gem = versions.sort.last
+      class << self
+        def all
+          # Mactag::Bundler.gems
+          bundler = Mactag::Bundler.new
+          bundler.gems
+        end
+
+        def last(name)
+          dirs = Mactag::Tag::Gem.dirs(name)
+          unless dirs.empty?
+            if dirs.size == 1
+              gem = dirs.first
+            else
+              gem = dirs.sort.last
+            end
+            if /-(.+)$/.match(gem)
+              $1
+            end
           end
-          File.basename(gem)
+        end
+
+        def dirs(name)
+          Dir.glob(File.join(Mactag::Config.gem_home, "#{name}-*"))
         end
       end
 
 
       private
 
-      def exists?
-        if @version
-          File.directory?(File.join(Mactag::Config.gem_home, splash))
-        else
-          Gem.most_recent(@name)
-        end
-      end
-
-      def splash
-        "#{@name}-#{@version}"
+      def combo
+        "#{name}-#{version}"
       end
     end
   end

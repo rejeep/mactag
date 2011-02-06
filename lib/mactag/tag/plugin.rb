@@ -2,7 +2,7 @@ module Mactag
   module Tag
     ##
     #
-    # Tags plugins in current Rails application.
+    # Tag plugins in Rails project.
     #
     # ==== Examples
     #   Mactag do
@@ -17,29 +17,35 @@ module Mactag
     #   do
     #
     class Plugin
-      PLUGIN_PATH = File.join('vendor', 'plugins')
+      PLUGIN_PATH = %w(vendor plugins)
 
-      def initialize(plugin)
-        @plugin = plugin
+      attr_accessor :name
+
+      def initialize(name)
+        @name = name
       end
 
       def tag
         if exists?
-          return File.join(PLUGIN_PATH, @plugin, 'lib', '**', '*.rb')
+          return File.join(PLUGIN_PATH, name, 'lib', '**', '*.rb')
         else
-          Mactag.warn "Plugin #{@plugin} not found"
+          raise PluginNotFoundError.new(self)
         end
       end
-      
-      def self.all
-        Dir.glob(File.join(PLUGIN_PATH, '*')).collect { |f| File.basename(f) }
-      end
-      
-      
-      private
-      
+
       def exists?
-        File.directory?(File.join(PLUGIN_PATH, @plugin))
+        File.directory?(path)
+      end
+
+      def path
+        File.join(PLUGIN_PATH, name)
+      end
+
+      def self.all
+        pattern = File.join(PLUGIN_PATH, '*')
+        Dir.glob(pattern).map do |f|
+          File.basename(f)
+        end
       end
     end
   end

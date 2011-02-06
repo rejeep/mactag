@@ -1,14 +1,9 @@
 require 'spec_helper'
 
 describe Mactag::Tag::App do
-  describe '#initialize' do
-    before do
-      @tag = 'app/**/*.rb'
-      @app = Mactag::Tag::App.new(@tag)
-    end
-
-    it 'should set the tag' do
-      @app.tag.should == @tag
-    end
+  subject do
+    Mactag::Tag::App.new('app')
   end
+
+  it_should_behave_like 'tagger'
 end

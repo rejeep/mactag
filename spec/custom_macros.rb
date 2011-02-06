@@ -11,7 +11,7 @@ module CustomMacros
         }.should_not raise_exception
       end
     end
-    
+
     def it_does_not_support_dsl(description = nil, &block)
       it "does not support dsl #{description}" do
         lambda {

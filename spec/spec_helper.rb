@@ -7,9 +7,11 @@ require 'mactag'
 require 'custom_macros'
 
 RSpec.configure do |config|
-  config.before do
-    Mactag.stub!(:warn)
-  end
-
   config.include CustomMacros
+end
+
+shared_examples_for 'tagger' do
+  it 'responds to tag' do
+    subject.should respond_to(:tag)
+  end
 end

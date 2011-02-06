@@ -50,11 +50,11 @@ describe Mactag::Dsl do
 
     context 'with multiple arguments' do
       it_supports_dsl 'without version' do
-        @dsl.gem('devise', 'rack')
+        @dsl.gems('devise', 'rack')
       end
 
       it_does_not_support_dsl 'with version' do
-        @dsl.gem('devise', 'rack', :version => '1.1.1')
+        @dsl.gems('devise', 'rack', :version => '1.1.1')
       end
     end
   end

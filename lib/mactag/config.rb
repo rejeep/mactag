@@ -21,10 +21,13 @@ module Mactag
 
     ##
     #
-    # Directory to store tags in when using Mactag server and FSSM.
+    # If using Ruby Version Manager (RVM), setting this option to true
+    # will enable Mactag to find out the gem path automatically.
     #
-    @@tags_dir = '.tags'
-    cattr_accessor :tags_dir
+    #   Mactag::Config.rvm = false
+    #
+    @@rvm = true
+    cattr_accessor :rvm
 
     ##
     #
@@ -42,15 +45,5 @@ module Mactag
         @@gem_home
       end
     end
-
-    ##
-    #
-    # If using Ruby Version Manager (RVM), setting this option to true
-    # will enable Mactag to find out the gem path automatically.
-    #
-    #   Mactag::Config.rvm = false
-    #
-    @@rvm = true
-    cattr_accessor :rvm
   end
 end

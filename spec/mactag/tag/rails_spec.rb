@@ -1,94 +1,105 @@
 require 'spec_helper'
 
 describe Mactag::Tag::Rails do
-  it 'should have correct packages' do
-    Mactag::Tag::Rails::PACKAGES.should =~ [:actionmailer, :actionpack, :activemodel, :activerecord, :activeresource, :railties, :activesupport]
+  subject do
+    Mactag::Tag::Rails.new({})
+  end
+
+  it_should_behave_like 'tagger'
+
+  before do
+    @rails = Mactag::Tag::Rails.new({})
+  end
+
+  it 'has correct default packages' do
+    Mactag::Tag::Rails::PACKAGES.should eq(['actionmailer', 'actionpack', 'activemodel', 'activerecord', 'activeresource', 'activesupport', 'railties'])
   end
 
   describe '#tag' do
     before do
-      @rails = Mactag::Tag::Rails.new({})
+      Mactag::Tag::Gem.stub(:new) { mock(:tag => 'tag') }
     end
 
-    it 'return empty array if no packages' do
-      @rails.stub!(:packages).and_return([])
+    it 'returns empty array if no packages' do
+      @rails.stub(:packages) { [] }
 
-      @rails.tag.should be_empty
+      @rails.tag.should eq([])
     end
 
-    it 'should return array with gem tags when packages' do
-      @rails.stub!(:packages).and_return([:activemodel, :activerecord])
+    it 'returns array with gem tags when packages' do
+      @rails.stub(:packages) { ['activemodel', 'activerecord'] }
 
-      o = Object.new
-      def o.tag
-        'tag'
-      end
-
-      Mactag::Tag::Gem.stub!(:new).and_return(o)
-
-      @rails.tag.should =~ ['tag', 'tag']
+      @rails.tag.should eq(['tag', 'tag'])
     end
   end
 
   describe '#packages' do
-    it 'should return all packages when no arguments' do
-      @rails = Mactag::Tag::Rails.new({})
-
-      @rails.send(:packages).should =~ Mactag::Tag::Rails::PACKAGES
+    it 'returns all packages unless only and except' do
+      @rails.packages.should eq(Mactag::Tag::Rails::PACKAGES)
     end
 
-    it 'should return some packages when only specified' do
+    it 'returns some packages when only specified' do
       @rails = Mactag::Tag::Rails.new(:only => [:active_support, :activerecord])
 
-      @rails.send(:packages).should =~ [:activesupport, :activerecord]
+      @rails.packages.should eq(['activesupport', 'activerecord'])
     end
 
-    it 'return some packages when except specified' do
+    it 'returns some packages when except specified' do
       @rails = Mactag::Tag::Rails.new(:except => [:active_support, :activerecord])
 
-      @rails.send(:packages).should =~ (Mactag::Tag::Rails::PACKAGES - [:activesupport, :activerecord])
+      @rails.packages.should eq(['actionmailer', 'actionpack', 'activemodel', 'activeresource', 'railties'])
     end
   end
 
   describe '#packagize' do
-    before do
-      @rails = Mactag::Tag::Rails.new({})
+    it 'returns empty array when no packages' do
+      @rails.send(:packagize, []).should be_nil
     end
 
     context 'single package' do
-      before do
-        @packagized = @rails.send(:packagize, 'active_record')
+      it 'packagizes when symbol' do
+        @rails.send(:packagize, [:activerecord]).should eq(['activerecord'])
       end
 
-      it 'should return package packagized' do
-        @packagized.should =~ [:activerecord]
+      it 'packagizes when string' do
+        @rails.send(:packagize, ['activerecord']).should eq(['activerecord'])
+      end
+
+      it 'packagizes when underscore' do
+        @rails.send(:packagize, [:active_record]).should eq(['activerecord'])
       end
     end
 
-    context 'multiple packages' do
-      before do
-        @packagized = @rails.send(:packagize, ['_active_support_', :action_view])
+    context 'multiples packages' do
+      it 'packagizes when symbols' do
+        @rails.send(:packagize, [:activerecord, :activemodel]).should eq(['activerecord', 'activemodel'])
       end
 
-      it 'should return packages packagized' do
-        @packagized.should =~ [:activesupport, :actionview]
+      it 'packagizes when string' do
+        @rails.send(:packagize, ['activerecord', 'activemodel']).should eq(['activerecord', 'activemodel'])
+      end
+
+      it 'packagizes when underscore' do
+        @rails.send(:packagize, [:active_record, :active_model]).should eq(['activerecord', 'activemodel'])
+      end
+
+      it 'packagizes when mixed' do
+        @rails.send(:packagize, [:active_record, 'activemodel']).should eq(['activerecord', 'activemodel'])
       end
     end
   end
 
   describe '#version' do
-    it 'should pick specified version when given' do
-      @rails = Mactag::Tag::Rails.new({ :version => '3.0.0.rc' })
+    it 'returns specified version when version option' do
+      @rails = Mactag::Tag::Rails.new(:version => '3.0.0')
 
-      @rails.send(:version).should == '3.0.0.rc'
+      @rails.send(:version).should eq('3.0.0')
     end
 
-    it 'pick same rails version as application when not specified version' do
-      Rails.stub!(:version).and_return('3.0.0.beta3')
+    it 'returns same version as rails application when version option is not specified' do
+      Rails.stub(:version) { '3.0.0' }
 
-      @rails = Mactag::Tag::Rails.new({})
-
-      @rails.send(:version).should == '3.0.0.beta3'
+      @rails.send(:version).should eq('3.0.0')
     end
   end
 end
