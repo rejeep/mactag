@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'mactag'
-  s.version = '0.5.2'
+  s.version = '0.5.3'
 
   s.authors = ['Johan Andersson']
   s.date = '2011-02-06'
