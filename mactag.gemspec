@@ -5,16 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mactag}
-  s.version = "0.4.0"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johan Andersson"]
-  s.date = %q{2011-02-04}
+  s.date = %q{2011-02-06}
   s.description = %q{Mactag is a Ctags DSL for Rails}
   s.email = %q{johan.rejeep@gmail.com}
   s.extra_rdoc_files = [
-    "README.markdown",
-    "TODO"
+    "README.markdown"
   ]
   s.files = [
     ".gemtest",
@@ -25,18 +24,17 @@ Gem::Specification.new do |s|
     "lib/generators/mactag/templates/mactag.rb",
     "lib/mactag.rb",
     "lib/mactag/builder.rb",
+    "lib/mactag/bundler.rb",
     "lib/mactag/config.rb",
     "lib/mactag/ctags.rb",
     "lib/mactag/dsl.rb",
-    "lib/mactag/event_handler.rb",
+    "lib/mactag/errors.rb",
     "lib/mactag/railtie.rb",
-    "lib/mactag/server.rb",
     "lib/mactag/tag.rb",
     "lib/mactag/tag/app.rb",
     "lib/mactag/tag/gem.rb",
     "lib/mactag/tag/plugin.rb",
     "lib/mactag/tag/rails.rb",
-    "lib/mactag/tags_file.rb",
     "lib/tasks/mactag.rake"
   ]
   s.homepage = %q{http://github.com/rejeep/mactag}
@@ -45,16 +43,15 @@ Gem::Specification.new do |s|
   s.summary = %q{Ctags for Rails}
   s.test_files = [
     "spec/mactag/builder_spec.rb",
+    "spec/mactag/bundler_spec.rb",
     "spec/mactag/config_spec.rb",
     "spec/mactag/ctags_spec.rb",
     "spec/mactag/dsl_spec.rb",
-    "spec/mactag/server_spec.rb",
     "spec/mactag/tag/app_spec.rb",
     "spec/mactag/tag/gem_spec.rb",
     "spec/mactag/tag/plugin_spec.rb",
     "spec/mactag/tag/rails_spec.rb",
     "spec/mactag/tag_spec.rb",
-    "spec/mactag/tags_file_spec.rb",
     "spec/mactag_spec.rb"
   ]
 
@@ -63,13 +60,22 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<mactag>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
+      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
       s.add_runtime_dependency(%q<rails>, [">= 3.0.0.beta1"])
       s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
     else
+      s.add_dependency(%q<mactag>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
       s.add_dependency(%q<rails>, [">= 3.0.0.beta1"])
       s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
     end
   else
+    s.add_dependency(%q<mactag>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
     s.add_dependency(%q<rails>, [">= 3.0.0.beta1"])
     s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
   end
