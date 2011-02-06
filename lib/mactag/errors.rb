@@ -22,7 +22,7 @@ module Mactag
     end
 
     def to_s
-      if version
+      if gem.version
         "Gem #{gem.name} with version #{gem.version} not found"
       else
         "Gem #{gem.name} not found"
