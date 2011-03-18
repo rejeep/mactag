@@ -58,7 +58,7 @@ module Mactag
             else
               gem = dirs.sort.last
             end
-            if /-(.+)$/.match(gem)
+            if /-([^\/]+)$/.match(gem)
               $1
             end
           end

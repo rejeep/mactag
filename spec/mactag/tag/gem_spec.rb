@@ -102,5 +102,16 @@ describe Mactag::Tag::Gem do
         Mactag::Tag::Gem.last('devise').should eq('1.1.1')
       end
     end
+    
+    context 'when the path contains other version numbers' do
+      before do
+        Mactag::Tag::Gem.stub(:dirs) { ['/Users/user/.rvm/gems/ree-1.8.7-2011.03@project/gems/simple_form-1.3.1'] }
+      end
+
+      it 'extract correct version' do
+        Mactag::Tag::Gem.last('simple_form').should eq('1.3.1')
+      end      
+    end
+    
   end
 end
