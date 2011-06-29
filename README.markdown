@@ -17,13 +17,16 @@ sure that you are using **Exuberant Ctags** and not some other version.
 
 ## Plugin
 Install the plugin:
+
     $ rails plugin install git://github.com/rejeep/mactag.git
 
 ## Gem
 Install the gem:
+
     $ gem install mactag
     
 Add mactag to the **Gemfile**:
+
     group :development do
       gem 'mactag'
     end
@@ -34,6 +37,7 @@ Add mactag to the **Gemfile**:
 To generate a template configuration file (**config/mactag.rb**),
 which contains a basic setup and some examples of how to configure
 Mactag, use the **mactag** generator:
+
     $ rails generate mactag
 
 ## Example mactag.rb file
@@ -78,6 +82,7 @@ Defaults to: `TAGS`
 
 # Usage
 To create the TAGS file, simply run:
+
     $ rake mactag
 
 
