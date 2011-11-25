@@ -14,7 +14,7 @@ module Mactag
     #
     # Name of the output tags file.
     #
-    # Mactag::Config.binary = 'TAGS_FILE'
+    # Mactag::Config.tags_file = 'TAGS_FILE'
     #
     @@tags_file = 'TAGS'
     cattr_accessor :tags_file
