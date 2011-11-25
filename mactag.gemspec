@@ -46,7 +46,8 @@ Gem::Specification.new do |s|
     'spec/mactag/tag/plugin_spec.rb',
     'spec/mactag/tag/rails_spec.rb',
     'spec/mactag/tag_spec.rb',
-    'spec/mactag_spec.rb'
+    'spec/mactag_spec.rb',
+    'spec/spec_helper.rb'
   ]
 
   s.add_runtime_dependency('rails', ['>= 3.0.0'])
