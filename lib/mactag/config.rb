@@ -38,11 +38,17 @@ module Mactag
     @@gem_home = '/Library/Ruby/Gems/1.8/gems'
     cattr_writer :gem_home
 
-    def self.gem_home
-      if rvm
-        File.join(ENV['GEM_HOME'], 'gems')
-      else
-        @@gem_home
+    class << self
+      def gem_home
+        if rvm
+          File.join(ENV['GEM_HOME'], 'gems')
+        else
+          @@gem_home
+        end
+      end
+
+      def configure(&block)
+        yield self
       end
     end
   end

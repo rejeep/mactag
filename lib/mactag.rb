@@ -10,6 +10,12 @@ require 'mactag/errors'
 module Mactag
   autoload :Bundler, 'bundler'
   autoload :Rails, 'rails'
+
+  class << self
+    def configure(&block)
+      Mactag::Config.configure(&block)
+    end
+  end
 end
 
 def Mactag(&block)

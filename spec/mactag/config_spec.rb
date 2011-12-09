@@ -41,4 +41,23 @@ describe Mactag::Config do
       Mactag::Config.rvm.should be_true
     end
   end
+
+  describe '#configure' do
+    before do
+      Mactag::Config.stub(:rvm) { false }
+    end
+    
+    it 'should be possible to configure using configure block' do
+      Mactag.configure do |config|
+        config.binary = 'ctags -o {OUTPUT} -e {INPUT}'
+        config.tags_file = 'tags-foo'
+        config.gem_home = '/Library/Ruby/Gems/1.9/gems'
+      end
+
+      Mactag::Config.binary.should == 'ctags -o {OUTPUT} -e {INPUT}'
+      Mactag::Config.tags_file.should == 'tags-foo'
+      Mactag::Config.rvm.should be_false
+      Mactag::Config.gem_home.should == '/Library/Ruby/Gems/1.9/gems'
+    end
+  end
 end

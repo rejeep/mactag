@@ -46,6 +46,14 @@ Mactag, use the **mactag** generator:
     Mactag::Config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
     Mactag::Config.binary = 'etags -o {OUTPUT} {INPUT}'
     Mactag::Config.tags_file = 'TAGS'
+    
+    # Same configuration as above only using Mactag#configure
+    Mactag.configure do |config|
+      config.rvm = false
+      config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
+      config.binary = 'etags -o {OUTPUT} {INPUT}'
+      config.tags_file = 'TAGS'
+    end
 
     Mactag do
       app 'app/**/*.rb', 'lib/*.rb'
