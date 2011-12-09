@@ -7,25 +7,20 @@ their definitions.
 
 
 # Exuberant Ctags
+
 First off, you must install [Ctags](http://ctags.sourceforge.net/).
-Some systems comes with a **ctags** command already. If you have the
+Some systems comes with a `ctags` binary already. If you have the
 ctags executable, but have problems creating the tags file. Then make
 sure that you are using **Exuberant Ctags** and not some other version.
 
 
 # Installation
 
-## Plugin
-Install the plugin:
-
-    $ rails plugin install git://github.com/rejeep/mactag.git
-
-## Gem
 Install the gem:
 
     $ gem install mactag
     
-Add mactag to the **Gemfile**:
+Add mactag to the `Gemfile`:
 
     group :development do
       gem 'mactag'
@@ -34,9 +29,9 @@ Add mactag to the **Gemfile**:
 
 # Configuration
 
-To generate a template configuration file (**config/mactag.rb**),
-which contains a basic setup and some examples of how to configure
-Mactag, use the **mactag** generator:
+To generate the configuration file `config/mactag.rb`, use the
+`mactag` generator. The generated file contains a basic setup and some
+examples of how to configure Mactag.
 
     $ rails generate mactag
 
@@ -74,12 +69,12 @@ If true, use [Rvm](http://rvm.beginrescueend.com/) when indexing gems.
 Defaults to: `true`
 
 ### Mactag::Config.gem_home
-Path to gems. No need to set this when using **Mactag::Config.rvm**.  
+Path to gems. No need to set this when using `Mactag::Config.rvm`.  
 Defaults to: `/Library/Ruby/Gems/1.8/gems`
  
 ### Mactag::Config.binary
-The command to run when creating the TAGS-file. **{OUTPUT}** will be
-replaced with the value of **Mactag::Config.tags_file**. **{INPUT}**
+The command to run when creating the TAGS-file. `{OUTPUT}` will be
+replaced with the value of `Mactag::Config.tags_file`. `{INPUT}`
 will be replaced with all files to index.  
 Defaults to: `ctags -o {OUTPUT} -e {INPUT}`
 
