@@ -25,7 +25,7 @@ describe Mactag::Tag::Gem do
         end
 
         it 'returns path to gem' do
-          @gem.tag.should eq('GEM_HOME/devise-1.1.1/lib/**/*.rb')
+          @gem.tag.should == 'GEM_HOME/devise-1.1.1/lib/**/*.rb'
         end
       end
 
@@ -35,7 +35,7 @@ describe Mactag::Tag::Gem do
         end
 
         it 'returns path to gem' do
-          @gem.tag.should eq('GEM_HOME/devise-1.1.1/lib/**/*.rb')
+          @gem.tag.should == 'GEM_HOME/devise-1.1.1/lib/**/*.rb'
         end
       end
     end
@@ -89,7 +89,7 @@ describe Mactag::Tag::Gem do
       end
 
       it 'returns nil' do
-        Mactag::Tag::Gem.last('devise').should eq('1.1.1')
+        Mactag::Tag::Gem.last('devise').should == '1.1.1'
       end
     end
 
@@ -99,7 +99,7 @@ describe Mactag::Tag::Gem do
       end
 
       it 'returns nil' do
-        Mactag::Tag::Gem.last('devise').should eq('1.1.1')
+        Mactag::Tag::Gem.last('devise').should == '1.1.1'
       end
     end
     
@@ -109,7 +109,7 @@ describe Mactag::Tag::Gem do
       end
 
       it 'extract correct version' do
-        Mactag::Tag::Gem.last('simple_form').should eq('1.3.1')
+        Mactag::Tag::Gem.last('simple_form').should == '1.3.1'
       end      
     end
     

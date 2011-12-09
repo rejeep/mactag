@@ -12,7 +12,7 @@ describe Mactag::Tag::Rails do
   end
 
   it 'has correct default packages' do
-    Mactag::Tag::Rails::PACKAGES.should eq(['actionmailer', 'actionpack', 'activemodel', 'activerecord', 'activeresource', 'activesupport', 'railties'])
+    Mactag::Tag::Rails::PACKAGES.should == ['actionmailer', 'actionpack', 'activemodel', 'activerecord', 'activeresource', 'activesupport', 'railties']
   end
 
   describe '#tag' do
@@ -23,31 +23,31 @@ describe Mactag::Tag::Rails do
     it 'returns empty array if no packages' do
       @rails.stub(:packages) { [] }
 
-      @rails.tag.should eq([])
+      @rails.tag.should == []
     end
 
     it 'returns array with gem tags when packages' do
       @rails.stub(:packages) { ['activemodel', 'activerecord'] }
 
-      @rails.tag.should eq(['tag', 'tag'])
+      @rails.tag.should == ['tag', 'tag']
     end
   end
 
   describe '#packages' do
     it 'returns all packages unless only and except' do
-      @rails.packages.should eq(Mactag::Tag::Rails::PACKAGES)
+      @rails.packages.should == Mactag::Tag::Rails::PACKAGES
     end
 
     it 'returns some packages when only specified' do
       @rails = Mactag::Tag::Rails.new(:only => [:active_support, :activerecord])
 
-      @rails.packages.should eq(['activesupport', 'activerecord'])
+      @rails.packages.should == ['activesupport', 'activerecord']
     end
 
     it 'returns some packages when except specified' do
       @rails = Mactag::Tag::Rails.new(:except => [:active_support, :activerecord])
 
-      @rails.packages.should eq(['actionmailer', 'actionpack', 'activemodel', 'activeresource', 'railties'])
+      @rails.packages.should == ['actionmailer', 'actionpack', 'activemodel', 'activeresource', 'railties']
     end
   end
 
@@ -58,33 +58,33 @@ describe Mactag::Tag::Rails do
 
     context 'single package' do
       it 'packagizes when symbol' do
-        @rails.send(:packagize, [:activerecord]).should eq(['activerecord'])
+        @rails.send(:packagize, [:activerecord]).should == ['activerecord']
       end
 
       it 'packagizes when string' do
-        @rails.send(:packagize, ['activerecord']).should eq(['activerecord'])
+        @rails.send(:packagize, ['activerecord']).should == ['activerecord']
       end
 
       it 'packagizes when underscore' do
-        @rails.send(:packagize, [:active_record]).should eq(['activerecord'])
+        @rails.send(:packagize, [:active_record]).should == ['activerecord']
       end
     end
 
     context 'multiples packages' do
       it 'packagizes when symbols' do
-        @rails.send(:packagize, [:activerecord, :activemodel]).should eq(['activerecord', 'activemodel'])
+        @rails.send(:packagize, [:activerecord, :activemodel]).should == ['activerecord', 'activemodel']
       end
 
       it 'packagizes when string' do
-        @rails.send(:packagize, ['activerecord', 'activemodel']).should eq(['activerecord', 'activemodel'])
+        @rails.send(:packagize, ['activerecord', 'activemodel']).should == ['activerecord', 'activemodel']
       end
 
       it 'packagizes when underscore' do
-        @rails.send(:packagize, [:active_record, :active_model]).should eq(['activerecord', 'activemodel'])
+        @rails.send(:packagize, [:active_record, :active_model]).should == ['activerecord', 'activemodel']
       end
 
       it 'packagizes when mixed' do
-        @rails.send(:packagize, [:active_record, 'activemodel']).should eq(['activerecord', 'activemodel'])
+        @rails.send(:packagize, [:active_record, 'activemodel']).should == ['activerecord', 'activemodel']
       end
     end
   end
@@ -93,13 +93,13 @@ describe Mactag::Tag::Rails do
     it 'returns specified version when version option' do
       @rails = Mactag::Tag::Rails.new(:version => '3.0.0')
 
-      @rails.send(:version).should eq('3.0.0')
+      @rails.send(:version).should == '3.0.0'
     end
 
     it 'returns same version as rails application when version option is not specified' do
       Rails.stub(:version) { '3.0.0' }
 
-      @rails.send(:version).should eq('3.0.0')
+      @rails.send(:version).should == '3.0.0'
     end
   end
 end

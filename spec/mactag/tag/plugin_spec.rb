@@ -12,13 +12,13 @@ describe Mactag::Tag::Plugin do
   it_should_behave_like 'tagger'
 
   it 'has correct plugin path' do
-    Mactag::Tag::Plugin::PLUGIN_PATH.should eq(['vendor', 'plugins'])
+    Mactag::Tag::Plugin::PLUGIN_PATH.should == ['vendor', 'plugins']
   end
 
   describe '#tag' do
     it 'returns path to plugin when plugin exists' do
       @plugin.stub(:exists?) { true }
-      @plugin.tag.should eq('vendor/plugins/devise/lib/**/*.rb')
+      @plugin.tag.should == 'vendor/plugins/devise/lib/**/*.rb'
     end
 
     it 'raises exception when plugin does not exist' do
@@ -31,7 +31,7 @@ describe Mactag::Tag::Plugin do
 
   describe '#path' do
     it 'return path to plugin' do
-      @plugin.path.should eq('vendor/plugins/devise')
+      @plugin.path.should == 'vendor/plugins/devise'
     end
   end
 
@@ -55,14 +55,14 @@ describe Mactag::Tag::Plugin do
 
     it 'returns plugin name when single plugin' do
       Dir.stub(:glob) { ['vendor/plugins/devise'] }
-      Mactag::Tag::Plugin.all.should eq(['devise'])
+      Mactag::Tag::Plugin.all.should == ['devise']
     end
 
     it 'returns plugin names when multiple plugins' do
       Dir.stub(:glob) {
         ['vendor/plugins/devise', 'vendor/plugins/simple_form']
       }
-      Mactag::Tag::Plugin.all.should eq(['devise', 'simple_form'])
+      Mactag::Tag::Plugin.all.should == ['devise', 'simple_form']
     end
   end
 end

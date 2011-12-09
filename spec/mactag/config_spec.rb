@@ -3,13 +3,13 @@ require 'spec_helper'
 describe Mactag::Config do
   describe '#binary' do
     it 'is correct command' do
-      Mactag::Config.binary.should eq('ctags -o {OUTPUT} -e {INPUT}')
+      Mactag::Config.binary.should == 'ctags -o {OUTPUT} -e {INPUT}'
     end
   end
 
   describe '#tags_file' do
     it 'is correct name' do
-      Mactag::Config.tags_file.should eq('TAGS')
+      Mactag::Config.tags_file.should == 'TAGS'
     end
   end
 
@@ -21,7 +21,7 @@ describe Mactag::Config do
       end
 
       it 'is the correct gems path' do
-        Mactag::Config.gem_home.should eq('/path/to/rvm/gems')
+        Mactag::Config.gem_home.should == '/path/to/rvm/gems'
       end
     end
 
@@ -31,7 +31,7 @@ describe Mactag::Config do
       end
 
       it 'is the default gem path' do
-        Mactag::Config.gem_home.should eq('/Library/Ruby/Gems/1.8/gems')
+        Mactag::Config.gem_home.should == '/Library/Ruby/Gems/1.8/gems'
       end
     end
   end

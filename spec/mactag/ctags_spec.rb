@@ -8,12 +8,12 @@ describe Mactag::Ctags do
   describe '#initialize' do
     it 'handles a single file' do
       @ctags = Mactag::Ctags.new('in', 'out')
-      @ctags.instance_variable_get('@input').should eq(['in'])
+      @ctags.instance_variable_get('@input').should == ['in']
     end
 
     it 'handles multiple files' do
       @ctags = Mactag::Ctags.new(['in_1', 'in_2'], 'out')
-      @ctags.instance_variable_get('@input').should eq(['in_1', 'in_2'])
+      @ctags.instance_variable_get('@input').should == ['in_1', 'in_2']
     end
   end
 
@@ -24,7 +24,7 @@ describe Mactag::Ctags do
     end
 
     it 'is correct command' do
-      @ctags.send(:command).should eq('cd root && binary')
+      @ctags.send(:command).should == 'cd root && binary'
     end
   end
 
@@ -34,7 +34,7 @@ describe Mactag::Ctags do
     end
 
     it 'returns correct command' do
-      @ctags.send(:binary).should eq('ctags -o out -e in')
+      @ctags.send(:binary).should == 'ctags -o out -e in'
     end
   end
 end

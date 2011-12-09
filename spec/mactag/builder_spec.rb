@@ -13,13 +13,13 @@ describe Mactag::Builder do
     it 'adds single tag' do
       @builder << @tag
 
-      @builder.instance_variable_get('@tags').should eq([@tag])
+      @builder.instance_variable_get('@tags').should == [@tag]
     end
 
     it 'adds multiple tags' do
       @builder << [@tag, @tag]
 
-      @builder.instance_variable_get('@tags').should eq([@tag, @tag])
+      @builder.instance_variable_get('@tags').should == [@tag, @tag]
     end
   end
 
@@ -32,12 +32,12 @@ describe Mactag::Builder do
 
     it 'flattens all files' do
       @builder.stub(:all) { [['app'], 'lib'] }
-      @builder.files.should eq(['app', 'lib'])
+      @builder.files.should == ['app', 'lib']
     end
 
     it 'compacts all files' do
       @builder.stub(:all) { [nil, 'app', nil, 'lib', nil] }
-      @builder.files.should eq(['app', 'lib'])
+      @builder.files.should == ['app', 'lib']
     end
 
     it 'expands all files' do
@@ -56,7 +56,7 @@ describe Mactag::Builder do
 
     it 'uniquifies files' do
       @builder.stub(:all) { ['app', 'lib', 'lib', 'app'] }
-      @builder.files.should eq(['app', 'lib'])
+      @builder.files.should == ['app', 'lib']
     end
 
     it 'does not return directories' do
@@ -70,12 +70,12 @@ describe Mactag::Builder do
   describe '#directories' do
     it 'returns all file dirnames' do
       @builder.stub(:files) { ['app/models/user.rb', 'lib/validate.rb'] }
-      @builder.directories.should eq(['app/models', 'lib'])
+      @builder.directories.should == ['app/models', 'lib']
     end
 
     it 'returns uniq directories' do
       @builder.stub(:files) { ['app/models/user.rb', 'app/models/post.rb'] }
-      @builder.directories.should eq(['app/models'])
+      @builder.directories.should == ['app/models']
     end
   end
 
@@ -84,7 +84,7 @@ describe Mactag::Builder do
       @builder << Mactag::Tag::App.new('app')
       @builder << Mactag::Tag::App.new('lib')
 
-      @builder.all.should eq(['app', 'lib'])
+      @builder.all.should == ['app', 'lib']
     end
 
     it 'returns empty array when no tags' do
