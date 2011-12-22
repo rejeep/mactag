@@ -39,7 +39,7 @@ examples of how to configure Mactag.
 
     Mactag::Config.rvm = false
     Mactag::Config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
-    Mactag::Config.binary = 'etags -o {OUTPUT} {INPUT}'
+    Mactag::Config.binary = '/usr/local/Cellar/ctags/5.8/bin/ctags -e -o {OUTPUT} {INPUT}'
     Mactag::Config.tags_file = 'TAGS'
     
     # Same configuration as above only using Mactag#configure
