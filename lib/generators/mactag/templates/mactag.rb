@@ -53,13 +53,7 @@ Mactag do
   # Index all ruby files in app recursive and all ruby files directly under lib.
   #   app 'app/**/*.rb', 'lib/*.rb'
   #
-
-  ##
-  #
-  # Index the plugins thinking-sphinx and formtastic.
-  #  plugins 'thinking-sphinx', 'formtastic'
-  #
-
+  
   ##
   #
   # Index the gems paperclip and authlogic.

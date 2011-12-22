@@ -16,7 +16,7 @@ module Mactag
       if tags.empty?
         raise ArgumentError.new('App requires at least one argument')
       end
-      
+
       tags.each do |tag|
         @builder << Mactag::Tag::App.new(tag)
       end
@@ -24,9 +24,13 @@ module Mactag
 
     ##
     #
+    # <b>DEPRECATED:</b> Please use gems instead.
+    #
     # @see Mactag::Tag::Plugin
     #
     def plugin(*plugins)
+      warn '[DEPRECATION] Please use gem instead of plugins.'
+
       if plugins.empty?
         plugins = Mactag::Tag::Plugin.all
       end
@@ -43,7 +47,7 @@ module Mactag
     #
     def gem(*gems)
       options = gems.extract_options!
-      
+
       if options[:version] && gems.size > 1
         raise ArgumentError.new('The :version option is not valid when specifying more than one gem')
       end
@@ -66,7 +70,7 @@ module Mactag
       if options[:only] && options[:except]
         raise ArgumentError.new('Can not specify options :only and :except at the same time')
       end
-      
+
       @builder << Mactag::Tag::Rails.new(options)
     end
   end

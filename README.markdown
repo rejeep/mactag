@@ -53,8 +53,6 @@ examples of how to configure Mactag.
     Mactag do
       app 'app/**/*.rb', 'lib/*.rb'
 
-      plugins 'thinking-sphinx', 'whenever'
-
       gems 'paperclip', 'authlogic'
       gem 'formtastic', :version => '0.9.7'
 
