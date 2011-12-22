@@ -2,21 +2,22 @@ module Mactag
   module Tag
     ##
     #
-    # Tag files in Rails project.
+    # Tag files in current project.
     #
     # ==== Examples
+    #
     #   Mactag do
-    #     # Tag single file
-    #     app 'lib/super_duper.rb'
+    #     # Index single file.
+    #     index 'lib/super_duper.rb'
     #
-    #     # Tag all ruby files in lib, recursive
-    #     app 'lib/**/*.rb'
+    #     # Index all ruby files in lib, recursive.
+    #     index 'lib/**/*.rb'
     #
-    #     # Tag all helper and model ruby files
-    #     app 'app/helpers/*.rb', 'app/models/*.rb'
+    #     # Index all helper and model ruby files.
+    #     index 'app/helpers/*.rb', 'app/models/*.rb'
     #
     #     # Same as above
-    #     app 'app/{models,helpers}/*.rb'
+    #     index 'app/{models,helpers}/*.rb'
     #   do
     #
     class App

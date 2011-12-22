@@ -2,21 +2,22 @@ module Mactag
   module Tag
     ##
     #
-    # Tags ruby gems.
+    # Index Ruby gems.
     #
     # ==== Examples
+    #
     #   Mactag do
-    #     # Tags all gems specified in Gemfile.
-    #     gems
+    #     # Index all gems specified in Gemfile.
+    #     index :gems
     #
-    #     # Tag the whenever gem, latest version
-    #     gem 'whenever'
+    #     # Index the gem whenever, latest version.
+    #     index 'whenever'
     #
-    #     # Tag the thinking-sphinx and formtastic gems, latest versions
-    #     gems 'thinking-sphinx', 'formtastic'
+    #     # Index the thinking-sphinx and carrierwave gems, latest versions.
+    #     index 'thinking-sphinx', 'carrierwave'
     #
-    #     # Tag the formtastic gem, version 0.8.2
-    #     gem 'formtastic', :version => '0.8.2'
+    #     # Index the gem simple_form, version 1.5.2.
+    #     index 'simple_form', :version => '1.5.2'
     #   do
     #
     class Gem

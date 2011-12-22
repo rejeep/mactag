@@ -38,39 +38,44 @@ examples of how to configure Mactag.
 ## Example mactag.rb file
 
     Mactag.configure do |config|
+      # Do not use RVM
       config.rvm = false
       config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
+      
+      # Binary when installing ctags from Homebrew
       config.binary = '/usr/local/Cellar/ctags/5.8/bin/ctags -e -o {OUTPUT} {INPUT}'
-      config.tags_file = 'TAGS'
+      
+      # Change name of output file
+      config.tags_file = 'DA-TAGS'
     end
 
     Mactag do
-      app 'app/**/*.rb', 'lib/*.rb'
+      index 'app/models/*.rb'
+      
+      index 'carrerwave, simple_form'
+      index 'redcarpet', :version => '1.17.2'
 
-      gems 'paperclip', 'authlogic'
-      gem 'formtastic', :version => '0.9.7'
-
-      rails :except => :actionmailer, :version => '2.3.5'
+      index :rails, :except => :actionmailer, :version => '3.1.3'
     end
     
-## Options
+## Configuration Options
 The available configuration options are described below.
 
-### Mactag::Config.rvm
+### rvm
 If true, use [Rvm](http://rvm.beginrescueend.com/) when indexing gems.  
 Defaults to: `true`
 
-### Mactag::Config.gem_home
-Path to gems. No need to set this when using `Mactag::Config.rvm`.  
+### gem_home
+Path to gems. No need to set this when using `rvm`.  
 Defaults to: `/Library/Ruby/Gems/1.8/gems`
  
-### Mactag::Config.binary
+### binary
 The command to run when creating the TAGS-file. `{OUTPUT}` will be
-replaced with the value of `Mactag::Config.tags_file`. `{INPUT}`
+replaced with the value of `tags_file` configuration option. `{INPUT}`
 will be replaced with all files to index.  
 Defaults to: `ctags -o {OUTPUT} -e {INPUT}`
 
-### Mactag::Config.tags_file
+### tags_file
 Name of the output tags file.  
 Defaults to: `TAGS`
 

@@ -1,92 +1,39 @@
-##
-#
-# Rvm support or not. Mactag will automatically set path to gems.
-#
-# Defaults to: true
-#
-# Example:
-#   Mactag::Config.rvm = false
-#
+Mactag.configure do |config|
+  # Use RVM to locate gems for project.
+  # config.rvm = false
 
-##
-#
-# Path to gems.
-#
-# Change to whatever your system is using, if not the default. Most
-# GNU/Linux systems use: /usr/lib/ruby/gems/1.8/gems
-#
-# (You don't need to set this when Mactag::Config.rvm is true)
-#
-# Defaults to: '/Library/Ruby/Gems/1.8/gems'
-#
-# Example:
-#   Mactag::Config.gem_home = '/usr/lib/ruby/gems/1.8/gems'
-#
+  # Path to gems. No need to set this when rvm is used!
+  # config.gem_home = '/Library/Ruby/Gems/1.8/gems'
 
-##
-#
-# Name of tags file.
-#
-# Defaults to: 'TAGS'
-#
-# Example:
-#   Mactag::Config.tags_file = '.tags'
-#
+  # Name of tags file.
+  # config.tags_file = '.tags'
 
-##
-#
-# This is the command used to create the TAGS table.
-#
-# The command must specify:
-#   {INPUT}  - replaced by the input files to tag
-#   {OUTPUT} - replaced by Mactag::Config.tags_file
-#
-# Defaults to: 'ctags -o {OUTPUT} -e {INPUT}'
-#
-# Example:
-#   Mactag::Config.binary = '/usr/local/Cellar/ctags/5.8/bin/ctags -e -o {OUTPUT} {INPUT}'
-#
+  # Command used to create the tags table.
+  # config.binary = '/usr/local/Cellar/ctags/5.8/bin/ctags -e -o {OUTPUT} {INPUT}'
+end
 
 Mactag do
-  ##
-  #
-  # Index all ruby files in app recursive and all ruby files directly under lib.
-  #   app 'app/**/*.rb', 'lib/*.rb'
-  #
-  
-  ##
-  #
-  # Index the gems paperclip and authlogic.
-  #   gems 'paperclip', 'authlogic'
-  #
+  # Index current project.
+  # index :app
 
-  ##
-  #
-  # Index the gem formtastic version 0.9.7.
-  #   gem 'formtastic', :version => '0.9.7'
-  #
+  # Index all models and helpers.
+  # index 'app/models/*.rb', 'app/helpers/*.rb'
 
-  ##
-  #
-  # Index all rails packages, except actionmailer.
-  #   rails :except => :actionmailer
-  #
+  # Index the gems carrierwave and redcarpet.
+  # index 'carrierwave', 'redcarpet'
 
-  ##
-  #
+  # Index the gem simple_form version 1.5.2.
+  # index 'simple_form', :version => '1.5.2'
+
+  # Index rails.
+  # index :rails
+
+  # Index rails except action mailer.
+  # index :rails, :except => :actionmailer
+
   # Index only rails packages activerecord and activesupport.
-  #   rails :only => [:activerecord, :active_support]
-  #
+  # index :rails, :only => [:activerecord, :active_support]
 
-  ##
-  #
-  # Index all rails packages, version 3.0.0.
-  #   rails :version => '3.0.0'
-  #
-
-  ##
-  #
-  # Index all rails packages, same version as current application.
-  #   rails
-  #
+  # Index rails, version 3.1.3.
+  # index :rails, :version => '3.1.3'
 end

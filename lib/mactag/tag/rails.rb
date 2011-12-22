@@ -2,10 +2,12 @@ module Mactag
   module Tag
     ##
     #
-    # Tags Rails gem.
+    # Index Rails.
     #
     # ==== Packages
-    # Naming does not matter, so *activerecord* and *active_record* are the same.
+    #
+    # These are the packages that can be indexed. Naming does not
+    # matter, so *activerecord* and *active_record* are the same.
     #
     # * actionmailer
     # * actionpack
@@ -17,27 +19,26 @@ module Mactag
     #
     #
     # ==== Examples
+    #
     #   Mactag do
-    #     # Tag all rails packages, same rails version as application
-    #     rails
+    #     # Index all packages, same version as application
+    #     index :rails
     #
-    #     # Tag all rails packages, version 2.3.5
-    #     rails :version => '2.3.5'
+    #     # Index all packages, version 3.1.3
+    #     index :rails, :version => '3.1.3'
     #
-    #     # Tag only activerecord, same rails version as application
-    #     rails :only => :active_record
+    #     # Index all packages except activerecord, same version as application
+    #     index :rails, :except => :activerecord
     #
-    #     # Tag all packages except activerecord, same rails version as application
-    #     rails :except => :activerecord
+    #     # Index only activerecord and actionview, same version as application
+    #     index :rails, :only => [:activerecord, :action_view]
     #
-    #     # Tag only activerecord and actionview, same rails version as application
-    #     rails :only => [:activerecord, :action_view]
+    #     # Index all packages except activerecord and actionview,
+    #     # same version as application
+    #     index :rails, :except => ['activerecord', :action_controller]
     #
-    #     # Tag all packages except activerecord and actionview, same rails version as application
-    #     rails :except => ['activerecord', :action_controller]
-    #
-    #     # Tag all packages except actionmailer, version 2.3.4
-    #     rails :except => :actionmailer, :version => '2.3.4'
+    #     # Index all packages except actionmailer, version 3.1.3
+    #     index :rails, :except => :actionmailer, :version => '3.1.3'
     #   do
     #
     class Rails

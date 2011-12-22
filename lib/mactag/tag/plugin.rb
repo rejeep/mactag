@@ -5,14 +5,15 @@ module Mactag
     # Tag plugins in Rails project.
     #
     # ==== Examples
+    #
     #   Mactag do
-    #     # Tag single plugin
+    #     # Index single plugin.
     #     plugin 'whenever'
     #
-    #     # Tag multiple plugins
+    #     # Index multiple plugins.
     #     plugins 'thinking-sphinx', 'formtastic'
     #
-    #     # Tag all plugins
+    #     # Index all plugins.
     #     plugins
     #   do
     #
