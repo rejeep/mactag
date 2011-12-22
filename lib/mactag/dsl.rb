@@ -32,7 +32,7 @@ module Mactag
     #
     #     # Same as above
     #     index 'app/{models,helpers}/*.rb'
-    #   do
+    #   end
     #
     #
     # = Gem
@@ -53,7 +53,7 @@ module Mactag
     #
     #     # Index the gem simple_form, version 1.5.2.
     #     index 'simple_form', :version => '1.5.2'
-    #   do
+    #   end
     #
     #
     # = Rails
@@ -96,7 +96,7 @@ module Mactag
     #
     #     # Index all packages except actionmailer, version 3.1.3
     #     index :rails, :except => :actionmailer, :version => '3.1.3'
-    #   do
+    #   end
     #
     def index(*args)
       options = args.extract_options!
