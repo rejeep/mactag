@@ -20,7 +20,7 @@ Install the gem:
 
     $ gem install mactag
     
-Add mactag to the `Gemfile`:
+Add `mactag` to the `Gemfile`:
 
     group :development do
       gem 'mactag'
