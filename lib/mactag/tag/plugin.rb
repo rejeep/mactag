@@ -27,7 +27,7 @@ module Mactag
 
       def tag
         if exists?
-          return File.join(PLUGIN_PATH, name, 'lib', '**', '*.rb')
+          File.join(PLUGIN_PATH, name, 'lib', '**', '*.rb')
         else
           raise PluginNotFoundError.new(self)
         end
