@@ -10,17 +10,129 @@ module Mactag
 
     ##
     #
-    # @see Mactag::Tag::App
+    # This is the method used to index. Three different things can be
+    # indexed: the current project, gems and Rails (which really is a
+    # collection of gems).
     #
-    def app(*tags)
-      if tags.empty?
-        raise ArgumentError.new('App requires at least one argument')
-      end
-
-      tags.each do |tag|
-        @builder << Mactag::Tag::App.new(tag)
-      end
+    # = App
+    #
+    # App indexes files in the current project.
+    #
+    # == Examples
+    #
+    #   Mactag do
+    #     # Index single file.
+    #     index 'lib/super_duper.rb'
+    #
+    #     # Index all ruby files in lib, recursive.
+    #     index 'lib/**/*.rb'
+    #
+    #     # Index all helper and model ruby files.
+    #     index 'app/helpers/*.rb', 'app/models/*.rb'
+    #
+    #     # Same as above
+    #     index 'app/{models,helpers}/*.rb'
+    #   do
+    #
+    #
+    # = Gem
+    #
+    # Index Ruby gems.
+    #
+    # == Examples
+    #
+    #   Mactag do
+    #     # Index all gems specified in Gemfile.
+    #     index :gems
+    #
+    #     # Index the gem whenever, latest version.
+    #     index 'whenever'
+    #
+    #     # Index the thinking-sphinx and carrierwave gems, latest versions.
+    #     index 'thinking-sphinx', 'carrierwave'
+    #
+    #     # Index the gem simple_form, version 1.5.2.
+    #     index 'simple_form', :version => '1.5.2'
+    #   do
+    #
+    #
+    # = Rails
+    #
+    # Index Rails.
+    #
+    # == Packages
+    #
+    # These are the packages that can be indexed. Naming does not
+    # matter, so <tt>activerecord</tt> and <tt>active_record</tt> are
+    # the same.
+    #
+    # * actionmailer
+    # * actionpack
+    # * activemodel
+    # * activerecord
+    # * activeresource
+    # * railties
+    # * activesupport
+    #
+    #
+    # == Examples
+    #
+    #   Mactag do
+    #     # Index all packages, same version as application
+    #     index :rails
+    #
+    #     # Index all packages, version 3.1.3
+    #     index :rails, :version => '3.1.3'
+    #
+    #     # Index all packages except activerecord, same version as application
+    #     index :rails, :except => :activerecord
+    #
+    #     # Index only activerecord and actionview, same version as application
+    #     index :rails, :only => [:activerecord, :action_view]
+    #
+    #     # Index all packages except activerecord and actionview,
+    #     # same version as application
+    #     index :rails, :except => ['activerecord', :action_controller]
+    #
+    #     # Index all packages except actionmailer, version 3.1.3
+    #     index :rails, :except => :actionmailer, :version => '3.1.3'
+    #   do
+    #
+    def index(*args)
+      options = args.extract_options!
     end
+
+    ##
+    #
+    # <b>DEPRECATED:</b> Please use '#index' instead.
+    #
+    def app(*args)
+      warn '[DEPRECATION] Please use #index gems.'
+
+      app_private(*args)
+    end
+
+    ##
+    #
+    # <b>DEPRECATED:</b> Please use '#index' instead.
+    #
+    def gem(*args)
+      warn '[DEPRECATION] Please use #index gems.'
+      
+      gem_private(*args)
+    end
+    alias :gems :gem
+
+    ##
+    #
+    # <b>DEPRECATED:</b> Please use '#index' instead.
+    #
+    def rails(*args)
+      warn '[DEPRECATION] Please use #index gems.'
+
+      rails_private(*args)
+    end
+
 
     ##
     #
@@ -41,11 +153,20 @@ module Mactag
     end
     alias :plugins :plugin
 
-    ##
-    #
-    # @see Mactag::Tag::Gem
-    #
-    def gem(*gems)
+
+    private
+
+    def app_private(*tags)
+      if tags.empty?
+        raise ArgumentError.new('App requires at least one argument')
+      end
+
+      tags.each do |tag|
+        @builder << Mactag::Tag::App.new(tag)
+      end
+    end
+
+    def gem_private(*gems)
       options = gems.extract_options!
 
       if options[:version] && gems.size > 1
@@ -60,13 +181,8 @@ module Mactag
         end
       end
     end
-    alias :gems :gem
 
-    ##
-    #
-    # @see Mactag::Tag::Rails
-    #
-    def rails(options = {})
+    def rails_private(options = {})
       if options[:only] && options[:except]
         raise ArgumentError.new('Can not specify options :only and :except at the same time')
       end

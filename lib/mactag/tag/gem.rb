@@ -1,25 +1,5 @@
 module Mactag
   module Tag
-    ##
-    #
-    # Index Ruby gems.
-    #
-    # ==== Examples
-    #
-    #   Mactag do
-    #     # Index all gems specified in Gemfile.
-    #     index :gems
-    #
-    #     # Index the gem whenever, latest version.
-    #     index 'whenever'
-    #
-    #     # Index the thinking-sphinx and carrierwave gems, latest versions.
-    #     index 'thinking-sphinx', 'carrierwave'
-    #
-    #     # Index the gem simple_form, version 1.5.2.
-    #     index 'simple_form', :version => '1.5.2'
-    #   do
-    #
     class Gem
       attr_accessor :name, :version
 
