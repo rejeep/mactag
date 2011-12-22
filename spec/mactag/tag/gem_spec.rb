@@ -112,6 +112,5 @@ describe Mactag::Tag::Gem do
         Mactag::Tag::Gem.last('simple_form').should == '1.3.1'
       end      
     end
-    
   end
 end
