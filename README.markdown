@@ -90,4 +90,4 @@ To create the TAGS file, simply run:
 
 
 # License
-Copyright (c) 2010 Johan Andersson, released under the MIT license
+Copyright (c) 2010-2012 Johan Andersson, released under the MIT license
