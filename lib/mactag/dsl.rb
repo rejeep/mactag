@@ -100,6 +100,26 @@ module Mactag
     #
     def index(*args)
       options = args.extract_options!
+
+      if args.first == :app
+        app_private
+      elsif args.first == :gems
+        gem_private
+      elsif args.first == :rails
+        rails_private(options)
+      else
+        if options[:version] && args.size > 1
+          raise ArgumentError.new('The :version option is not valid when specifying more than one gem')
+        end
+
+        args.each do |arg|
+          if Mactag::Tag::Gem.exists?(arg)
+            gem_private(arg, options)
+          else
+            app_private(arg)
+          end
+        end
+      end
     end
 
     ##
@@ -118,7 +138,7 @@ module Mactag
     #
     def gem(*args)
       warn '[DEPRECATION] Please use #index gems.'
-      
+
       gem_private(*args)
     end
     alias :gems :gem
@@ -144,11 +164,11 @@ module Mactag
       warn '[DEPRECATION] Please use gems instead of plugins.'
 
       if plugins.empty?
-        plugins = Mactag::Tag::Plugin.all
-      end
-
-      plugins.each do |plugin|
-        @builder << Mactag::Tag::Plugin.new(plugin)
+        @builder << Mactag::Tag::Plugin.all
+      else
+        plugins.each do |plugin|
+          @builder << Mactag::Tag::Plugin.new(plugin)
+        end
       end
     end
     alias :plugins :plugin
@@ -158,26 +178,20 @@ module Mactag
 
     def app_private(*tags)
       if tags.empty?
-        raise ArgumentError.new('App requires at least one argument')
-      end
-
-      tags.each do |tag|
-        @builder << Mactag::Tag::App.new(tag)
+        @builder << Mactag::Tag::App.all
+      else
+        tags.each do |tag|
+          @builder << Mactag::Tag::App.new(tag)
+        end
       end
     end
 
     def gem_private(*gems)
-      options = gems.extract_options!
-
-      if options[:version] && gems.size > 1
-        raise ArgumentError.new('The :version option is not valid when specifying more than one gem')
-      end
-
       if gems.empty?
         @builder << Mactag::Tag::Gem.all
       else
         gems.each do |gem|
-          @builder << Mactag::Tag::Gem.new(gem, options[:version])
+          @builder << Mactag::Tag::Gem.new(gem)
         end
       end
     end

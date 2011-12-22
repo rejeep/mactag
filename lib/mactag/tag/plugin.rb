@@ -44,8 +44,10 @@ module Mactag
 
       def self.all
         pattern = File.join(PLUGIN_PATH, '*')
-        Dir.glob(pattern).map do |f|
-          File.basename(f)
+        Dir.glob(pattern).map do |file|
+          basename = File.basename(file)
+
+          Mactag::Tag::Plugin.new(basename)
         end
       end
     end

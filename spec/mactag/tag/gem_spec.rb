@@ -8,8 +8,6 @@ describe Mactag::Tag::Gem do
   it_should_behave_like 'tagger'
 
   before do
-    Mactag::Config.stub(:gem_home) { 'GEM_HOME' }
-
     @gem = Mactag::Tag::Gem.new('devise')
   end
 
@@ -21,7 +19,7 @@ describe Mactag::Tag::Gem do
 
       context 'without version' do
         before do
-          Mactag::Tag::Gem.stub(:last) { '1.1.1' }
+          @gem.stub(:most_recent) { '1.1.1' }
         end
 
         it 'returns path to gem' do
@@ -72,45 +70,49 @@ describe Mactag::Tag::Gem do
     end
   end
 
-  describe '#last' do
+  describe '#most_recent' do
+    before do
+      @gem = Mactag::Tag::Gem.new('devise', '1.1.1')
+    end
+
     context 'when no gems exists' do
       before do
-        Mactag::Tag::Gem.stub(:dirs) { [] }
+        @gem.stub(:dirs) { [] }
       end
 
       it 'returns nil' do
-        Mactag::Tag::Gem.last('devise').should be_nil
+        @gem.most_recent.should be_nil
       end
     end
 
     context 'when single version of gem exist' do
       before do
-        Mactag::Tag::Gem.stub(:dirs) { ['devise-1.1.1'] }
+        @gem.stub(:dirs) { ['devise-1.1.1'] }
       end
 
       it 'returns nil' do
-        Mactag::Tag::Gem.last('devise').should == '1.1.1'
+        @gem.most_recent.should == '1.1.1'
       end
     end
 
     context 'when multiple versions of gem exist' do
       before do
-        Mactag::Tag::Gem.stub(:dirs) { ['devise-1.1.0', 'devise-1.1.1'] }
+        @gem.stub(:dirs) { ['devise-1.1.0', 'devise-1.1.1'] }
       end
 
       it 'returns nil' do
-        Mactag::Tag::Gem.last('devise').should == '1.1.1'
+        @gem.most_recent.should == '1.1.1'
       end
     end
-    
+
     context 'when the path contains other version numbers' do
       before do
-        Mactag::Tag::Gem.stub(:dirs) { ['/Users/user/.rvm/gems/ree-1.8.7-2011.03@project/gems/simple_form-1.3.1'] }
+        @gem.stub(:dirs) { ['/Users/user/.rvm/gems/ree-1.8.7-2011.03@project/gems/devise-1.1.2'] }
       end
 
       it 'extract correct version' do
-        Mactag::Tag::Gem.last('simple_form').should == '1.3.1'
-      end      
+        @gem.most_recent.should == '1.1.2'
+      end
     end
   end
 end

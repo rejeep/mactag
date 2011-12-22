@@ -6,88 +6,104 @@ describe Mactag::Dsl do
   end
 
   describe '#app' do
-    it_does_not_support_dsl 'without arguments' do
-      @dsl.app
+    it_supports_dsl 'without arguments' do
+      @dsl.index(:app)
     end
 
     it_supports_dsl 'with single argument' do
-      @dsl.app('lib/**/*.rb')
+      @dsl.index('lib/foo.rb')
     end
 
     it_supports_dsl 'with multiple arguments' do
-      @dsl.app('lib/**/*.rb', 'app/**/*.rb')
+      @dsl.index('lib/foo.rb', 'app/models/*.rb')
     end
   end
 
-  describe '#plugin' do
-    it_supports_dsl 'without arguments' do
-      @dsl.plugin
+  describe '#gems' do
+    before do
+      Mactag::Tag::Gem.stub(:all) do
+        [Mactag::Tag::Gem.new('devise', '1.1.1')]
+      end
     end
 
-    it_supports_dsl 'with single argument' do
-      @dsl.plugin('devise')
+    it_supports_dsl ':gems' do
+      @dsl.index(:gems)
     end
 
-    it_supports_dsl 'with multiple arguments' do
-      @dsl.plugins('devise', 'rack')
-    end
-  end
-
-  describe '#gem' do
-    it_supports_dsl 'without arguments' do
-      @dsl.gem
-    end
-
-    context 'with single argument' do
+    context 'with single gem' do
       it_supports_dsl 'without version' do
-        @dsl.gem('devise')
+        @dsl.index('devise')
       end
 
       it_supports_dsl 'with version' do
-        @dsl.gem('devise', :version => '1.1.1')
+        @dsl.index('devise', :version => '1.1.1')
       end
     end
 
-    context 'with multiple arguments' do
+    context 'with multiple gems' do
       it_supports_dsl 'without version' do
-        @dsl.gems('devise', 'rack')
+        @dsl.index('devise', 'rack')
       end
 
       it_does_not_support_dsl 'with version' do
-        @dsl.gems('devise', 'rack', :version => '1.1.1')
+        @dsl.index('devise', 'rack', :version => '1.1.1')
       end
     end
   end
 
   describe '#rails' do
-    it_supports_dsl 'without arguments' do
-      @dsl.rails
-    end
+    context 'without version' do
+      it_supports_dsl 'without arguments' do
+        @dsl.index(:rails)
+      end
 
-    it_supports_dsl 'with packages only' do
-      @dsl.rails(:only => [])
-    end
+      it_supports_dsl 'with packages only' do
+        @dsl.index(:rails, :only => [])
+      end
 
-    it_supports_dsl 'with packages except' do
-      @dsl.rails(:except => [])
+      it_supports_dsl 'with packages except' do
+        @dsl.index(:rails, :except => [])
+      end
     end
 
     context 'with version' do
       it_supports_dsl do
-        @dsl.rails(:version => '3.0.0')
+        @dsl.index(:rails, :version => '3.0.0')
       end
 
       it_supports_dsl 'with only' do
-        @dsl.rails(:version => '3.0.0', :only => [])
+        @dsl.index(:rails, :version => '3.0.0', :only => [])
       end
 
       it_supports_dsl 'with except' do
-        @dsl.rails(:version => '3.0.0', :except => [])
+        @dsl.index(:rails, :version => '3.0.0', :except => [])
       end
     end
 
     it_does_not_support_dsl 'with only and except' do
-      @dsl.rails(:only => [], :except => [])
+      @dsl.index(:rails, :only => [], :except => [])
+    end
+  end
+
+  context 'deprecated' do
+    describe '#plugin' do
+      before do
+        Mactag::Tag::Plugin.stub(:all) do
+          [Mactag::Tag::Plugin.new('devise')]
+        end
+      end
+
+      it_supports_dsl 'without arguments' do
+        @dsl.plugin
+      end
+
+      it_supports_dsl 'with single argument' do
+        @dsl.plugin('devise')
+      end
+
+      it_supports_dsl 'with multiple arguments' do
+        @dsl.plugins('devise', 'rack')
+      end
     end
   end
 end

@@ -5,32 +5,34 @@ module Mactag
   # used.
   #
   class Bundler
-    def gems
-      dependencies.map do |dependency|
-        Mactag::Tag::Gem.new(dependency, specs[dependency])
+    class << self
+      def gems
+        dependencies.map do |dependency|
+          [dependency, specs[dependency]]
+        end
       end
-    end
 
 
-    private
+      private
 
-    def specs
-      @specs ||= runtime.specs.inject({}) do |hash, spec|
-        hash[spec.name] = spec.version.to_s
-        hash
+      def specs
+        @specs ||= runtime.specs.inject({}) do |hash, spec|
+          hash[spec.name] = spec.version.to_s
+          hash
+        end
       end
-    end
 
-    def dependencies
-      default = runtime.dependencies.select { |dependency|
-        dependency.groups.include?(:default)
-      }.collect(&:name)
-      default.delete('rails')
-      default
-    end
+      def dependencies
+        default = runtime.dependencies.select { |dependency|
+          dependency.groups.include?(:default)
+        }.map(&:name)
+        default.delete('rails')
+        default
+      end
 
-    def runtime
-      @runtime ||= ::Bundler.load
+      def runtime
+        @runtime ||= ::Bundler.load
+      end
     end
   end
 end

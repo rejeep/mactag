@@ -4,7 +4,7 @@ describe Mactag::Tag::Plugin do
   subject do
     Mactag::Tag::Plugin.new('devise')
   end
-  
+
   before do
     @plugin = Mactag::Tag::Plugin.new('devise')
   end
@@ -55,14 +55,14 @@ describe Mactag::Tag::Plugin do
 
     it 'returns plugin name when single plugin' do
       Dir.stub(:glob) { ['vendor/plugins/devise'] }
-      Mactag::Tag::Plugin.all.should == ['devise']
+      Mactag::Tag::Plugin.all.map(&:name) == ['devise']
     end
 
     it 'returns plugin names when multiple plugins' do
       Dir.stub(:glob) {
         ['vendor/plugins/devise', 'vendor/plugins/simple_form']
       }
-      Mactag::Tag::Plugin.all.should == ['devise', 'simple_form']
+      Mactag::Tag::Plugin.all.map(&:name) =~ ['devise', 'simple_form']
     end
   end
 end

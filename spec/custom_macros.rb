@@ -8,6 +8,11 @@ module CustomMacros
       it "supports dsl #{description}" do
         lambda {
           instance_eval(&block)
+
+          builder = @dsl.instance_variable_get('@builder')
+          tags = builder.instance_variable_get('@tags')
+
+          tags.should_not be_empty
         }.should_not raise_exception
       end
     end
