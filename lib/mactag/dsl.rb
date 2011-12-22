@@ -29,7 +29,7 @@ module Mactag
     # @see Mactag::Tag::Plugin
     #
     def plugin(*plugins)
-      warn '[DEPRECATION] Please use gem instead of plugins.'
+      warn '[DEPRECATION] Please use gems instead of plugins.'
 
       if plugins.empty?
         plugins = Mactag::Tag::Plugin.all
