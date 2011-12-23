@@ -39,7 +39,7 @@ module Mactag
     class << self
       def create
         unless gem_home_exists?
-          raise Mactag::MactagError.new("Specified gem home directory does not exist: #{Mactag::Config.gem_home}")
+          raise Mactag::MactagError.new("Gem home directory '#{Mactag::Config.gem_home}' does not exist")
         end
 
         if builder.has_gems?
