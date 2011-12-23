@@ -6,7 +6,7 @@ module Mactag
     # and <tt>{INPUT}</tt> with the input files) when creating the tags file.
     #
     @@binary = 'ctags -o {OUTPUT} -e {INPUT}'
-    cattr_accessor :binary
+    cattr_reader :binary
 
     ##
     #
@@ -31,6 +31,14 @@ module Mactag
     cattr_writer :gem_home
 
     class << self
+      def binary=(binary)
+        if binary.include?('{INPUT}') && binary.include?('{OUTPUT}')
+          @@binary = binary
+        else
+          raise Mactag::MactagError.new("Binary command must include '{INPUT}' and '{OUTPUT}'")
+        end
+      end
+
       def gem_home
         if rvm
           File.join(ENV['GEM_HOME'], 'gems')
