@@ -10,7 +10,6 @@ Gem::Specification.new do |s|
     'README.markdown'
   ]
   s.files = [
-    '.gemtest',
     'README.markdown',
     'Rakefile',
     'VERSION',
