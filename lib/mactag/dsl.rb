@@ -127,7 +127,7 @@ module Mactag
     # <b>DEPRECATED:</b> Please use '#index' instead.
     #
     def app(*args)
-      warn '[DEPRECATION] Please use #index gems.'
+      $stderr.puts '[DEPRECATION] Please use #index instead.'
 
       app_private(*args)
     end
@@ -137,7 +137,7 @@ module Mactag
     # <b>DEPRECATED:</b> Please use '#index' instead.
     #
     def gem(*args)
-      warn '[DEPRECATION] Please use #index gems.'
+      $stderr.puts '[DEPRECATION] Please use #index instead.'
 
       gem_private(*args)
     end
@@ -148,7 +148,7 @@ module Mactag
     # <b>DEPRECATED:</b> Please use '#index' instead.
     #
     def rails(*args)
-      warn '[DEPRECATION] Please use #index gems.'
+      $stderr.puts '[DEPRECATION] Please use #index instead.'
 
       rails_private(*args)
     end
@@ -161,7 +161,7 @@ module Mactag
     # @see Mactag::Tag::Plugin
     #
     def plugin(*plugins)
-      warn '[DEPRECATION] Please use gems instead of plugins.'
+      $stderr.puts '[DEPRECATION] Please use gems instead of plugins.'
 
       if plugins.empty?
         @builder << Mactag::Tag::Plugin.all
