@@ -52,7 +52,7 @@ examples of how to configure Mactag.
     Mactag do
       index 'app/models/*.rb'
       
-      index 'carrerwave, simple_form'
+      index 'carrerwave', 'simple_form'
       index 'redcarpet', :version => '1.17.2'
 
       index :rails, :except => :actionmailer, :version => '3.1.3'
