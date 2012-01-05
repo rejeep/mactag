@@ -129,7 +129,11 @@ module Mactag
     def app(*args)
       $stderr.puts '[DEPRECATION] Please use #index instead of #app.'
 
-      index(*args)
+      if args.empty?
+        index(:app)
+      else
+        index(*args)
+      end
     end
 
     ##
@@ -139,7 +143,11 @@ module Mactag
     def gem(*args)
       $stderr.puts '[DEPRECATION] Please use #index instead of #gems.'
 
-      index(*args)
+      if args.empty?
+        index(:gems)
+      else
+        index(*args)
+      end
     end
     alias :gems :gem
 
@@ -150,7 +158,11 @@ module Mactag
     def rails(*args)
       $stderr.puts '[DEPRECATION] Please use #index instead of #rails.'
 
-      index(*args)
+      if args.empty?
+        index(:rails)
+      else
+        index(*args)
+      end
     end
 
 

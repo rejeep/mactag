@@ -5,6 +5,93 @@ describe Mactag::Dsl do
     @dsl = Mactag::Dsl.new(Mactag::Builder.new)
   end
 
+  context 'deprecated API' do
+    before do
+      $stderr.stub(:puts)
+    end
+
+    describe '#app' do
+      it '#index should receive :app when no arguments' do
+        @dsl.should_receive(:index).with(:app)
+        @dsl.app
+      end
+
+      it '#index should receive argument when single arguments' do
+        @dsl.should_receive(:index).with('foo.rb')
+        @dsl.app('foo.rb')
+      end
+
+      it '#index should receive arguments when many arguments' do
+        @dsl.should_receive(:index).with('foo.rb', 'bar.rb')
+        @dsl.app('foo.rb', 'bar.rb')
+      end
+    end
+
+    describe '#gems' do
+      it '#index should receive :gems when no arguments' do
+        @dsl.should_receive(:index).with(:gems)
+        @dsl.gems
+      end
+
+      it '#index should receive gem name when single gem' do
+        @dsl.should_receive(:index).with('devise')
+        @dsl.gems('devise')
+      end
+
+      it '#index should receive gem name and version when single gem with version' do
+        @dsl.should_receive(:index).with('devise', '1.1.1')
+        @dsl.gems('devise', '1.1.1')
+      end
+
+      it '#index should receive gem names when multiple gems' do
+        @dsl.should_receive(:index).with('devise', 'simple_form')
+        @dsl.gems('devise', 'simple_form')
+      end
+
+      it '#index should receive gems and version when multiple gems and version' do
+        @dsl.should_receive(:index).with('devise', 'simple_form', { :version => '1.1.1' })
+        @dsl.gems('devise', 'simple_form', :version => '1.1.1')
+      end
+    end
+
+    describe '#rails' do
+      it '#index should receive :rails when no options' do
+        @dsl.should_receive(:index).with(:rails)
+        @dsl.rails
+      end
+
+      it '#index should receive version when version' do
+        @dsl.should_receive(:index).with({ :version => '3.0.0' })
+        @dsl.rails(:version => '3.0.0')
+      end
+
+      it '#index should receive package when only and single package' do
+        @dsl.should_receive(:index).with({ :only => 'activerecord' })
+        @dsl.rails(:only => 'activerecord')
+      end
+
+      it '#index should receive packages when only and many package' do
+        @dsl.should_receive(:index).with({ :only => ['activerecord', 'activemodel'] })
+        @dsl.rails(:only => ['activerecord', 'activemodel'])
+      end
+
+      it '#index should receive package when except and single package' do
+        @dsl.should_receive(:index).with({ :except => 'activerecord' })
+        @dsl.rails(:except => 'activerecord')
+      end
+
+      it '#index should receive packages when except and many package' do
+        @dsl.should_receive(:index).with({ :except => ['activerecord', 'activemodel'] })
+        @dsl.rails(:except => ['activerecord', 'activemodel'])
+      end
+
+      it '#index should receive options when mix' do
+        @dsl.should_receive(:index).with({ :only => ['activerecord', 'activemodel'], :version => '3.0.0' })
+        @dsl.rails(:only => ['activerecord', 'activemodel'], :version => '3.0.0')
+      end
+    end
+  end
+
   describe '#app' do
     it 'should index default when :app' do
       @dsl.index(:app)
