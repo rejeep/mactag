@@ -1,5 +1,5 @@
 module Mactag
-  module Tag
+  module Indexer
     ##
     #
     # Tag plugins in Rails project.
@@ -27,14 +27,14 @@ module Mactag
       end
 
       def tag
-        if exists?
+        if exist?
           File.join(PLUGIN_PATH, name, 'lib', '**', '*.rb')
         else
           raise PluginNotFoundError.new(self)
         end
       end
 
-      def exists?
+      def exist?
         File.directory?(path)
       end
 
@@ -45,9 +45,7 @@ module Mactag
       def self.all
         pattern = File.join(PLUGIN_PATH, '*')
         Dir.glob(pattern).map do |file|
-          basename = File.basename(file)
-
-          Mactag::Tag::Plugin.new(basename)
+          new(File.basename(file))
         end
       end
     end

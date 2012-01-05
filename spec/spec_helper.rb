@@ -4,18 +4,15 @@ require 'bundler'
 require 'rspec'
 
 require 'mactag'
-require 'custom_macros'
+
+require 'matcher'
 
 RSpec.configure do |config|
-  config.include CustomMacros
-  
-  config.before do
-    Mactag::Config.stub(:gem_home) { 'GEM_HOME' }
-  end
+  config.include Matcher
 end
 
-shared_examples_for 'tagger' do
-  it 'responds to tag' do
+shared_examples_for 'indexer' do
+  it 'responds to #tag' do
     subject.should respond_to(:tag)
   end
 end

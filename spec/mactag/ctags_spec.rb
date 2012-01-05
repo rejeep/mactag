@@ -8,12 +8,12 @@ describe Mactag::Ctags do
   describe '#initialize' do
     it 'handles a single file' do
       @ctags = Mactag::Ctags.new('in', 'out')
-      @ctags.instance_variable_get('@input').should == ['in']
+      @ctags.input.should =~ ['in']
     end
 
     it 'handles multiple files' do
       @ctags = Mactag::Ctags.new(['in_1', 'in_2'], 'out')
-      @ctags.instance_variable_get('@input').should == ['in_1', 'in_2']
+      @ctags.input.should =~ ['in_1', 'in_2']
     end
   end
 

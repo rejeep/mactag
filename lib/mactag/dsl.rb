@@ -4,6 +4,8 @@ module Mactag
   # Mactag DSL.
   #
   class Dsl
+    attr_reader :builder
+
     def initialize(builder)
       @builder = builder
     end
@@ -99,25 +101,23 @@ module Mactag
     #   end
     #
     def index(*args)
-      options = args.extract_options!
-
       if args.first == :app
         app_private
       elsif args.first == :gems
         gem_private
       elsif args.first == :rails
-        rails_private(options)
+        rails_private(*args)
       else
-        if options[:version] && args.size > 1
+        options = args.last
+
+        if options[:version] && args.size > 2
           raise ArgumentError.new('The :version option is not valid when specifying more than one gem')
         end
 
-        args.each do |arg|
-          if Mactag::Tag::Gem.exists?(arg)
-            gem_private(arg, options)
-          else
-            app_private(arg)
-          end
+        if options.is_a?(Hash) || args.all? { |arg| Mactag::Indexer::Gem.exist?(arg) }
+          gem_private(*args)
+        else
+          app_private(*args)
         end
       end
     end
@@ -129,7 +129,7 @@ module Mactag
     def app(*args)
       $stderr.puts '[DEPRECATION] Please use #index instead of #app.'
 
-      app_private(*args)
+      index(*args)
     end
 
     ##
@@ -139,7 +139,7 @@ module Mactag
     def gem(*args)
       $stderr.puts '[DEPRECATION] Please use #index instead of #gems.'
 
-      gem_private(*args)
+      index(*args)
     end
     alias :gems :gem
 
@@ -150,7 +150,7 @@ module Mactag
     def rails(*args)
       $stderr.puts '[DEPRECATION] Please use #index instead of #rails.'
 
-      rails_private(*args)
+      index(*args)
     end
 
 
@@ -158,18 +158,12 @@ module Mactag
     #
     # <b>DEPRECATED:</b> Please use gems instead.
     #
-    # @see Mactag::Tag::Plugin
+    # @see Mactag::Indexer::Plugin
     #
     def plugin(*plugins)
       $stderr.puts '[DEPRECATION] Please use gems instead of plugins.'
 
-      if plugins.empty?
-        @builder << Mactag::Tag::Plugin.all
-      else
-        plugins.each do |plugin|
-          @builder << Mactag::Tag::Plugin.new(plugin)
-        end
-      end
+      plugin_private(*plugins)
     end
     alias :plugins :plugin
 
@@ -178,30 +172,55 @@ module Mactag
 
     def app_private(*tags)
       if tags.empty?
-        @builder << Mactag::Tag::App.all
+        @builder << Mactag::Indexer::App.all
       else
         tags.each do |tag|
-          @builder << Mactag::Tag::App.new(tag)
+          @builder << Mactag::Indexer::App.new(tag)
         end
       end
     end
 
-    def gem_private(*gems)
-      if gems.empty?
-        @builder << Mactag::Tag::Gem.all
+    def gem_private(*args)
+      if args.empty?
+        @builder << Mactag::Indexer::Gem.all
       else
-        gems.each do |gem|
-          @builder << Mactag::Tag::Gem.new(gem)
+        options = args.last
+
+        if version = options[:version]
+          @builder << Mactag::Indexer::Gem.new(args.first, version)
+        else
+          args.each do |arg|
+            @builder << Mactag::Indexer::Gem.new(arg)
+          end
         end
       end
     end
 
-    def rails_private(options = {})
+    def rails_private(*args)
+      args.shift
+
+      if args.size.zero?
+        options = {}
+      else
+        options = args.first
+      end
+
       if options[:only] && options[:except]
         raise ArgumentError.new('Can not specify options :only and :except at the same time')
       end
 
-      @builder << Mactag::Tag::Rails.new(options)
+      @builder << Mactag::Indexer::Rails.new(options)
+    end
+
+    def plugin_private(*plugins)
+      if plugins.empty?
+        @builder << Mactag::Indexer::Plugin.all
+      else
+        plugins.each do |plugin|
+          @builder << Mactag::Indexer::Plugin.new(plugin)
+        end
+      end
     end
   end
 end
+

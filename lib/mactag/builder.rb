@@ -1,9 +1,7 @@
 module Mactag
-  ##
-  #
-  # Tag builder.
-  #
   class Builder
+    attr_reader :tags
+
     def initialize
       @tags = []
     end

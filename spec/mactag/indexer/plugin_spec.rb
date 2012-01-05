@@ -1,31 +1,43 @@
 require 'spec_helper'
 
-describe Mactag::Tag::Plugin do
+describe Mactag::Indexer::Plugin do
   subject do
-    Mactag::Tag::Plugin.new('devise')
+    Mactag::Indexer::Plugin.new('devise')
   end
+
+  it_should_behave_like 'indexer'
 
   before do
-    @plugin = Mactag::Tag::Plugin.new('devise')
+    @plugin = Mactag::Indexer::Plugin.new('devise')
   end
 
-  it_should_behave_like 'tagger'
-
   it 'has correct plugin path' do
-    Mactag::Tag::Plugin::PLUGIN_PATH.should == ['vendor', 'plugins']
+    Mactag::Indexer::Plugin::PLUGIN_PATH.should == ['vendor', 'plugins']
   end
 
   describe '#tag' do
     it 'returns path to plugin when plugin exists' do
-      @plugin.stub(:exists?) { true }
+      @plugin.stub(:exist?) { true }
       @plugin.tag.should == 'vendor/plugins/devise/lib/**/*.rb'
     end
 
     it 'raises exception when plugin does not exist' do
-      @plugin.stub(:exists?) { false }
+      @plugin.stub(:exist?) { false }
       proc {
         @plugin.tag
       }.should raise_exception(Mactag::PluginNotFoundError)
+    end
+  end
+
+  describe '#exist?' do
+    it 'is true when plugin directory exists' do
+      File.stub(:directory?) { true }
+      @plugin.should exist
+    end
+
+    it 'is false when plugin directory does not exist' do
+      File.stub(:directory?) { false }
+      @plugin.should_not exist
     end
   end
 
@@ -35,34 +47,31 @@ describe Mactag::Tag::Plugin do
     end
   end
 
-  describe '#exists?' do
-    it 'is true when plugin directory exists' do
-      File.stub(:directory?) { true }
-      @plugin.exists?.should be_true
-    end
-
-    it 'is false when plugin directory does not exist' do
-      File.stub(:directory?) { false }
-      @plugin.exists?.should be_false
-    end
-  end
-
   describe '#all' do
     it 'returns empty array when no plugins' do
       Dir.stub(:glob) { [] }
-      Mactag::Tag::Plugin.all.should be_empty
+
+      all = Mactag::Indexer::Plugin.all
+      all.should be_empty
     end
 
     it 'returns plugin name when single plugin' do
       Dir.stub(:glob) { ['vendor/plugins/devise'] }
-      Mactag::Tag::Plugin.all.map(&:name) == ['devise']
+      
+      all = Mactag::Indexer::Plugin.all
+      all.map(&:name).should == ['devise']
     end
 
     it 'returns plugin names when multiple plugins' do
       Dir.stub(:glob) {
-        ['vendor/plugins/devise', 'vendor/plugins/simple_form']
+        [
+         'vendor/plugins/devise',
+         'vendor/plugins/simple_form'
+        ]
       }
-      Mactag::Tag::Plugin.all.map(&:name) =~ ['devise', 'simple_form']
+      
+      all = Mactag::Indexer::Plugin.all
+      all.map(&:name).should =~ ['devise', 'simple_form']
     end
   end
 end

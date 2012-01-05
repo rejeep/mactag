@@ -4,6 +4,8 @@ module Mactag
   # Wrapper around Ctags command.
   #
   class Ctags
+    attr_reader :input, :output
+    
     def initialize(input, output)
       @input = Array(input)
       @output = output

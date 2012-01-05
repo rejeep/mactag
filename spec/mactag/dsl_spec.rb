@@ -6,103 +6,132 @@ describe Mactag::Dsl do
   end
 
   describe '#app' do
-    it_supports_dsl 'without arguments' do
+    it 'should index default when :app' do
       @dsl.index(:app)
+      @dsl.should have_app_index(*Mactag::Indexer::App::PATTERNS)
     end
 
-    it_supports_dsl 'with single argument' do
+    it 'should index argument' do
       @dsl.index('lib/foo.rb')
+      @dsl.should have_app_index('lib/foo.rb')
     end
 
-    it_supports_dsl 'with multiple arguments' do
+    it 'should index arguments' do
       @dsl.index('lib/foo.rb', 'app/models/*.rb')
+      @dsl.should have_app_index('lib/foo.rb', 'app/models/*.rb')
     end
   end
 
   describe '#gems' do
-    before do
-      Mactag::Tag::Gem.stub(:all) do
-        [Mactag::Tag::Gem.new('devise', '1.1.1')]
+    it 'should index all gems when :gems' do
+      Mactag::Indexer::Gem.stub(:all) do
+        [
+         Mactag::Indexer::Gem.new('devise', '1.1.1'),
+         Mactag::Indexer::Gem.new('simple_form', '1.5.4')
+        ]
       end
-    end
 
-    it_supports_dsl ':gems' do
       @dsl.index(:gems)
+      @dsl.should have_gem_index('devise', '1.1.1')
+      @dsl.should have_gem_index('simple_form', '1.5.4')
     end
 
-    context 'with single gem' do
-      it_supports_dsl 'without version' do
-        @dsl.index('devise')
-      end
+    it 'should index single gem without version' do
+      Mactag::Indexer::Gem.stub(:exist?) { true }
 
-      it_supports_dsl 'with version' do
-        @dsl.index('devise', :version => '1.1.1')
-      end
+      @dsl.index('devise')
+      @dsl.should have_gem_index('devise')
     end
 
-    context 'with multiple gems' do
-      it_supports_dsl 'without version' do
-        @dsl.index('devise', 'rack')
-      end
+    it 'should index single gem with version' do
+      Mactag::Indexer::Gem.stub(:exist?) { true }
 
-      it_does_not_support_dsl 'with version' do
-        @dsl.index('devise', 'rack', :version => '1.1.1')
-      end
+      @dsl.index('devise', :version => '1.1.1')
+      @dsl.should have_gem_index('devise', '1.1.1')
+    end
+
+    it 'should index multiple gems' do
+      Mactag::Indexer::Gem.stub(:exist?) { true }
+
+      @dsl.index('devise', 'simple_form')
+      @dsl.should have_gem_index('devise')
+      @dsl.should have_gem_index('simple_form')
+    end
+
+    it 'should index when mix' do
+      Mactag::Indexer::Gem.stub(:exist?) { true }
+
+      @dsl.index('devise', :version => '1.1.1')
+      @dsl.index('simple_form')
+      @dsl.should have_gem_index('devise', '1.1.1')
+      @dsl.should have_gem_index('simple_form')
+    end
+
+    it 'should raise exception when more than one gem specified with version' do
+      proc {
+        @dsl.index('devise', 'simple_form', :version => '1.1.1')
+      }.should raise_exception(ArgumentError)
     end
   end
 
   describe '#rails' do
-    context 'without version' do
-      it_supports_dsl 'without arguments' do
-        @dsl.index(:rails)
-      end
-
-      it_supports_dsl 'with packages only' do
-        @dsl.index(:rails, :only => [])
-      end
-
-      it_supports_dsl 'with packages except' do
-        @dsl.index(:rails, :except => [])
-      end
+    it 'should index when no options' do
+      @dsl.index(:rails)
+      @dsl.should have_rails_index('actionmailer', 'actionpack', 'activemodel', 'activerecord', 'activeresource', 'activesupport', 'railties')
     end
 
-    context 'with version' do
-      it_supports_dsl do
-        @dsl.index(:rails, :version => '3.0.0')
-      end
-
-      it_supports_dsl 'with only' do
-        @dsl.index(:rails, :version => '3.0.0', :only => [])
-      end
-
-      it_supports_dsl 'with except' do
-        @dsl.index(:rails, :version => '3.0.0', :except => [])
-      end
+    it 'should index when version' do
+      @dsl.index(:rails, :version => '3.0.0')
+      @dsl.should have_rails_index('actionmailer', 'actionpack', 'activemodel', 'activerecord', 'activeresource', 'activesupport', 'railties', :version => '3.0.0')
     end
 
-    it_does_not_support_dsl 'with only and except' do
-      @dsl.index(:rails, :only => [], :except => [])
+    it 'should index when only and single package' do
+      @dsl.index(:rails, :only => 'activemodel')
+      @dsl.should have_rails_index('activemodel')
+    end
+
+    it 'should index when only and many packages' do
+      @dsl.index(:rails, :only => ['activerecord', 'activemodel'])
+      @dsl.should have_rails_index('activerecord', 'activemodel')
+    end
+
+    it 'should index when except and single package' do
+      @dsl.index(:rails, :except => 'activemodel')
+      @dsl.should have_rails_index('actionmailer', 'actionpack', 'activerecord', 'activeresource', 'activesupport', 'railties')
+    end
+
+    it 'should index when except and many packages' do
+      @dsl.index(:rails, :except => ['activerecord', 'activemodel'])
+      @dsl.should have_rails_index('actionmailer', 'actionpack', 'activeresource', 'activesupport', 'railties')
+    end
+
+    it 'should index when mix' do
+      @dsl.index(:rails, :only => ['activerecord', 'activemodel'], :version => '3.0.0')
+      @dsl.should have_rails_index('activerecord', 'activemodel', :version => '3.0.0')
     end
   end
 
   context 'deprecated' do
     describe '#plugin' do
       before do
-        Mactag::Tag::Plugin.stub(:all) do
-          [Mactag::Tag::Plugin.new('devise')]
+        Mactag::Indexer::Plugin.stub(:all) do
+          [Mactag::Indexer::Plugin.new('devise')]
         end
       end
 
-      it_supports_dsl 'without arguments' do
-        @dsl.plugin
+      it 'should index without arguments' do
+        @dsl.send(:plugin_private)
+        @dsl.should have_plugin_index('devise')
       end
 
-      it_supports_dsl 'with single argument' do
-        @dsl.plugin('devise')
+      it 'should index with single argument' do
+        @dsl.send(:plugin_private, 'devise')
+        @dsl.should have_plugin_index('devise')
       end
 
-      it_supports_dsl 'with multiple arguments' do
-        @dsl.plugins('devise', 'rack')
+      it 'should index with many arguments' do
+        @dsl.send(:plugin_private, 'devise', 'rack')
+        @dsl.should have_plugin_index('devise', 'rack')
       end
     end
   end

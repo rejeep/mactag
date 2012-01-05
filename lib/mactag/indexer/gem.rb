@@ -1,5 +1,5 @@
 module Mactag
-  module Tag
+  module Indexer
     class Gem
       attr_accessor :name
       attr_writer :version
@@ -10,15 +10,19 @@ module Mactag
       end
 
       def tag
-        if exists?
+        if exist?
           File.join(Mactag::Config.gem_home, combo, 'lib', '**', '*.rb')
         else
           raise GemNotFoundError.new(self)
         end
       end
 
-      def exists?
+      def exist?
         dirs.size > 0
+      end
+
+      def version
+        @version || most_recent
       end
 
       def most_recent
@@ -28,8 +32,10 @@ module Mactag
           else
             gem = dirs.sort.last
           end
-          if /-([^\/]+)$/.match(gem)
-            $1
+          regex = /#{escaped_name}-([^\/]+)/
+
+          if match = regex.match(gem)
+            match[1]
           end
         end
       end
@@ -38,20 +44,16 @@ module Mactag
         @dirs ||= Dir.glob(File.join(Mactag::Config.gem_home, "#{name}-*"))
       end
 
-      def version
-        @version || most_recent
-      end
-
       class << self
         def all
           gems = Mactag::Bundler.gems
           gems.map do |name, version|
-            Mactag::Tag::Gem.new(name, version)
+            new(name, version)
           end
         end
 
-        def exists?(name)
-          new(name).exists?
+        def exist?(name)
+          new(name).exist?
         end
       end
 
@@ -60,6 +62,10 @@ module Mactag
 
       def combo
         "#{name}-#{version}"
+      end
+
+      def escaped_name
+        Regexp.escape(name)
       end
     end
   end

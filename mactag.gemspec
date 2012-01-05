@@ -23,11 +23,11 @@ Gem::Specification.new do |s|
     'lib/mactag/dsl.rb',
     'lib/mactag/errors.rb',
     'lib/mactag/railtie.rb',
-    'lib/mactag/tag.rb',
-    'lib/mactag/tag/app.rb',
-    'lib/mactag/tag/gem.rb',
-    'lib/mactag/tag/plugin.rb',
-    'lib/mactag/tag/rails.rb',
+    'lib/mactag/indexer.rb',
+    'lib/mactag/indexer/app.rb',
+    'lib/mactag/indexer/gem.rb',
+    'lib/mactag/indexer/plugin.rb',
+    'lib/mactag/indexer/rails.rb',
     'lib/tasks/mactag.rake'
   ]
   s.homepage = 'http://github.com/rejeep/mactag'
@@ -40,11 +40,10 @@ Gem::Specification.new do |s|
     'spec/mactag/config_spec.rb',
     'spec/mactag/ctags_spec.rb',
     'spec/mactag/dsl_spec.rb',
-    'spec/mactag/tag/app_spec.rb',
-    'spec/mactag/tag/gem_spec.rb',
-    'spec/mactag/tag/plugin_spec.rb',
-    'spec/mactag/tag/rails_spec.rb',
-    'spec/mactag/tag_spec.rb',
+    'spec/mactag/indexer/app_spec.rb',
+    'spec/mactag/indexer/gem_spec.rb',
+    'spec/mactag/indexer/plugin_spec.rb',
+    'spec/mactag/indexer/rails_spec.rb',
     'spec/mactag_spec.rb',
     'spec/spec_helper.rb'
   ]

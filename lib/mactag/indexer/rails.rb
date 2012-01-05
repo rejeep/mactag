@@ -1,5 +1,5 @@
 module Mactag
-  module Tag
+  module Indexer
     class Rails
 
       PACKAGES = %w(actionmailer actionpack activemodel activerecord activeresource activesupport railties)
@@ -27,6 +27,10 @@ module Mactag
         end
       end
 
+      def version
+        @version || ::Rails.version
+      end
+
 
       private
 
@@ -36,10 +40,6 @@ module Mactag
         Array(pkgs).map do |pkg|
           "#{pkg}".gsub(/[^a-z]/, '')
         end
-      end
-
-      def version
-        @version || ::Rails.version
       end
     end
   end
