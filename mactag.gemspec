@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     'README.markdown'
   ]
-  s.executables = ['bin/mactag']
+  s.executables = ['mactag']
   s.files = [
     'README.markdown',
     'Rakefile',
@@ -57,7 +57,6 @@ Gem::Specification.new do |s|
     'spec/spec_helper.rb'
   ]
 
-  s.add_runtime_dependency('rails', ['>= 3.0.0'])
   s.add_development_dependency('rspec', ['~> 2.7'])
   s.add_development_dependency('yard')
   s.add_development_dependency('redcarpet')
