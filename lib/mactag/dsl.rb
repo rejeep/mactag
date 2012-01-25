@@ -209,6 +209,10 @@ module Mactag
     end
 
     def rails_private(*args)
+      unless Mactag.rails_app?
+        raise MactagError.new('You can not index :rails when not in a Rails application')
+      end
+      
       args.shift
 
       if args.size.zero?

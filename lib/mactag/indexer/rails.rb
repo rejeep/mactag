@@ -28,17 +28,17 @@ module Mactag
       end
 
       def version
-        @version || ::Rails.version
+        @version || ::Mactag.rails_version
       end
 
 
       private
 
-      def packagize(pkgs)
-        return nil if pkgs.blank?
+      def packagize(packages)
+        return nil unless packages && packages.any?
 
-        Array(pkgs).map do |pkg|
-          "#{pkg}".gsub(/[^a-z]/, '')
+        Array(packages).map do |package|
+          "#{package}".gsub(/[^a-z]/, '')
         end
       end
     end

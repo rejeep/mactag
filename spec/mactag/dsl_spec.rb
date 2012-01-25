@@ -162,6 +162,17 @@ describe Mactag::Dsl do
   end
 
   describe '#rails' do
+    before do
+      Mactag.stub(:rails_app?) { true }
+    end
+    
+    it 'should raise exception when indexing :rails and not in a Rails application' do
+      Mactag.stub(:rails_app?) { false }
+      proc {
+        @dsl.index(:rails)
+      }.should raise_exception
+    end
+    
     it 'should index when no options' do
       @dsl.index(:rails)
       @dsl.should have_rails_index('actionmailer', 'actionpack', 'activemodel', 'activerecord', 'activeresource', 'activesupport', 'railties')
