@@ -110,7 +110,7 @@ module Mactag
       else
         options = args.last
 
-        if options[:version] && args.size > 2
+        if options.is_a?(Hash) && options[:version] && args.size > 2
           raise ArgumentError.new('The :version option is not valid when specifying more than one gem')
         end
 
@@ -198,8 +198,8 @@ module Mactag
       else
         options = args.last
 
-        if version = options[:version]
-          @builder << Mactag::Indexer::Gem.new(args.first, version)
+        if options.is_a?(Hash) && options[:version]
+          @builder << Mactag::Indexer::Gem.new(args.first, options[:version])
         else
           args.each do |arg|
             @builder << Mactag::Indexer::Gem.new(arg)
@@ -235,4 +235,3 @@ module Mactag
     end
   end
 end
-
