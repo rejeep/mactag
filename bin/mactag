@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 if ARGV.include?('-h') || ARGV.include?('--help') || ARGV.include?('help')
-  $stderr.puts 'Usage: mactag [new] [configuration_file]'
+  puts 'Usage: mactag [new] [configuration_file]'
 else
   default_config_file = File.join('config', 'mactag.rb')
 
