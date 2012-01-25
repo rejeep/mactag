@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
 
   s.authors = ['Johan Andersson']
   s.date = '2011-02-06'
-  s.description = 'Mactag is a Ctags DSL for Rails'
+  s.description = 'Mactag is a DSL to create Ctags files for Ruby/Rails'
   s.email = 'johan.rejeep@gmail.com'
   s.extra_rdoc_files = [
     'README.markdown'
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.homepage = 'http://github.com/rejeep/mactag'
   s.require_paths = ['lib']
   s.rubygems_version = '1.5.0'
-  s.summary = 'Ctags for Rails'
+  s.summary = 'Ctags for Ruby/Rails'
   s.test_files = [
     'spec/mactag/builder_spec.rb',
     'spec/mactag/bundler_spec.rb',
