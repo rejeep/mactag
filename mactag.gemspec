@@ -60,5 +60,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec', ['~> 2.7'])
   s.add_development_dependency('yard')
   s.add_development_dependency('redcarpet')
+  s.add_development_dependency('rake')
 end
 
