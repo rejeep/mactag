@@ -19,7 +19,8 @@ describe Mactag::Ctags do
 
   describe '#command' do
     before do
-      Rails.stub(:root) { 'root' }
+      Mactag.stub(:project_root) { 'root' }
+
       @ctags.stub(:binary) { 'binary' }
     end
 

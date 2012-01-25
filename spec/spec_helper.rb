@@ -1,6 +1,4 @@
 require 'rubygems'
-require 'rails'
-require 'bundler'
 require 'rspec'
 
 require 'mactag'

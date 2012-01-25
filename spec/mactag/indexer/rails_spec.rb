@@ -66,15 +66,15 @@ describe Mactag::Indexer::Rails do
 
     context 'single package' do
       it 'packagizes when symbol' do
-        @rails.send(:packagize, [:activerecord]).should =~ ['activerecord']
+        @rails.send(:packagize, :activerecord).should =~ ['activerecord']
       end
 
       it 'packagizes when string' do
-        @rails.send(:packagize, ['activerecord']).should =~ ['activerecord']
+        @rails.send(:packagize, 'activerecord').should =~ ['activerecord']
       end
 
       it 'packagizes when underscore' do
-        @rails.send(:packagize, [:active_record]).should =~ ['activerecord']
+        @rails.send(:packagize, :active_record).should =~ ['activerecord']
       end
     end
 
@@ -100,13 +100,13 @@ describe Mactag::Indexer::Rails do
   describe '#version' do
     it 'returns specified version when version' do
       @rails = Mactag::Indexer::Rails.new(:version => '3.0.0')
-      @rails.send(:version).should == '3.0.0'
+      @rails.version.should == '3.0.0'
     end
 
     it 'returns same version as app when version option is not specified' do
-      Rails.stub(:version) { '3.0.0' }
+      Mactag.stub(:rails_version) { '3.0.0' }
 
-      @rails.send(:version).should == '3.0.0'
+      @rails.version.should == '3.0.0'
     end
   end
 end

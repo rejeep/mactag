@@ -19,7 +19,7 @@ module Mactag
     private
 
     def command
-      "cd #{Rails.root} && #{binary}"
+      "cd #{Mactag.project_root} && #{binary}"
     end
 
     def binary

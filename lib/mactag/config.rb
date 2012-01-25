@@ -1,41 +1,25 @@
 module Mactag
-  class Config
-    ##
-    #
-    # The command to run (replacing <tt>{OUTPUT}</tt> with <tt>tags_file</tt>
-    # and <tt>{INPUT}</tt> with the input files) when creating the tags file.
-    #
-    @@binary = 'ctags -o {OUTPUT} -e {INPUT}'
-    cattr_reader :binary
-
-    ##
-    #
-    # Name of the output tags file.
-    #
-    @@tags_file = 'TAGS'
-    cattr_accessor :tags_file
-
-    ##
-    #
-    # If using Ruby Version Manager (RVM), setting this option to true
-    # will enable Mactag to find out the gem path automatically.
-    #
-    @@rvm = true
-    cattr_accessor :rvm
-
-    ##
-    #
-    # The system folder where the gems are located.
-    #
-    @@gem_home = '/Library/Ruby/Gems/1.8/gems'
-    cattr_writer :gem_home
-
+  module Config
     class << self
-      def binary=(binary)
-        if binary.include?('{INPUT}') && binary.include?('{OUTPUT}')
-          @@binary = binary
-        else
-          raise Mactag::MactagError.new("Binary command must include '{INPUT}' and '{OUTPUT}'")
+      def configure(&block)
+        yield self
+      end
+
+      def add_config(name, &block)
+        unless respond_to?(name)
+          class_eval <<-RUBY, __FILE__, __LINE__ + 1
+            def self.#{name}
+              @#{name}
+            end
+          RUBY
+        end
+
+        unless respond_to?("#{name}=")
+          class_eval <<-RUBY, __FILE__, __LINE__ + 1
+            def self.#{name}=(value)
+              @#{name} = value
+            end
+          RUBY
         end
       end
 
@@ -43,13 +27,41 @@ module Mactag
         if rvm
           File.join(ENV['GEM_HOME'], 'gems')
         else
-          @@gem_home
+          @gem_home
         end
       end
 
-      def configure(&block)
-        yield self
+      def rvm=(rvm)
+        if rvm == true || rvm == false
+          @rvm = rvm
+        else
+          raise Mactag::MactagError.new("RVM must be either true or false")
+        end
+      end
+
+      def binary=(binary)
+        if binary.include?('{INPUT}') && binary.include?('{OUTPUT}')
+          @binary = binary
+        else
+          raise Mactag::MactagError.new("Binary command must include '{INPUT}' and '{OUTPUT}'")
+        end
+      end
+
+      def reset_config
+        configure do |config|
+          config.binary = 'ctags -o {OUTPUT} -e {INPUT}'
+          config.tags_file = 'TAGS'
+          config.rvm = true
+          config.gem_home = '/Library/Ruby/Gems/1.8/gems'
+        end
       end
     end
+
+    add_config :binary
+    add_config :tags_file
+    add_config :rvm
+    add_config :gem_home
+
+    reset_config
   end
 end

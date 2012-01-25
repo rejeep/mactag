@@ -1,5 +1,5 @@
 module Matcher
-  class AppIndex
+  class LibIndex
     def initialize(paths)
       @paths = paths
     end
@@ -7,7 +7,7 @@ module Matcher
     def matches?(dsl)
       @tags = dsl.builder.tags
       @actual = @tags.map(&:tag)
-      @actual - @paths == @paths - @actual && all_apps?
+      @actual - @paths == @paths - @actual
     end
 
     def failure_message
@@ -17,16 +17,15 @@ module Matcher
     def negative_failure_message
       "expected something else then '#{@paths.inspect}' but got '#{@actual.inspect}'"
     end
-
-
+    
     private
 
-    def all_apps?
-      @tags.all? { |tag| tag.is_a?(Mactag::Indexer::App) }
+    def all_libs?
+      @tags.all? { |tag| tag.is_a?(Mactag::Indexer::Lib) }
     end
   end
 
-  def have_app_index(*paths)
-    AppIndex.new(paths)
+  def have_lib_index(*paths)
+    LibIndex.new(paths)
   end
 end

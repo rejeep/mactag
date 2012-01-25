@@ -18,18 +18,21 @@ module Mactag
     #
     # = App
     #
-    # App indexes files in the current project.
+    # App indexes files in the current Rails project.
     #
     # == Examples
     #
     #   Mactag do
-    #     # Index single file.
+    #     # Index all ruby files in app and lib, recursive
+    #     index :app
+    #
+    #     # Index single file
     #     index 'lib/super_duper.rb'
     #
-    #     # Index all ruby files in lib, recursive.
+    #     # Index all ruby files in lib, recursive
     #     index 'lib/**/*.rb'
     #
-    #     # Index all helper and model ruby files.
+    #     # Index all helper and model ruby files
     #     index 'app/helpers/*.rb', 'app/models/*.rb'
     #
     #     # Same as above
@@ -44,16 +47,16 @@ module Mactag
     # == Examples
     #
     #   Mactag do
-    #     # Index all gems specified in Gemfile.
+    #     # Index all gems specified in Gemfile
     #     index :gems
     #
-    #     # Index the gem whenever, latest version.
+    #     # Index the gem whenever, latest version
     #     index 'whenever'
     #
-    #     # Index the thinking-sphinx and carrierwave gems, latest versions.
+    #     # Index the thinking-sphinx and carrierwave gems, latest versions
     #     index 'thinking-sphinx', 'carrierwave'
     #
-    #     # Index the gem simple_form, version 1.5.2.
+    #     # Index the gem simple_form, version 1.5.2
     #     index 'simple_form', :version => '1.5.2'
     #   end
     #
@@ -75,6 +78,24 @@ module Mactag
     # * activeresource
     # * railties
     # * activesupport
+    #
+    #
+    # = Lib
+    #
+    # Lib indexes files in the current project.
+    #
+    # == Examples
+    #
+    #   Mactag do
+    #     # Index all ruby files in lib, recursive
+    #     index :lib
+    #
+    #     # Index single file
+    #     index 'lib/super_duper.rb'
+    #
+    #     # Index all ruby files in lib, recursive
+    #     index 'lib/**/*.rb'
+    #   end
     #
     #
     # == Examples
@@ -103,6 +124,8 @@ module Mactag
     def index(*args)
       if args.first == :app
         app_private
+      elsif args.first == :lib
+        lib_private
       elsif args.first == :gems
         gem_private
       elsif args.first == :rails
@@ -115,9 +138,13 @@ module Mactag
         end
 
         if options.is_a?(Hash) || args.all? { |arg| Mactag::Indexer::Gem.exist?(arg) }
-          gem_private(*args)
+            gem_private(*args)
         else
-          app_private(*args)
+          if Mactag.rails_app?
+            app_private(*args)
+          else
+            lib_private(*args)
+          end
         end
       end
     end
@@ -182,7 +209,25 @@ module Mactag
 
     private
 
+    def lib_private(*tags)
+      if Mactag.rails_app?
+        raise MactagError.new('Can not index :lib when in a Rails application')
+      end
+      
+      if tags.empty?
+        @builder << Mactag::Indexer::Lib.all
+      else
+        tags.each do |tag|
+          @builder << Mactag::Indexer::Lib.new(tag)
+        end
+      end
+    end
+
     def app_private(*tags)
+      unless Mactag.rails_app?
+        raise MactagError.new('Can not index :app when not a Rails application')
+      end
+      
       if tags.empty?
         @builder << Mactag::Indexer::App.all
       else
@@ -209,6 +254,10 @@ module Mactag
     end
 
     def rails_private(*args)
+      unless Mactag.rails_app?
+        raise MactagError.new('You can not index :rails when not in a Rails application')
+      end
+
       args.shift
 
       if args.size.zero?

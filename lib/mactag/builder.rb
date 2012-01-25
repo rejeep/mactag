@@ -43,7 +43,7 @@ module Mactag
         if builder.has_gems?
           Mactag::Ctags.new(@builder.files, Mactag::Config.tags_file).create
 
-          puts "Successfully generated #{Mactag::Config.tags_file} file"
+          puts "[done] Successfully generated #{Mactag::Config.tags_file} file"
         else
           raise Mactag::MactagError.new('Nothing to tag')
         end

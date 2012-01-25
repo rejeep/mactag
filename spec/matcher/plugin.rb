@@ -5,9 +5,9 @@ module Matcher
     end
 
     def matches?(dsl)
-      @actual = dsl.builder.tags.map(&:name)
-
-      @actual - @plugins == @plugins - @actual
+      @tags = dsl.builder.tags
+      @actual = @tags.map(&:name)
+      @actual - @plugins == @plugins - @actual && all_plugins?
     end
 
     def failure_message
@@ -16,6 +16,13 @@ module Matcher
 
     def negative_failure_message
       "expected '#{@actual.inspect}' to not equal '#{@plugins}' but did"
+    end
+    
+    
+    private
+    
+    def all_plugins?
+      @tags.all? { |tag| tag.is_a?(Mactag::Indexer::Plugin) }
     end
   end
 
