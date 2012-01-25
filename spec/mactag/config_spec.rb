@@ -26,7 +26,17 @@ describe Mactag::Config do
   it 'should be configurable' do
     Mactag.configure do |config|
       config.should == Mactag::Config
+
+      config.binary = 'binary {INPUT} {OUTPUT}'
+      config.tags_file = 'tags_file'
+      config.rvm = false
+      config.gem_home = 'gem_home'
     end
+
+    Mactag::Config.binary.should == 'binary {INPUT} {OUTPUT}'
+    Mactag::Config.tags_file.should == 'tags_file'
+    Mactag::Config.rvm.should == false
+    Mactag::Config.gem_home.should == 'gem_home'
   end
 
   it "requires '{INPUT}' and '{OUTPUT}' in binary string" do
