@@ -1,6 +1,77 @@
 #!/usr/bin/env ruby
 
-require 'mactag'
-require File.join(Mactag.project_root, 'config', 'mactag')
+file = File.join('config', 'mactag.rb')
+dir = File.dirname(file)
 
-Mactag::Builder.create
+if ARGV.empty?
+  if environment = File.expand_path(File.join(ENV['PWD'], 'config', 'environment'))
+    require environment
+  end
+
+  require 'mactag'
+  begin
+    require File.join(Mactag.project_root, 'config', 'mactag')
+    
+    Mactag::Builder.create
+  rescue Mactag::MactagError => e
+    $stderr.puts "[error] #{e.message}"
+  end
+elsif ARGV.first == 'new'
+  if File.exists?(dir)
+    if File.exists?(file)
+      $stderr.puts "[skip] `#{file}' already exists"
+    else
+      content = <<-CONFIG
+Mactag.configure do |config|
+  # Use RVM to locate project gems.
+  # config.rvm = false
+
+  # Path to gems. No need to set this when RVM is used!
+  # config.gem_home = '/Library/Ruby/Gems/1.8/gems'
+
+  # Name of tags file to create.
+  # config.tags_file = '.tags'
+
+  # Command used to create the tags table. {INPUT} and {OUTPUT} are required!
+  # config.binary = '/usr/local/Cellar/ctags/5.8/bin/ctags -e -o {OUTPUT} {INPUT}'
+end
+
+Mactag do
+  # Index current project.
+  # index :app
+
+  # Index all models and helpers.
+  # index 'app/models/*.rb', 'app/helpers/*.rb'
+
+  # Index the gems carrierwave and redcarpet.
+  # index 'carrierwave', 'redcarpet'
+
+  # Index the gem simple_form version 1.5.2.
+  # index 'simple_form', :version => '1.5.2'
+
+  # Index rails.
+  # index :rails
+
+  # Index rails except action mailer.
+  # index :rails, :except => :actionmailer
+
+  # Index only rails packages activerecord and activesupport.
+  # index :rails, :only => %w(activerecord activesupport)
+
+  # Index rails, version 3.1.3.
+  # index :rails, :version => '3.1.3'
+end
+CONFIG
+
+      File.open(file, 'w') do |f|
+        f.write(content)
+      end
+
+      puts "[done] created `#{file}'!"
+    end
+  else
+    $stderr.puts "[skip] directory `#{dir}' does not exist"
+  end
+else
+  $stderr.puts 'Usage: mactag [new]'
+end
