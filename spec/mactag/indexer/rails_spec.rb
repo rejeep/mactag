@@ -66,15 +66,15 @@ describe Mactag::Indexer::Rails do
 
     context 'single package' do
       it 'packagizes when symbol' do
-        @rails.send(:packagize, [:activerecord]).should =~ ['activerecord']
+        @rails.send(:packagize, :activerecord).should =~ ['activerecord']
       end
 
       it 'packagizes when string' do
-        @rails.send(:packagize, ['activerecord']).should =~ ['activerecord']
+        @rails.send(:packagize, 'activerecord').should =~ ['activerecord']
       end
 
       it 'packagizes when underscore' do
-        @rails.send(:packagize, [:active_record]).should =~ ['activerecord']
+        @rails.send(:packagize, :active_record).should =~ ['activerecord']
       end
     end
 

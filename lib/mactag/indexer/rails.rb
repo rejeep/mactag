@@ -35,10 +35,11 @@ module Mactag
       private
 
       def packagize(packages)
-        return nil unless packages && packages.any?
-
-        Array(packages).map do |package|
-          "#{package}".gsub(/[^a-z]/, '')
+        packages = Array(packages)
+        unless packages.empty?
+          packages.map do |package|
+            package.to_s.gsub(/[^a-z]/, '')
+          end
         end
       end
     end
