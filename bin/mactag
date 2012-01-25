@@ -45,6 +45,9 @@ end
 
 Mactag do
   # Index current project.
+  # index :lib
+  
+  # Index current Rails project.
   # index :app
 
   # Index all models and helpers.
