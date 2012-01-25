@@ -14,8 +14,6 @@ Gem::Specification.new do |s|
     'README.markdown',
     'Rakefile',
     'VERSION',
-    'lib/generators/mactag/mactag_generator.rb',
-    'lib/generators/mactag/templates/mactag.rb',
     'lib/mactag.rb',
     'lib/mactag/builder.rb',
     'lib/mactag/bundler.rb',
@@ -29,8 +27,7 @@ Gem::Specification.new do |s|
     'lib/mactag/indexer/gem.rb',
     'lib/mactag/indexer/plugin.rb',
     'lib/mactag/indexer/rails.rb',
-    'lib/mactag/indexer/lib.rb',
-    'lib/tasks/mactag.rake'
+    'lib/mactag/indexer/lib.rb'
   ]
   s.homepage = 'http://github.com/rejeep/mactag'
   s.require_paths = ['lib']
