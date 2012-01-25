@@ -13,7 +13,7 @@ describe Mactag do
     Mactag.should respond_to(:project_root)
   end
   
-  it 'should respond to #current_project' do
-    Mactag.should respond_to(:current_project)
+  it 'should respond to #project_name' do
+    Mactag.should respond_to(:project_name)
   end
 end

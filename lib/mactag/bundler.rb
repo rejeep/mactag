@@ -31,7 +31,7 @@ module Mactag
         if Mactag.rails_app?
           default.delete('rails')
         else
-          if project = Mactag.current_project
+          if project = Mactag.project_name
             default.delete(project)
           end
         end

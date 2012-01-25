@@ -30,7 +30,7 @@ module Mactag
       end
     end
     
-    def current_project
+    def project_name
       File.basename(project_root)
     end
   end
