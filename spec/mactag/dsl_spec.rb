@@ -96,7 +96,14 @@ describe Mactag::Dsl do
     before do
       Mactag.stub(:rails_app?) { false }
     end
-    
+
+    it 'should raise exception when indexing :lib and in a Rails application' do
+      Mactag.stub(:rails_app?) { true }
+      proc {
+        @dsl.index(:lib)
+      }.should raise_exception
+    end
+
     it 'should index default when :lib' do
       @dsl.index(:lib)
       @dsl.should have_lib_index(*Mactag::Indexer::Lib::PATTERNS)
@@ -112,12 +119,19 @@ describe Mactag::Dsl do
       @dsl.should have_lib_index('lib/foo.rb', 'lib/foo/*.rb')
     end
   end
-  
+
   describe '#app' do
     before do
       Mactag.stub(:rails_app?) { true }
     end
     
+    it 'should raise exception when indexing :app and not in a Rails application' do
+      Mactag.stub(:rails_app?) { false }
+      proc {
+        @dsl.index(:app)
+      }.should raise_exception
+    end
+
     it 'should index default when :app' do
       @dsl.index(:app)
       @dsl.should have_app_index(*Mactag::Indexer::App::PATTERNS)
@@ -190,14 +204,14 @@ describe Mactag::Dsl do
     before do
       Mactag.stub(:rails_app?) { true }
     end
-    
+
     it 'should raise exception when indexing :rails and not in a Rails application' do
       Mactag.stub(:rails_app?) { false }
       proc {
         @dsl.index(:rails)
       }.should raise_exception
     end
-    
+
     it 'should index when no options' do
       @dsl.index(:rails)
       @dsl.should have_rails_index('actionmailer', 'actionpack', 'activemodel', 'activerecord', 'activeresource', 'activesupport', 'railties')

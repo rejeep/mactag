@@ -210,6 +210,10 @@ module Mactag
     private
 
     def lib_private(*tags)
+      if Mactag.rails_app?
+        raise MactagError.new('Can not index :lib when in a Rails application')
+      end
+      
       if tags.empty?
         @builder << Mactag::Indexer::Lib.all
       else
@@ -220,6 +224,10 @@ module Mactag
     end
 
     def app_private(*tags)
+      unless Mactag.rails_app?
+        raise MactagError.new('Can not index :app when not a Rails application')
+      end
+      
       if tags.empty?
         @builder << Mactag::Indexer::App.all
       else
