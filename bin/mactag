@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'mactag'
+require File.join(Mactag.project_root, 'config', 'mactag')
+
+Mactag::Builder.create

@@ -92,7 +92,32 @@ describe Mactag::Dsl do
     end
   end
 
+  describe '#lib' do
+    before do
+      Mactag.stub(:rails_app?) { false }
+    end
+    
+    it 'should index default when :lib' do
+      @dsl.index(:lib)
+      @dsl.should have_lib_index(*Mactag::Indexer::Lib::PATTERNS)
+    end
+
+    it 'should index argument' do
+      @dsl.index('lib/foo.rb')
+      @dsl.should have_lib_index('lib/foo.rb')
+    end
+
+    it 'should index arguments' do
+      @dsl.index('lib/foo.rb', 'lib/foo/*.rb')
+      @dsl.should have_lib_index('lib/foo.rb', 'lib/foo/*.rb')
+    end
+  end
+  
   describe '#app' do
+    before do
+      Mactag.stub(:rails_app?) { true }
+    end
+    
     it 'should index default when :app' do
       @dsl.index(:app)
       @dsl.should have_app_index(*Mactag::Indexer::App::PATTERNS)

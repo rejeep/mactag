@@ -13,7 +13,7 @@ module Matcher
     def matches?(dsl)
       @actual = dsl.builder.tags.first
 
-      same_packages? && same_version?
+      same_packages? && same_version? && rails_indexer?
     end
 
     def failure_message
@@ -36,6 +36,10 @@ module Matcher
 
     def same_packages?
       @actual.packages - @packages == @packages - @actual.packages
+    end
+
+    def rails_indexer?
+      @actual.is_a?(Mactag::Indexer::Rails)
     end
   end
 

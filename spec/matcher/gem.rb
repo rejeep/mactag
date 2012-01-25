@@ -7,9 +7,8 @@ module Matcher
 
     def matches?(dsl)
       @actual = dsl.builder.tags
-      @actual.find do |gem|
-        gem.name == @name && gem.version == @version
-      end
+
+      gem_exists? && all_gems?
     end
 
     def failure_message
@@ -18,6 +17,19 @@ module Matcher
 
     def negative_failure_message
       "expected '#{@actual.inspect}' to not include '#{@name}/#{@version}' but did"
+    end
+
+
+    private
+
+    def all_gems?
+      @actual.all? { |tag| tag.is_a?(Mactag::Indexer::Gem) }
+    end
+    
+    def gem_exists?
+      @actual.find do |gem|
+        gem.name == @name && gem.version == @version
+      end
     end
   end
 

@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     'README.markdown'
   ]
+  s.executables = ['bin/mactag']
   s.files = [
     'README.markdown',
     'Rakefile',
@@ -28,6 +29,7 @@ Gem::Specification.new do |s|
     'lib/mactag/indexer/gem.rb',
     'lib/mactag/indexer/plugin.rb',
     'lib/mactag/indexer/rails.rb',
+    'lib/mactag/indexer/lib.rb',
     'lib/tasks/mactag.rake'
   ]
   s.homepage = 'http://github.com/rejeep/mactag'
@@ -42,9 +44,16 @@ Gem::Specification.new do |s|
     'spec/mactag/dsl_spec.rb',
     'spec/mactag/indexer/app_spec.rb',
     'spec/mactag/indexer/gem_spec.rb',
+    'spec/mactag/indexer/lib_spec.rb',
     'spec/mactag/indexer/plugin_spec.rb',
     'spec/mactag/indexer/rails_spec.rb',
     'spec/mactag_spec.rb',
+    'spec/matcher/app.rb',
+    'spec/matcher/gem.rb',
+    'spec/matcher/lib.rb',
+    'spec/matcher/plugin.rb',
+    'spec/matcher/rails.rb',
+    'spec/matcher.rb',
     'spec/spec_helper.rb'
   ]
 
