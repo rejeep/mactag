@@ -1,34 +1,21 @@
 #!/usr/bin/env ruby
 
-file = File.join('config', 'mactag.rb')
-dir = File.dirname(file)
+require 'fileutils'
 
-if ARGV.empty?
-  environment = File.expand_path(File.join(ENV['PWD'], 'config', 'environment.rb'))
-  if File.exists?(environment)
-    require environment
-  end
+if ARGV.include?('-h') || ARGV.include?('--help') || ARGV.include?('help')
+  $stderr.puts 'Usage: mactag [new] [configuration_file]'
+else
+  default_config_file = File.join('config', 'mactag.rb')
 
-  require 'mactag'
+  if ARGV.first == 'new'
+    config_file = ARGV[1] || default_config_file
 
-  begin
-    configuration = File.join(Mactag.project_root, 'config', 'mactag.rb')
-    if File.exists?(configuration)
-      require configuration
-
-      Mactag::Builder.create
-    else
-      $stderr.puts "[error] Configuration file `#{file}' was not found. Use `mactag new' to generate one."
-    end
-  rescue Mactag::MactagError => e
-    $stderr.puts "[error] #{e.message}"
-  end
-elsif ARGV.first == 'new'
-  if File.exists?(dir)
-    if File.exists?(file)
-      $stderr.puts "[skip] `#{file}' already exists"
-    else
-      content = <<-CONFIG
+    config_dir = File.dirname(config_file)
+    if File.exists?(config_dir)
+      if File.exists?(config_file)
+        $stderr.puts "[skip] file `#{config_file}' already exists"
+      else
+        content = <<-CONFIG
 Mactag.configure do |config|
   # Use RVM to locate project gems.
   # config.rvm = false
@@ -46,7 +33,7 @@ end
 Mactag do
   # Index current project.
   # index :lib
-  
+
   # Index current Rails project.
   # index :app
 
@@ -73,15 +60,36 @@ Mactag do
 end
 CONFIG
 
-      File.open(file, 'w') do |f|
-        f.write(content)
-      end
+        File.open(config_file, 'w') do |f|
+          f.write(content)
+        end
 
-      puts "[done] created `#{file}'!"
+        puts "[done] created `#{config_file}'"
+      end
+    else
+      $stderr.puts "[skip] directory `#{config_dir}' does not exist"
     end
   else
-    $stderr.puts "[skip] directory `#{dir}' does not exist"
+    config_file = ARGV[0] || default_config_file
+
+    if File.exists?(config_file)
+      require 'mactag'
+
+      environment = File.expand_path(File.join(ENV['PWD'], 'config', 'environment.rb'))
+      if File.exists?(environment)
+        require environment
+      end
+
+      begin
+        require config_file
+
+        Mactag::Builder.create
+      rescue Mactag::MactagError => e
+        $stderr.puts "[error] #{e.message}"
+      end
+
+    else
+      $stderr.puts "[skip] file `#{config_file}' does not exist"
+    end
   end
-else
-  $stderr.puts 'Usage: mactag [new]'
 end
