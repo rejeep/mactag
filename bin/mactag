@@ -4,15 +4,22 @@ file = File.join('config', 'mactag.rb')
 dir = File.dirname(file)
 
 if ARGV.empty?
-  if environment = File.expand_path(File.join(ENV['PWD'], 'config', 'environment'))
+  environment = File.expand_path(File.join(ENV['PWD'], 'config', 'environment.rb'))
+  if File.exists?(environment)
     require environment
   end
 
   require 'mactag'
+
   begin
-    require File.join(Mactag.project_root, 'config', 'mactag')
-    
-    Mactag::Builder.create
+    configuration = File.join(Mactag.project_root, 'config', 'mactag.rb')
+    if File.exists?(configuration)
+      require configuration
+
+      Mactag::Builder.create
+    else
+      $stderr.puts "[error] Configuration file `#{file}' was not found. Use `mactag new' to generate one."
+    end
   rescue Mactag::MactagError => e
     $stderr.puts "[error] #{e.message}"
   end
