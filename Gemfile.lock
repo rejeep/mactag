@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mactag (0.6.0)
+    mactag (0.7.0)
 
 GEM
   remote: http://rubygems.org/
