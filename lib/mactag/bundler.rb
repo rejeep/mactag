@@ -28,7 +28,13 @@ module Mactag
         default = runtime.dependencies.select { |dependency|
           dependency.groups.include?(:default)
         }.map(&:name)
-        default.delete('rails')
+        if Mactag.rails_app?
+          default.delete('rails')
+        else
+          if project = Mactag.current_project
+            default.delete(project)
+          end
+        end
         default
       end
 

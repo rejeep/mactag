@@ -12,4 +12,8 @@ describe Mactag do
   it 'should respond to #project_root' do
     Mactag.should respond_to(:project_root)
   end
+  
+  it 'should respond to #current_project' do
+    Mactag.should respond_to(:current_project)
+  end
 end

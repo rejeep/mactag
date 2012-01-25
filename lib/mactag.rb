@@ -29,6 +29,10 @@ module Mactag
         ENV['PWD']
       end
     end
+    
+    def current_project
+      File.basename(project_root)
+    end
   end
 end
 
