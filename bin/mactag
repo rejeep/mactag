@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'fileutils'
-
 if ARGV.include?('-h') || ARGV.include?('--help') || ARGV.include?('help')
   $stderr.puts 'Usage: mactag [new] [configuration_file]'
 else
