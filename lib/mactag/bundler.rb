@@ -1,5 +1,3 @@
-require 'bundler'
-
 module Mactag
   ##
   #
@@ -28,6 +26,7 @@ module Mactag
         default = runtime.dependencies.select { |dependency|
           dependency.groups.include?(:default)
         }.map(&:name)
+
         if Mactag.rails_app?
           default.delete('rails')
         else
@@ -35,6 +34,7 @@ module Mactag
             default.delete(project)
           end
         end
+
         default
       end
 

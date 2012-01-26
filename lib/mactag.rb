@@ -7,6 +7,8 @@ require 'mactag/bundler'
 require 'mactag/errors'
 
 module Mactag
+  autoload :Bundler, 'bundler'
+
   class << self
     def configure(&block)
       Mactag::Config.configure(&block)
@@ -29,7 +31,7 @@ module Mactag
         ENV['PWD']
       end
     end
-    
+
     def project_name
       File.basename(project_root)
     end
