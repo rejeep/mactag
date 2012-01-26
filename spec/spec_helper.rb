@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'rspec'
-
 require 'mactag'
-
 require 'matcher'
 
 RSpec.configure do |config|
