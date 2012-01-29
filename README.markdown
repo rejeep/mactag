@@ -24,9 +24,15 @@ Install the gem:
 
     $ gem install mactag
 
-Add `mactag` to the `Gemfile`:
+Add `mactag` to the `Gemfile` (add to development group in Rails):
 
+    # Ruby gem
     gem 'mactag'
+    
+    # Rails app
+    group :development do
+      gem 'mactag'
+    end
 
 Then run `bundle install`.
 
