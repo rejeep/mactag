@@ -41,7 +41,3 @@ end
 def Mactag(&block)
   Mactag::Builder.generate(&block)
 end
-
-if Mactag.rails_app?
-  require 'mactag/railtie'
-end
