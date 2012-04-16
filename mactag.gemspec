@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
     'lib/mactag/ctags.rb',
     'lib/mactag/dsl.rb',
     'lib/mactag/errors.rb',
-    'lib/mactag/railtie.rb',
     'lib/mactag/indexer.rb',
     'lib/mactag/indexer/app.rb',
     'lib/mactag/indexer/gem.rb',
