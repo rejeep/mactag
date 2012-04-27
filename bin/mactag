@@ -79,7 +79,7 @@ CONFIG
       end
 
       begin
-        require config_file
+        require File.expand_path(File.join(ENV['PWD'], config_file))
 
         Mactag::Builder.create
       rescue Mactag::MactagError => e
